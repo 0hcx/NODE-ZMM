@@ -1,0 +1,36 @@
+/*.login-page{*/
+  /*padding: 50px;*/
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
+  /*background-image: url("/img/2.jpg");*/
+/*}*/
+.login-body{
+  background-image: url("/img/2.jpg");
+}
+a {
+  color: #00B7FF;
+}
+.login-box{
+  padding: 100px 0 0 -100px;
+  float:left;
+  margin-top: 60px;
+  border: none;
+}
+.login-logo h1{
+  font-size: 40px;
+  color: white;
+  margin-left: 500px;
+  position: relative;
+}
+.login-box-body{
+  padding: 20px;
+  width: 300px;
+  height: 200px;
+  margin-left: 500px;
+}
+#loginBtn{
+  color: 	#515151;
+  border-radius: 3px;
+  border: none;
+  width: 70px;
+}
+
