@@ -175,4 +175,68 @@ RFC2616定义的状态码，由3位数字和原因短信组成。
 |5XX	|Server Error |	服务器错误状态码，表示服务器处理请求出错      |
 
 
+---
+
+##学习报告
+
+（2016/6/28）
+
+###Node.js
+是一个让 JavaScript 运行在服务端的开发平台
+###小技巧——使用 supervisor
+希望修改后立即看到效果，而不是每次都要终止进程并重启。
+$ npm install -g supervisor
+###异步式 I/O 与事件驱动
+Node.js 最大的特点就是异步式 I/O（或者非阻塞 I/O）与事件紧密结合的编程模式。这
+种模式与传统的同步式 I/O 线性的编程思路有很大的不同，因为控制流很大程度上要靠事件
+和回调函数来组织，一个逻辑要拆分为若干个单元。当操作系统完成 I/O 操作时，以事件的
+形式通知执行 I/O 操作的线程，线程会在特定时候处理这个事件。为了处理异步 I/O，线程
+必须有事件循环，不断地检查有没有未处理的事件，依次予以处理。
+优点:少了多线程的开销。
+缺点:不符合人们一般的程序设计思维
+###回调函数
+
+####同步式
+    将文件名作为参数传入 fs.readFileSync 函数，阻塞等待读取完成后，
+    将文件的内容作为函数的返回值赋给 data 变量，接下来控制台输出 data 的值，最后输出 end.。
+####异步式（发送请求）
+    fs.readFile 接收了三个参数，第一个是文件名，第二个是编码方式，第三个是一个函数，
+    我们称这个函数为回调函数。fs.readFile 调用时所做的工作只是将异步式 I/O 请求发送给了操作系统
+    当 fs 接收到 I/O 请求完成的事件时，事件循环会主动调用回调函数以完成后续工作
+###事件
+
+由 EventEmitter 对象提供。事件循环机制（不可见）
+###模块和包
+（某个功能模块的集）
+require 函数来调用其他模块 
+```
+var http = require('http')//不会重复加载模块
+```
+获取
+exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获取模块的exports对象。
+module.js require('./module') 加载这个模块 就可以直接访问 module.js 中 exports 对象的成员函数了
+把一个对象封装到模块中
+```
+module.exports = Hello 代替了 exports.Hello=Hello。只能通过指定module.exports 来改变访问接口。
+```
+创建包
+只要顶层目录下有 package.json 
+###安装Node
+打开(https://nodejs.org/en/download/)，选择相对应的软件下载即可。一切准备好以后，打开命令提示符，
+进入 Node.js 源代码所在的目录进行编译。在 Release 子目录下面会有一个 node.exe 文件，这就是我们编译的唯一目标。
+####Hello World！
+ ```
+ var http = require('http');  http.createServer(function (req, res) {   
+ res.writeHead(200, {'Content-Type': 'text/plain'});     
+ res.end('Hello World\n');   })
+ .listen(1337, "127.0.0.1");   
+ console.log('Server running at http://127.0.0.1:1337/');
+ ```
+首先，创建个hello.js的文件，copy如上代码
+###npm的下载和使用
+npm就是Node的软件包管理器，可以用它安装所需软件包并发布自己为nodejs写的软件包。官网地址：npmjs.org
+安装只需要在终端写入一行代码：
+```　
+curl http://npmjs.org/install.sh | sh
+```
 
