@@ -320,7 +320,7 @@ RFC2616定义的状态码，由3位数字和原因短信组成。
 ###登录功能的实现
 1. 定义数据模型
 
-```
+```js
 var Schema = mongoose.Schema;
 /* 用户定义 */
 var userSchema = new Schema({
@@ -335,17 +335,17 @@ var userSchema = new Schema({
 });
 ```
 2. 开放接口
-```
+```js
 module.exports = mongoose.model('User', userSchema);
 ```
 3.ajax对象
 
 将module转为ajax对象
-```
+```js
 var user = (doc !== null) ? doc.toObject() : '';
 ```
 事件监听
-```
+```js
 $(init);
 
 function init() {
@@ -379,7 +379,7 @@ function doLogin() {
 }
 ```
 4. 添加路由
-```
+```js
 router.get('/login', function(req, res, next) {
     res.render('login', { layout: 'lg' });
 });
@@ -396,15 +396,15 @@ router.post('/login', function(req, res, next) {
 
 ##学习总结
 2016/6/30
-###书写文档的一些喜欢问题
+###书写文档的一些习惯问题
 ####sublime将hbs当html处理
 View->Syntax->Open all with current extention->html
 ####选择时连接符问题
 修改Setting-Uesr添加word separate
 ###登录模块的理解
 1.首先申明`ajax`对象,
-login.js
-```对象
+login.js 对象
+```js
 function doLogin() {
   $.ajax({
     type: "POST",
@@ -413,11 +413,11 @@ function doLogin() {
     dataType: "json",
     data: JSON.stringify({
       'usr': $("#usr").val(),
-      'pwd': $("#pwd").val() //用于从一个对象解析出字符串!(soga)
+      'pwd': $("#pwd").val() //用于从一个对象解析出字符串(soga!)
     })
 ```
 这部分cb返回结果，code=99表失败，code=0表示成功
-```
+```js
     success: function(result) {
       if (result.code == 99) {
         $(".login-box-msg").text(result.msg);
@@ -457,5 +457,5 @@ exports.findUsr = function(data, cb) {
     })
 }
 ```
-
+小结：理解了登录模块，前端和后端的运行，完成了发布的部分内容（前后端的连接），新增数据没有写在前端。
 
