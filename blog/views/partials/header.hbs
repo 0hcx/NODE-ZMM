@@ -1,6 +1,32 @@
-<div class="row menu ">
-    <div class="col-md-5">
-        <span class="menu-1">BLOG</span></div>
-    <div class="col-md-6"></div>
-    <!--<div class="col-md-1 menu-2">Mia</div>-->
+<div class="row Menu">
+    <div class="col-md-12">
+        <div class="col-md-2">
+            <span class="menu-1">BLOG</span></div>
+        <div class="col-md-8"></div>
+        <div class="col-md-2 username">Mia
+            <ul>
+                <li class="Userimage">
+                    <img src="/img/1.jpg" class="img-circle">
+                </li>
+                <li class="Userfunction">
+                    <a href="/admin/news" class="btn btn-default btn-flat left">Profile</a>
+                    <a href="/login" class="btn btn-default btn-flat right">Sign out</a>
+                </li>
+
+        </ul> </div>
+    </div>
 </div>
+
+
+<script>
+    $(document).ready(function()
+    {
+        $(".username ul").hide();
+        $(".username").click(function(){
+            $(".username ul").show();
+        });
+        $(".username").mouseleave(function(){
+            $(".username ul").hide();
+        })
+    });
+</script>

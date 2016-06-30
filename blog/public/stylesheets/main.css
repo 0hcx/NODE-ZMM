@@ -1,130 +1,140 @@
-.menu{
+.Menu{
   height: 55px;
-  background: #1ABC9C;
+  background-color: #1ABC9C;
+  color: white;
 }
+
 .menu-1{
   float: left;
   font-size: 20px;
-  margin: 10px 12px 0 40px;
+  text-align: center;
   color: white;
+  line-height: 55px;
 }
-.body{
-  background: #ECF0F1;
-}
-.sidebar{
-  background: #ECF0F1;
-  height: 500px;
-  margin-left: -20px;
-}
-.col-1{
-  width: 200px;
-}
-
-.searchBox{
-  margin:0px 0 0 0px;
-  border-radius: 3px;
-  width: 215px;
-  padding:10px;
-}
-/*.navigation{*/
-  /*margin-left: 20px;*/
-  /*margin-bottom: 10px;*/
-  /*margin-top: 20px;*/
-  /*color: white;*/
-/*}*/
-
-/*.cont {*/
-  /*background-color:#F8E7E0;*/
-  /*margin-left: -55px;*/
-  /*height: 500px;*/
-  /*margin-right: -13px;*/
-/*}*/
-
-*{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-.float-right{
-  float: right;
-}
-.fa{
-  font-size: .8em;
-  line-height: 22px
-}
-dropdown{
-  display: inline-block;
-}
-dropdown label, dropdown ul li{
-  display: block;
-  width: 213px;
-  background: #ECF0F1;
-  padding: 15px 20px;
-  float: left;
-}
-dropdown label:hover, dropdown ul li:hover{
-  background: #1ABC9C;
-  color: white;
+.username{
+  line-height: 55px;
   cursor: pointer;
 }
-dropdown label{
-  margin: 0 12px 0 0;
-  font-size: 15px;
-  color: #1ABC9C;
-  border-left: 1px solid #1ABC9C;
-  position: relative;
-  z-index: 2;
+.username ul{
+  float: right;
+  right: 55%;
+  position: absolute;
+  z-index: 100;
 }
-dropdown input{
-  display: none;
+.username ul{
+  overflow: hidden;
 }
-dropdown input ~ ul{
-  position: relative;
-  visibility: hidden;
-  opacity: 0;
-  top: -20px;
-  z-index: 1;
+.Userimage{
+  width: 225px;
+  height: 130px;
+  background-color: #1ABC9C;
+  border:1px solid #ECF0F1;
+  padding-top: 20px;
+  padding-left: 60px;
 }
-dropdown input:checked + label{
-  background: #1ABC9C;
+.img-circle {
+  border-radius: 50%;
+  background-color: #fff;
+  margin:0 auto;
+}
+.Userfunction{
+  height: 50px;
+  background-color: #ECF0F1;
+  padding: 5px;
+  padding-top: 10px;
+}
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
+.btn-1{
+  background-color: #ECF0F1;
+}
+.col-1{
+  float: left;
+  background-color: #ECF0F1;
+  border-radius: 5px;
+  height: 520px;
+}
+.sidebar-menu{
+  height: 500px;
+}
+.sidebar-menu li{
+  color: rgba(0,0,0,0);
+}
+.menu{
+  text-align: center;
+  font-size: 18px;
+  margin-right: 10%;
+  height: 40px;
+}
+.menu a{
+  color: gray;
+}
+.project a:hover{
+  background-color: #1ABC9C;
   color: white;
+  text-decoration: none;
+}
+.project{
+  color: rgba(0,0,0,0);
+  height: 40px;
 }
 
-dropdown input:checked ~ ul{
-  visibility: visible;
-  opacity: 1;
-  top: 0;
-}
 
-.animate{
-  -webkit-transition: all .3s;
-  -moz-transition: all .3s;
-  transition: all .3s;
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden; /* Chrome and Safari */
-  -moz-backface-visibility:hidden; /* Firefox */
-}
-.col-2{
-  width: auto;
-  height: auto;
-  background-color: #00a7d0;
-
-}
-.content{
-  background-color: #00a7d0;
-
-;
+.search{
+  margin-top: 10px;
 }
 .content-img{
   float: left;
-  width: 800px;
-  height:400px;
-  margin-top: 10px;
+  width: 80%;
+  height:80%;
+  margin-left: 10%;
+  margin-top: 5%;
   background-image: url("/img/4.jpg");
   background-size: cover;
-
-
 }
-.person{
-
+.content{
+  height: 500px;
+  /*background-color: gray;*/
+}
+.box-header {
+  color: #444;
+  display: block;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+  height: 34px;
+}
+#newsTitle{
+  width: 100%;
+  height: 30px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+.col-2{
+  background-color: #FFF8DC
+}
+#newsContent{
+  width: 100%;
+  height: 300px;
+  font-size: 14px;
+  line-height: 18px;
+  border: 1px solid #dddddd;
+  padding: 10px;
+}
+.box {
+  position: relative;
+  border-radius: 3px;
+  /*background: #ffffff;*/
+  /*border-top: 3px solid #d2d6de;*/
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.btn-2{
+  float: right;
+  margin-top: 10px;
 }
