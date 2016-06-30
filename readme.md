@@ -378,7 +378,7 @@ function doLogin() {
   })
 }
 ```
-3. 添加路由
+4. 添加路由
 ```
 router.get('/login', function(req, res, next) {
     res.render('login', { layout: 'lg' });
@@ -393,5 +393,69 @@ router.post('/login', function(req, res, next) {
 ###小结
 在老师代码的基础上修改，然后应用到自己的，自己出现了一些问题，某些东西不是特别理解。
 
+
+##学习总结
+2016/6/30
+###书写文档的一些喜欢问题
+####sublime将hbs当html处理
+View->Syntax->Open all with current extention->html
+####选择时连接符问题
+修改Setting-Uesr添加word separate
+###登录模块的理解
+1.首先申明`ajax`对象,
+login.js
+```对象
+function doLogin() {
+  $.ajax({
+    type: "POST",
+    url: "/login",
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify({
+      'usr': $("#usr").val(),
+      'pwd': $("#pwd").val() //用于从一个对象解析出字符串!(soga)
+    })
+```
+这部分cb返回结果，code=99表失败，code=0表示成功
+```
+    success: function(result) {
+      if (result.code == 99) {
+        $(".login-box-msg").text(result.msg);
+      } else {
+        $.cookie('username', result.data.username, {expires:30});
+        $.cookie('password', result.data.password, {expires:30});
+        $.cookie('id', result.data._id, {expires:30});
+        location.href = "/blog";
+```
+2.user.js(用户定义并开放接口)
+3.index.js(入口文件)
+'添加路由''
+`callback`函数
+```js
+dbHelper.findUsr(req.body, function (success, doc) {
+        res.send(doc);
+    });
+```
+4.dbHelper.js
+```js
+exports.findUsr = function(data, cb) {
+    User.findOne({
+        username: data.usr
+    }, function(err, doc) {
+        var user = (doc !== null) ? doc.toObject() : '';
+        //将user转为一个对象(在密码和用户名匹配的前提下)
+       if (err) {
+            console.log(err)
+        } 
+        else if
+        ......
+        } else if (user.password === data.pwd) {
+            entries.data = user;
+            entries.code = 0;
+            cb(true, entries);
+        }
+    })
+}
+```
 
 
