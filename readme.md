@@ -30,14 +30,14 @@ Node.js 最大的特点就是异步式 I/O（或者非阻塞 I/O）与事件紧�
 ###模块和包
 （某个功能模块的集）
 require 函数来调用其他模块 
-```
+```js
 var http = require('http')//不会重复加载模块
 ```
 获取
 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获取模块的exports对象。
 module.js require('./module') 加载这个模块 就可以直接访问 module.js 中 exports 对象的成员函数了
 把一个对象封装到模块中
-```
+```js
 module.exports = Hello 代替了 exports.Hello=Hello。只能通过指定module.exports 来改变访问接口。
 ```
 创建包
@@ -46,7 +46,7 @@ module.exports = Hello 代替了 exports.Hello=Hello。只能通过指定module.
 打开(https://nodejs.org/en/download/)，选择相对应的软件下载即可。一切准备好以后，打开命令提示符，
 进入 Node.js 源代码所在的目录进行编译。在 Release 子目录下面会有一个 node.exe 文件，这就是我们编译的唯一目标。
 ####Hello World！
- ```
+ ```js
  var http = require('http');  http.createServer(function (req, res) {   
  res.writeHead(200, {'Content-Type': 'text/plain'});     
  res.end('Hello World\n');   })
@@ -76,7 +76,7 @@ curl http://npmjs.org/install.sh | sh
 '字符'
 or
 `Tab`或四个空格（大段文字添加代码框，每行前添加）
-```
+```c
 `#include <stdio.h>`
 `int main(){`
 ` int a;`
@@ -163,91 +163,159 @@ mongod --dbpath "E:\Web\db" --logpath "E:\Web\logpath\MongoDB.log" --install --s
 Schema  ：  一种以文件形式存储的数据库模型骨架
 Model   ：  由Schema发布生成的模型，具有抽象属性和行为的数据库操作对
 Entity  ：  由Model创建的实体，他的操作也会影响数据库
-例子：
+Mongoose的基本用法
+
+1 . 将Mongoose集成到项目中
 ```
+npm install --save mongoose
+```
+2 . 连接数据库
+```js
 var mongoose = require('mongoose');
-var config = require('../config')
-
-console.log('建立mongoose连接...');
-
-mongoose.connect(config.db.url);
-
-mongoose.connection.on('connected', function(){
-  console.log('mongoose default connection open to:' + config.db.url);
+mongoose.connect('mongodb://127.0.0.1:27017/blog');
+```
+3 . 定义一个Schema（也就是Mongodb中的Collections集合），更多字段类型，请参考SchemaTypes
+```js
+var userSchema = {
+ username: {type: String, required: true, unique: true},
+ password: {type: String, required: true}
+}
+```
+4 . 将Schema进行“Model化”
+```js
+var User = mongoose.model('User', userSchema );
+```
+5 . 增加记录
+```js
+User.create({username: '张三', password: 'md5-pass'}, function(err, user){
+ if(!err){
+     console.log(user.username + ' 保存成功!');
+ }else{
+    console.log('数据保存失败：' + err);
+ }
+});
+```
+6 . 修改记录
+```js
+User.findOneAndUpdate({_id: req.params.userId}, {
+ username: newUsername
+}, function (err, raw) {
+ if(!err) {
+     console.log( '修改成功!');
+ }else{
+     console.log('修改失败');
+ }
+});
+```
+7 . 删除记录
+```js
+User.deleteById(userId, function(err, doc){
+ if(!err){
+     console.log('删除成功');
+ }
+});
+```
+8 . 查询记录
+```js
+User.findById(userId, callback);    // one record
+User.findOne({username: '张三'}, callback);  // one record
+User.find();  // multi records
+```
+9 . 查询记录集合
+```js
+User.find({'age' : 28},function(error,data) {
+ console.log(data);
 })
-
-
-mongoose.connection.on('error', function(err){
-  console.log('mongoose 连接错误' + err);
+```
+{}  : 无查询参数时默认查出表中所有数据
+10 . entity保存方法,model调用的是create方法，entity调用的是save方法
+```js
+    var  Entity = new TestModel({});
+    Enity.save(function(error,data){})
+```
+11 . 数据更新
+```js
+  var mongoose = require("mongoose");
+  var db =mongoose.connect("mongodb://127.0.0.1:27017/test");
+  var TestSchema = new mongoose.Schema({
+    name : { type:String },
+    age  : { type:Number, default:0 },
+    email: { type:String },
+    time : { type:Date, default:Date.now }
+});
+var TestModel = db.model("test1", TestSchema );
+var conditions = {age : 26};
+var update = {$set :{name : '小小庄'}};
+TestModel.update(conditions,update,function(error,data){
+    if(error) {
+          console.log(error);
+    }else {
+          console.log(data);
+      }
 })
+```
+返回结果 ： { ok: 1, nModified: 1, n: 1 }
+12 . 删除数据
+```js
+var conditions = { name: 'tom' };
+TestModel.remove(conditions, function(error){
+     if(error) {
+           console.log(error);
+     } else {
+           console.log('Delete success!');
+   }
+});
+```
+13 . 简单查询方法 ---过滤
 
-mongoose.connection.on('disconnected', function(){
-  console.log('mongoose 断开连接...');
-})
-
-
-process.on('SIGNIT', function() {
-  mongoose.connection.close(function() {
-    console.log('mongoose default connection disconnected through the app termination');
-    process.exit(0);
+//返回一个只显示 name 和 email的属性集合
+//id为默认输出,可以设置为 0 代表不输出
+```js
+ TestModel.find({},{name:1, email:1, _id:0},function(err,docs){
+   console.log(docs);
+ });
+```
+14 . 单条数据 findOne(Conditions,callback);
+```js
+  //查询符合条件的数据，结果只返回单条
+  TestModel.findOne({},function(error,data){
+          console.log(data);
   })
-})
-
-module.exports = mongoose;
-```
-####新增(如果是Entity，使用save方法，如果是Model，使用create方法)
-```
-//使用Entity来增加一条数据
-    var user=new User({
-    username:'tom',
-    password:'a',
-    email:'786327091@qq.com',
-    address:'japan'
-  });
-  user.save(function(err, doc) {
-    if (err) {
-      console.log('error')
-    } else {
-      console.log(doc)
-    }
-  });
-```
-####删除
-```
-  User.remove({username: 'Zoe'},function(err) {
-    if(err){
-      console.log(err);
-    }
-    console.log('删除成功');
+  TestModel.findOne({age:28},function(error,docs){
+          console.log(docs);
   })
 ```
-####查询
-find通常会遍历查询多条记录，findone是查询一条记录
-```
-Blog.find({username: 'Zoe'},function (err,docs) {
-    if(err){
-      console.log(err);
-    }
-    console.log(docs);
-  })
-```
-#####直接查询
-在查询时带有回调函数的，称之为直接查询，查询的条件往往通过API来设定，例如：
-```
-PersonModel.findOne({'name.last':'dragon'},'some select',function(err,person){
-      //如果err==null，则person就能取到数据
-    });
-```
-#####链式查询
-不带回调，而查询条件通过API函数来制定，例如：
-```
- var query = PersonModel.findOne({'name.last':'dragon'});
-    query.select('some select');
-    query.exec(function(err,pserson){
-    //如果err==null，则person就能取到数据
+15 . 单条数据 findById(_id, callback);
+
+  根据Id取数据findById，与findOne相同，但它只接收文档的_id作为参数，返回单个文档。
+```js
+  TestModel.findById('obj._id', function (err, doc){
+           //doc 查询结果文档
+ });
+ ```
+16 . 根据某些字段进行条件筛选查询，比如说 Number类型，怎么办呢，我们就可以使用$gt(>)、$lt(<)、$lte(<=)、$gte(>=)操作符进行排除性的查询
+```js
+  Model.find({"age":{"$gt":18}},function(error,docs){
+           //查询所有nage大于18的数据
+ });
+
+  Model.find({"age":{"$lt":60}},function(error,docs){
+         //查询所有nage小于60的数据
+  });
+
+  Model.find({"age":{"$gt":18,"$lt":60}},function(error,docs){
+         //查询所有nage大于18小于60的数据
   });
 ```
+总结
 
+1. 查询：find查询返回符合条件一个、多个或者空数组文档结果。
+
+2. 保存：model调用create方法，entity调用的save方法。
+
+3. 更新：obj.update(查询条件,更新对象,callback)，根据条件更新相关数据。
+
+4. 删除：obj.remove(查询条件,callback)，根据条件删除相关数据。
 ###hbs
 ####配置
 index.js
@@ -320,7 +388,7 @@ RFC2616定义的状态码，由3位数字和原因短信组成。
 ###登录功能的实现
 1. 定义数据模型
 
-```js
+```
 var Schema = mongoose.Schema;
 /* 用户定义 */
 var userSchema = new Schema({
@@ -335,17 +403,17 @@ var userSchema = new Schema({
 });
 ```
 2. 开放接口
-```js
+```
 module.exports = mongoose.model('User', userSchema);
 ```
 3.ajax对象
 
 将module转为ajax对象
-```js
+```
 var user = (doc !== null) ? doc.toObject() : '';
 ```
 事件监听
-```js
+```
 $(init);
 
 function init() {
@@ -379,7 +447,7 @@ function doLogin() {
 }
 ```
 4. 添加路由
-```js
+```
 router.get('/login', function(req, res, next) {
     res.render('login', { layout: 'lg' });
 });
@@ -396,15 +464,15 @@ router.post('/login', function(req, res, next) {
 
 ##学习总结
 2016/6/30
-###书写文档的一些习惯问题
+###书写文档的一些喜欢问题
 ####sublime将hbs当html处理
 View->Syntax->Open all with current extention->html
 ####选择时连接符问题
 修改Setting-Uesr添加word separate
 ###登录模块的理解
 1.首先申明`ajax`对象,
-login.js 对象
-```js
+login.js
+```对象
 function doLogin() {
   $.ajax({
     type: "POST",
@@ -413,11 +481,11 @@ function doLogin() {
     dataType: "json",
     data: JSON.stringify({
       'usr': $("#usr").val(),
-      'pwd': $("#pwd").val() //用于从一个对象解析出字符串(soga!)
+      'pwd': $("#pwd").val() //用于从一个对象解析出字符串!(soga)
     })
 ```
 这部分cb返回结果，code=99表失败，code=0表示成功
-```js
+```
     success: function(result) {
       if (result.code == 99) {
         $(".login-box-msg").text(result.msg);
@@ -457,5 +525,30 @@ exports.findUsr = function(data, cb) {
     })
 }
 ```
-小结：理解了登录模块，前端和后端的运行，完成了发布的部分内容（前后端的连接），新增数据没有写在前端。
-
+##学习总结
+2016/6/31
+###全局对象的属性
+全局对象是最顶层的对象，在浏览器环境指的是 window 象，在 Node.js 指的是 global 对象
+####VM
+VM 是 node 中的一个内置模块，可以在文档中看到说明和使用方法。
+大致就是将代码运行在一个沙箱之内，并且事先赋予其一些 global 变量。
+而真正起到上述 var 和 global 区别的就是这个 vm 了。
+vm 之中在根作用域（也就是最外层作用域）中使用 var 应该是跟在浏览器中一样，会把变量粘到 global（浏览器中是 window）中去。
+我们可以试试这样的代码：
+```js
+var vm = require('vm');
+var localVar = 'initial value';
+vm.runInThisContext('var localVar = "vm";');
+console.log('localVar: ', localVar);
+console.log('global.localVar: ', global.localVar);
+```
+其输出结果是：
+```
+localVar: initial value
+global.localVar: vm
+```
+so，vm 的一系列函数中跑脚本都无法对当前的局部变量进行访问。各函数能访问自己的 global，而 runInThisContext 的 global 与当前上下文的 global 是一样的，所以能访问当前的全局变量。
+<小结
+<在于 Node.js 的 vm 里面，顶级作用域下的 var 会把变量贴到 global 下面。而 REPL 使用了 vm。然后 $ node 进入的一个模式就是一个特定参数下面启动的一个 REPL。
+<有或无var关键字声明的变量得到了连接到全局对象。这是通过声明的变量没有var关键字创造了节点的全局变量的基础。
+有在Node.js的创建全局变量的两种方法，一种使用`全局对象`，而另一个使用`module.exports` 。建议:对于小型应用全局方法， module.exports为大型应用。
