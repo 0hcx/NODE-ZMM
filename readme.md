@@ -526,7 +526,7 @@ exports.findUsr = function(data, cb) {
 }
 ```
 ##学习总结
-2016/6/31
+2016/7/1
 ###全局对象的属性
 全局对象是最顶层的对象，在浏览器环境指的是 window 象，在 Node.js 指的是 global 对象
 ####VM
@@ -552,3 +552,96 @@ so，vm 的一系列函数中跑脚本都无法对当前的局部变量进行访
 <在于 Node.js 的 vm 里面，顶级作用域下的 var 会把变量贴到 global 下面。而 REPL 使用了 vm。然后 $ node 进入的一个模式就是一个特定参数下面启动的一个 REPL。
 <有或无var关键字声明的变量得到了连接到全局对象。这是通过声明的变量没有var关键字创造了节点的全局变量的基础。
 有在Node.js的创建全局变量的两种方法，一种使用`全局对象`，而另一个使用`module.exports` 。建议:对于小型应用全局方法， module.exports为大型应用。
+##学生总结
+2017/6/2
+###news发布大概流程
+1.首先是 newsSchema的定义（db：schema:user.js）
+```js
+author: {
+  type: Schema.Types.ObjectId,
+  ref: 'User'
+```
+newsSchema 的属性 author，对应是一个 ObjectId 的数组。ref表示关联User
+(注意: 被关联的model的 type 必须是 ObjectId, Number, String, 和 Buffer 才有效)。
+
+2.然后是与之对应的json对象（/blog/newsAdmin.js）
+```js
+data: JSON.stringify({
+  'usr': $("#usr").val(),
+  'pwd': $("#pwd").val()
+```
+3.然后是两者之间的联系dbHelper.js
+```js
+exports.addNews = function(data, cb) {
+     data.content = md.render(data.content); //这与highlight相关
+      var news = new News({
+        title: data.title,
+        content: data.content,
+        author:data.id
+    }); 
+     news.save(function(err,doc){
+        if (err) {
+            cb(false,err);
+        }else{
+            cb(true,entries);
+        }
+    })
+};
+```
+4.Object类型的时，就是把 populate 的参数封装到一个对象里。如下，就是填充News的author字段
+[参考网页](https://segmentfault.com/a/1190000002727265#articleHeader3)
+```js
+exports.findNewsOne = function(req, id, cb) {
+    News.findOne({_id: id})
+        .populate('author')
+        .exec(function(err, docs) {
+            cb(true,docs.toObject());
+        });
+};
+```
+hbsHelper跟time有关系
+webHelper跟highlight有关系
+5.routes里面index.js
+```js
+router.get('/blogs', function(req, res, next) {
+  dbHelper.findNews(req, function (success, data) {
+    res.render('blogs', { //blogs.hbs
+      entries: data.results,
+      pageCount: data.pageCount,
+      pageNumber: data.pageNumber,
+      count: data.count
+    });
+  })
+});
+```
+6.admin.js
+```js
+router.get('/news', function(req, res, next) {
+  res.render('./admin/news', { title: 'Express', layout: 'admin' });
+});
+
+router.post('/news', function(req, res, next) {
+  dbHelper.addNews(req.body, function (success, doc) {
+    res.send(doc);
+  })
+});
+```
+7.app.js加
+```js
+app.use('/', require('./routes/login'));
+app.use('/pdf', require('./routes/pdf'));
+app.use('/p', authority.isAuthenticated, require('./routes/index'));//这两个是表示认证过的意思
+app.use('/admin', authority.isAuthenticated, require('./routes/admin'));
+这个我不大懂，但是应该是要加进去的
+//配置解析器，静态资源映射
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+```
+##跳转
+经测试
+/XXX 会跳转到  http://域名:端口/XXX  
+./XXX  会跳转到 当前路径+/XXX
+XXX(../XXX) 会跳转到 当前路径父级+XXX
