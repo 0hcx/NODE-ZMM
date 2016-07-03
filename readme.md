@@ -1,7 +1,5 @@
 ##学习报告
-
 （2016/6/27）
-
 ###Node.js
 是一个让 JavaScript 运行在服务端的开发平台
 ###小技巧——使用 supervisor
@@ -16,7 +14,6 @@ Node.js 最大的特点就是异步式 I/O（或者非阻塞 I/O）与事件紧�
 优点:少了多线程的开销。
 缺点:不符合人们一般的程序设计思维
 ###回调函数
-
 ####同步式
     将文件名作为参数传入 fs.readFileSync 函数，阻塞等待读取完成后，
     将文件的内容作为函数的返回值赋给 data 变量，接下来控制台输出 data 的值，最后输出 end.。
@@ -25,35 +22,35 @@ Node.js 最大的特点就是异步式 I/O（或者非阻塞 I/O）与事件紧�
     我们称这个函数为回调函数。fs.readFile 调用时所做的工作只是将异步式 I/O 请求发送给了操作系统
     当 fs 接收到 I/O 请求完成的事件时，事件循环会主动调用回调函数以完成后续工作
 ###事件
-
 由 EventEmitter 对象提供。事件循环机制（不可见）
 ###模块和包
-（某个功能模块的集）
 require 函数来调用其他模块 
 ```js
 var http = require('http')//不会重复加载模块
 ```
-获取
+####获取
 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获取模块的exports对象。
 module.js require('./module') 加载这个模块 就可以直接访问 module.js 中 exports 对象的成员函数了
 把一个对象封装到模块中
 ```js
 module.exports = Hello 代替了 exports.Hello=Hello。只能通过指定module.exports 来改变访问接口。
 ```
-创建包
+####创建包
 只要顶层目录下有 package.json 
 ###安装Node
 打开(https://nodejs.org/en/download/)，选择相对应的软件下载即可。一切准备好以后，打开命令提示符，
-进入 Node.js 源代码所在的目录进行编译。在 Release 子目录下面会有一个 node.exe 文件，这就是我们编译的唯一目标。
+进入 Node.js 源代码所在的目录进行编译。在 Release 子目录下面会有一个node.exe文件，这就是我们编译的唯一目标。
 ####Hello World！
  ```js
- var http = require('http');  http.createServer(function (req, res) {   
+ var http = require('http'); 
+ http.createServer(function (req, res) {   
  res.writeHead(200, {'Content-Type': 'text/plain'});     
- res.end('Hello World\n');   })
+ res.end('Hello World\n');   
+ })
  .listen(1337, "127.0.0.1");   
  console.log('Server running at http://127.0.0.1:1337/');
  ```
-首先，创建个hello.js的文件，copy如上代码
+创建个hello.js的文件，copy如上代码
 ###npm的下载和使用
 npm就是Node的软件包管理器，可以用它安装所需软件包并发布自己为nodejs写的软件包。官网地址：npmjs.org
 安装只需要在终端写入一行代码：
@@ -63,29 +60,25 @@ curl http://npmjs.org/install.sh | sh
 
 ###Markdown的一些常见语法
 ####标题
-```
+
+`# `一级标题
+`## `二级标题
+`###` 三级标题
+`####` 四级标题
+`#####` 五级标题
+`######` 六级标题
 # 一级标题
 ## 二级标题
 ### 三级标题
 #### 四级标题
 ##### 五级标题
 ###### 六级标题
-```
 ####代码添加
-```
 '字符'
 or
-`Tab`或四个空格（大段文字添加代码框，每行前添加）
-```c
-`#include <stdio.h>`
-`int main(){`
-` int a;`
-` int b;`
-` return 0;`
-`}  `
+`Tab`或四个空格（大段文字添加代码框，每行前添加）```
 ####图片添加
 ```
-![名称](链接地址)
 如![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
 ```
 ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
@@ -93,16 +86,8 @@ or
 ```
 >a
 >b
->c
-or
->a
->b
 >>c
 ```
->a
->b
->c
-
 >a
 >b
 >>c
@@ -111,17 +96,13 @@ or
 [参考网页](http://www.jianshu.com/p/21d355525bdf)
 or
 <链接>
-
+```
 [参考网页](http://www.jianshu.com/p/21d355525bdf)
 ####小型文本
 ```
 <small>文本内容</small>
 ```
 <small>文本内容</small>
-
-
-
-
 ##学习总结
 2016/6/28
 ###OmniMarkupPreviewer插件安装
@@ -131,7 +112,6 @@ or
 直接在浏览器中预览效果的话，可以自定义快捷键：点击 Preferences --> 选择 Key Bindings User，输入：
 { "keys": ["alt+m"], "command": "markdown_preview", "args": {"target": "browser", "parser":"markdown"} },
 保存后，直接输入快捷键：Alt + M 就可以直接在浏览器中预览生成的HTML文件了。
-
 ###MongoDB的安装和配置
 ####安装插件
 1.下载plugins插件，放入C:\Users\Zoe\.WebStorm2016.1\config\plugins
@@ -319,10 +299,10 @@ TestModel.remove(conditions, function(error){
 ###hbs
 ####配置
 index.js
-```
+```js
 var exphbs =require('express-handlebars'); //引入 
 ```
-```
+```js
 //配置hbs基础模板和分块模板  
 var hbs = exphbs.create({  
   partialsDir: 'views/partials',  
@@ -337,12 +317,12 @@ app.engine('hbs', hbs.engine);
 ####渲染
 layouts:利用{{>head}}  {{>body}}调用模块化代码
 index.js：将login.hbs递交给layout: 'lg'
-```
+```js
 router.get('/login', function(req, res, next) {
    res.render('login', { layout: 'lg' });
 ```
 ####静态文件目录映射
-```
+```js
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);                    //localhost:3000/ 映射到routes文件夹
 
@@ -355,7 +335,7 @@ app.use([path],function(req, res, next){})
 1.如果该app.use()带有path参数，则匹配path参数才会执行该回调函数。
 2.如果该app.use()的回调函数最后还调用了next方法，则这次请求的处理流程会继续流向下一个app.use()
 app.get()\app.post()就能同时处理req和res，只是ExpressJS的把能同时处理req和res的称为路由（Routing）
-```
+```js
 var express = require('express');//获取express模块，并且新建router
 var router = express.Router();
 router.get('/blog', function(req, res, next) {
@@ -382,13 +362,13 @@ RFC2616定义的状态码，由3位数字和原因短信组成。
 
 
 
-
+***
 ##学习总结
 2016/6/29
 ###登录功能的实现
 1. 定义数据模型
 
-```
+```js
 var Schema = mongoose.Schema;
 /* 用户定义 */
 var userSchema = new Schema({
@@ -409,20 +389,18 @@ module.exports = mongoose.model('User', userSchema);
 3.ajax对象
 
 将module转为ajax对象
-```
+```js
 var user = (doc !== null) ? doc.toObject() : '';
 ```
 事件监听
-```
+```js
 $(init);
 
 function init() {
-
   $("body").on('click', '#loginBtn', doLogin);
 }
 
 function doLogin() {
-
   $.ajax({
     type: "POST",
     url: "/login",//路径
@@ -447,7 +425,7 @@ function doLogin() {
 }
 ```
 4. 添加路由
-```
+```js
 router.get('/login', function(req, res, next) {
     res.render('login', { layout: 'lg' });
 });
@@ -460,8 +438,7 @@ router.post('/login', function(req, res, next) {
 ```
 ###小结
 在老师代码的基础上修改，然后应用到自己的，自己出现了一些问题，某些东西不是特别理解。
-
-
+***
 ##学习总结
 2016/6/30
 ###书写文档的一些喜欢问题
@@ -472,7 +449,7 @@ View->Syntax->Open all with current extention->html
 ###登录模块的理解
 1.首先申明`ajax`对象,
 login.js
-```对象
+```js
 function doLogin() {
   $.ajax({
     type: "POST",
@@ -485,7 +462,7 @@ function doLogin() {
     })
 ```
 这部分cb返回结果，code=99表失败，code=0表示成功
-```
+```js
     success: function(result) {
       if (result.code == 99) {
         $(".login-box-msg").text(result.msg);
@@ -525,6 +502,7 @@ exports.findUsr = function(data, cb) {
     })
 }
 ```
+***
 ##学习总结
 2016/7/1
 ###全局对象的属性
@@ -553,7 +531,7 @@ so，vm 的一系列函数中跑脚本都无法对当前的局部变量进行访
 <有或无var关键字声明的变量得到了连接到全局对象。这是通过声明的变量没有var关键字创造了节点的全局变量的基础。
 有在Node.js的创建全局变量的两种方法，一种使用`全局对象`，而另一个使用`module.exports` 。建议:对于小型应用全局方法， module.exports为大型应用。
 ##学生总结
-2017/6/2
+2016/7/2
 ###news发布大概流程
 1.首先是 newsSchema的定义（db：schema:user.js）
 ```js
@@ -640,8 +618,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 ```
-##跳转
+###跳转
 经测试
 /XXX 会跳转到  http://域名:端口/XXX  
 ./XXX  会跳转到 当前路径+/XXX
 XXX(../XXX) 会跳转到 当前路径父级+XXX
+***
+##学生总结
+2016/7/2
+###检测语法
+jslint(http://www.jslint.com/)
+###PlantUML高效地画图
+###nodejs生成pdf文档
+1.[PDF](http://pdfkit.org/)    
+最专业的函数库，支持各种pdf文档的数据格式，只是使用起来比较复杂，适合专业开发者。
+2.[Wkhtmltopdf](https://npmjs.org/package/wkhtmltopdf)
+将HTML转化成pdf文档的引擎，使用起来非常方便简单
+3.[PhantomJS](http://www.feedhenry.com/server-side-pdf-generation-node-js/) 
+PhantomJS 是一个基于 WebKit 的服务器端 JavaScript API。它全面支持web而不需浏览器支持，其快速，原生支持各种Web标准： DOM 处理, CSS 选择器, JSON, Canvas, 和 SVG。 PhantomJS 可以用于 页面自动化 ， 网络监测 ， 网页截屏 ，以及 无界面测试 等。
+###cookies和session区别
+cookies：将状态数据保存在客户端
+session：将状态数据保存在服务端
+ 应用场景
+Cookie的典型应用场景是Remember Me服务，即用户的账户信息通过cookie的形式保存在客户端，当用户再次请求匹配的URL的时候，账户信息会被传送到服务端，交由相应的程序完成自动登录等功能。当然也可以保存一些客户端信息，比如页面布局以及搜索历史等等。
+Session的典型应用场景是用户登录某网站之后，将其登录信息放入session，在以后的每次请求中查询相应的登录信息以确保该用户合法。当然还是有购物车等等经典场景；
+具体到Web中的Session指的就是用户在浏览某个网站时，从进入网站到关闭浏览器所经过的这段时间，也就是用户浏览这个网站所花费的时间。因此从上述的定义中我们可以看到，Session实际上是一个特定的时间概念。
+[参考](http://www.cnblogs.com/chenchenluo/p/4197181.html)
