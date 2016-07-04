@@ -1,5 +1,5 @@
-##学习报告
-（2016/6/27）
+#学习报告
+##2016/6/27
 ###Node.js
 是一个让 JavaScript 运行在服务端的开发平台
 ###小技巧——使用 supervisor
@@ -103,10 +103,10 @@ or
 <small>文本内容</small>
 ```
 <small>文本内容</small>
-##学习总结
-2016/6/28
+***
+##2016/6/28
 ###OmniMarkupPreviewer插件安装
-你可以在 Sublime Text 内通过 Package Control 输入 Install Package 来安装 OmniMarkupPreviewer, 也可以从其 Github主页 [下载压缩包](http://theo.im/OmniMarkupPreviewer/)，解压到 Sublime Text 的 Packages 目录即可完成安装。
+你可以在 Sublime Text 内通过 Package Control'shift+control+P'输入 Install Package 来安装 OmniMarkupPreviewer, 也可以从其 Github主页 [下载压缩包](http://theo.im/OmniMarkupPreviewer/)，解压到 Sublime Text 的 Packages 目录即可完成安装。
 或者
 自定义快捷键
 直接在浏览器中预览效果的话，可以自定义快捷键：点击 Preferences --> 选择 Key Bindings User，输入：
@@ -363,8 +363,7 @@ RFC2616定义的状态码，由3位数字和原因短信组成。
 
 
 ***
-##学习总结
-2016/6/29
+##2016/6/29
 ###登录功能的实现
 1. 定义数据模型
 
@@ -439,8 +438,7 @@ router.post('/login', function(req, res, next) {
 ###小结
 在老师代码的基础上修改，然后应用到自己的，自己出现了一些问题，某些东西不是特别理解。
 ***
-##学习总结
-2016/6/30
+##2016/6/30
 ###书写文档的一些喜欢问题
 ####sublime将hbs当html处理
 View->Syntax->Open all with current extention->html
@@ -503,8 +501,7 @@ exports.findUsr = function(data, cb) {
 }
 ```
 ***
-##学习总结
-2016/7/1
+##2016/7/1
 ###全局对象的属性
 全局对象是最顶层的对象，在浏览器环境指的是 window 象，在 Node.js 指的是 global 对象
 ####VM
@@ -530,8 +527,7 @@ so，vm 的一系列函数中跑脚本都无法对当前的局部变量进行访
 <在于 Node.js 的 vm 里面，顶级作用域下的 var 会把变量贴到 global 下面。而 REPL 使用了 vm。然后 $ node 进入的一个模式就是一个特定参数下面启动的一个 REPL。
 <有或无var关键字声明的变量得到了连接到全局对象。这是通过声明的变量没有var关键字创造了节点的全局变量的基础。
 有在Node.js的创建全局变量的两种方法，一种使用`全局对象`，而另一个使用`module.exports` 。建议:对于小型应用全局方法， module.exports为大型应用。
-##学生总结
-2016/7/2
+##2016/7/2
 ###news发布大概流程
 1.首先是 newsSchema的定义（db：schema:user.js）
 ```js
@@ -579,53 +575,27 @@ exports.findNewsOne = function(req, id, cb) {
 ```
 hbsHelper跟time有关系
 webHelper跟highlight有关系
-5.routes里面index.js
-```js
-router.get('/blogs', function(req, res, next) {
-  dbHelper.findNews(req, function (success, data) {
-    res.render('blogs', { //blogs.hbs
-      entries: data.results,
-      pageCount: data.pageCount,
-      pageNumber: data.pageNumber,
-      count: data.count
-    });
-  })
-});
 ```
 6.admin.js
 ```js
 router.get('/news', function(req, res, next) {
   res.render('./admin/news', { title: 'Express', layout: 'admin' });
 });
-
+```js
 router.post('/news', function(req, res, next) {
   dbHelper.addNews(req.body, function (success, doc) {
     res.send(doc);
   })
 });
 ```
-7.app.js加
-```js
-app.use('/', require('./routes/login'));
-app.use('/pdf', require('./routes/pdf'));
-app.use('/p', authority.isAuthenticated, require('./routes/index'));//这两个是表示认证过的意思
-app.use('/admin', authority.isAuthenticated, require('./routes/admin'));
-这个我不大懂，但是应该是要加进去的
-//配置解析器，静态资源映射
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-```
 ###跳转
 经测试
 /XXX 会跳转到  http://域名:端口/XXX  
 ./XXX  会跳转到 当前路径+/XXX
 XXX(../XXX) 会跳转到 当前路径父级+XXX
+
 ***
-##学生总结
-2016/7/2
+##2016/7/2
 ###检测语法
 jslint(http://www.jslint.com/)
 ###PlantUML高效地画图
@@ -644,3 +614,11 @@ Cookie的典型应用场景是Remember Me服务，即用户的账户信息通过
 Session的典型应用场景是用户登录某网站之后，将其登录信息放入session，在以后的每次请求中查询相应的登录信息以确保该用户合法。当然还是有购物车等等经典场景；
 具体到Web中的Session指的就是用户在浏览某个网站时，从进入网站到关闭浏览器所经过的这段时间，也就是用户浏览这个网站所花费的时间。因此从上述的定义中我们可以看到，Session实际上是一个特定的时间概念。
 [参考](http://www.cnblogs.com/chenchenluo/p/4197181.html)
+##2016/7/4
+###网页发布一些问题的解决  
+formatDate&timeFromNow
+这两个都是用来对时间进行格式化，但是系统报错说无法识别，经检验在`var hbs = exphbs.create`加入
+`helpers: hbsHelper`
+###网页布局的改变
+在原来基础上，我加了homepage，将新闻发布放在/news下
+ps：今天是独立日所以去看独立日电影了，明天会把页面完善，加上注册功能，并加上读书笔记。
