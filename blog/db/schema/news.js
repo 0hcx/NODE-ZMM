@@ -1,7 +1,6 @@
 var mongoose = require('../db');
 var Schema = mongoose.Schema;
 
-
 /* 用户定义 */
 var newsSchema = new Schema({
     title: String,

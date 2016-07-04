@@ -1,0 +1,26 @@
+<div class="col-md-10 col-xs-9 col-2">
+    <div class="content">
+        <h1>技术新闻<small>关于H5/JS/CSS3/NODEJS的文章</small></h1>
+        <div class="row">
+            <div class="col-md-12">
+                <section class="content">
+                    {{#each entries}}
+                        <div class="box box-widget">
+                            <div class="box-header">
+                                <div class="user-block">
+                                    <img class="img-circle img-block" src="/img/user.jpg" alt="User Image">
+                                    <span class="title"><a href="#">{{title}}</a></span>
+                                    <span class="postdate"><b>发布于 {{formatDate meta.createAt}}</b><i>{{timeFromNow meta.createAt}}</i></span>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <p> {{{content}}}</p>
+                            </div>
+                        </div>
+                    {{/each}}
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/blog/newsAdmin.js"></script>

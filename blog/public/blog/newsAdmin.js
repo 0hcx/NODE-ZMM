@@ -4,9 +4,7 @@ function init() {
 
   $("body").on('click', '#addNewsBtn', doAddNews);
 }
-
 function doAddNews() {
-
   $.ajax({
     type: "POST",
     url: "/admin/news",

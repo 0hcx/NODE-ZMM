@@ -1,12 +1,13 @@
 $(init);
 
 function init() {
-
   $("body").on('click', '#loginBtn', doLogin);
 }
+// function init() {
+//   $("body").on('click', '#registerBtn', doRegister);
+// }
 
 function doLogin() {
-
   $.ajax({
     type: "POST",
     url: "/login",
@@ -23,8 +24,12 @@ function doLogin() {
         $.cookie('username', result.data.username, {expires:30});
         $.cookie('password', result.data.password, {expires:30});
         $.cookie('id', result.data._id, {expires:30});
-        location.href = "/blog";
+        location.href = "/homepage";
       }
     }
   })
 }
+// function doRegister() {
+
+//   })
+// }

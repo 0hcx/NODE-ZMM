@@ -12,5 +12,14 @@ router.post('/news', function(req, res, next) {
     res.send(doc);
   })
 });
+// router.get('/news', function(req, res, next) {
+//   res.render('./admin/news', { title: 'Express', layout: 'admin' });
+// });
+//
+// router.post('/news', function(req, res, next) {
+//   dbHelper.findNews(req.body, function (success, doc) {
+//     res.send(doc);
+//   })
+// });
 
 module.exports = router;
