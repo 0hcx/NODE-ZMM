@@ -1,5 +1,5 @@
 var Remarkable = require('remarkable');
-
+ var hljs       = require('highlight.js');
 'use strict';
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
     },
     Remarkable: function () {
         return new Remarkable('full', {
-            linkify: true,         // autoconvert URL-like texts to links
+            linkify: true,         // 自动转换链接
             highlight: function (str, lang) {
                 if (lang && hljs.getLanguage(lang)) {
                     try {
@@ -31,7 +31,7 @@ module.exports = {
                 } catch (err) {
                 }
 
-                return ''; // use external default escaping
+                return ''; // 使用外部默认溢出
             }
         });
     }

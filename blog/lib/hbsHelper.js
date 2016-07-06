@@ -1,5 +1,4 @@
 var moment = require('moment');
-
 'use strict';
 
 moment.locale('zh-cn');

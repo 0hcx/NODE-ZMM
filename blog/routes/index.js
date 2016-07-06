@@ -14,6 +14,15 @@ router.post('/login', function(req, res, next) {
   })
 });
 
+router.get('/register', function(req, res, next) {
+	res.render('register', { layout: 'register' });
+});
+router.post('/register', function(req, res, next) {
+	dbHelper.addUser(req.body, function (success, doc) {
+		res.send(doc);
+	})
+});
+
 router.get('/', function(req, res, next) {
 	var user = new User({
 		username: 'tom',

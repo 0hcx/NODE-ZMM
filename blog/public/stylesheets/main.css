@@ -15,13 +15,11 @@
   line-height: 55px;
   cursor: pointer;
 }
-.username ul{
+.username ul {
   float: right;
   right: 55%;
   position: absolute;
   z-index: 100;
-}
-.username ul{
   overflow: hidden;
 }
 .Userimage{

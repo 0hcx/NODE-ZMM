@@ -29,7 +29,3 @@ function doLogin() {
     }
   })
 }
-// function doRegister() {
-
-//   })
-// }
