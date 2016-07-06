@@ -40,8 +40,10 @@ npm就是Node的软件包管理器，可以用它安装所需软件包并发布�
 <如![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
 ```
 ####引用
+```
 <a  
 <<a
+```
 ####链接
 ```
 <链接>
@@ -465,7 +467,7 @@ exports.findNewsOne = function(req, id, cb) {
 };
 ```
 hbsHelper跟time有关系  
-webHelper跟highlight有关系,但是好像有问题
+webHelper跟highlight有关系,但是好像有问题  
 5.admin.js
 ```js
 router.get('/news', function(req, res, next) {
@@ -507,8 +509,7 @@ session：将状态数据保存在服务端
 ##2016/7/4
 ###网页发布一些问题的解决  
 formatDate&timeFromNow
-这两个都是用来对时间进行格式化，但是系统报错说无法识别，经检验在`var hbs = exphbs.create`加入
-`helpers: hbsHelper`
+这两个都是用来对时间进行格式化，但是系统报错说无法识别，经检验在`var hbs = exphbs.create`加入`helpers: hbsHelper`
 ###网页布局的改变
 在原来基础上，我加了homepage，将新闻发布放在/news下
 ***
@@ -516,8 +517,78 @@ formatDate&timeFromNow
 ###一些链接
 演示的有趣框架<http://www.michaelbromley.co.uk/horizonal/demo/>  
 检测语法错误工具<http://www.jslint.com/>    
-PlantUML 还蛮好用的  <http://www.jianshu.com/p/e92a52770832>  
+PlantUML<http://www.jianshu.com/p/e92a52770832>  
 2016年至今最受欢迎的14篇CSS文章<https://segmentfault.com/a/1190000005850095>  
 高档版本的bootstrap<http://fezvrasta.github.io/bootstrap-material-design/>  
-ps：今天电脑炸了，明天代码更新并读书笔记。
+ps：今天电脑炸了，明天代码更新。
 ***
+##2016/7/6
+###注册功能
+```js
+exports.addUser = function(data, cb) {
+    if (data.usr === "") {                //未输入用户名
+        entries.code = 99;
+        entries.msg = '请输入用户名 ！';
+        cb(false, entries);
+    }
+    else if (data.password === "") {...} //未输入密码
+    else if (data.email === "") {...}    //未输入邮箱
+    else {User.findOne({username: data.usr}, function (err, usr) {
+            if (err) { ...}
+            else if (usr) {...}          //当用户存在
+              else {
+                var user = new User({...});
+                user.save(function (err, usr) {
+                    if (err) {...}
+                    else {
+                        entries.code = 0;
+                        entries.msg = '注册成功 ！';
+                        cb(true, entries);
+                        ...
+```
+###集成Markdown编辑器并渲染显示
+在项目中集成Markdown，最简单的方法就是直接放一个textarea，然后后台通过`remarkable`进行渲染。
+这里有一个Remarkable在线演示示例：<https://jonschlinkert.github.io/remarkable/demo/>
+####使用Remarkable
+为了能够支持代码高亮，所以用到了另外一个中间件`highlight`  
+1.首先安装集成  
+```js
+npm install --save remarkable
+npm install --save highlight.js
+```
+2.定义
+```js
+var Remarkable = require('remarkable');
+var hljs = require('highlight.js');
+```
+```js
+ Remarkable: function () {
+        return new Remarkable('full', {
+            linkify: true,         // 自动转换链接
+            highlight: function (str, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    try {return hljs.highlight(lang, str).value;
+                    } catch (err) {
+                    }
+                }try {
+                    return hljs.highlightAuto(str).value;
+                } catch (err) {}
+               return ''; // 使用外部默认溢出
+            }
+        });
+    }
+};
+```
+3.使用
+```js
+var md = webHelper.Remarkable();
+data.content = md.render(data.content);
+```
+4.前台正常渲染代码高亮(这个好像可以不用欸)  
+在前台我们还需要在前台引入highlight.js的相关css。
+```html
+<link rel="stylesheet" href="/stylesheets/default.css">
+<script src="/js/highlight.js"></script>
+```
+出现问题：无法识别标题的那个＃
+[参考网页](http://www.jianshu.com/p/2a533f47a6d7)
