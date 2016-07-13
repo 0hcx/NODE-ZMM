@@ -168,7 +168,8 @@
 }
 .box-widget {
   border: none;
-  position: relative
+  position: relative;
+  background-color: white;
 }
 .box-header{
   height: 60px;
@@ -195,5 +196,55 @@
 .img-block{
   height: 40px;
   width: 40px;
+}
+
+.box-footer #uploadFile  {
+  opacity: 0;
+  width: 104px;
+  height: 34px;
+  float: left;
+  position: absolute;
+}
+.pg-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999999990;
+  display: none;
+}
+
+.box-body img {
+  max-width: 900px;
+  border: 1px solid #eee;
+}
+
+.pg-wrapper>.pg-layer {
+  width: 400px;
+  *height: 24px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform:translate(-50%,-50%);
+}
+
+.pg-wrapper>.pg-layer>.pg-bar {
+  width: 100%;
+}
+
+.pg-wrapper>.pg-layer>.pg-info{
+  position: absolute;
+  top:2px;
+  left: 190px;
+  font: 12px/1.5 "微软雅黑";
+  color: #666;
+}
+.box-menu a {
+  float: right;
+  display: block;
+  font-size: 10px;
+  margin-left: 10px;
 }
 

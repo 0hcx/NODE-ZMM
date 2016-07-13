@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var User = require('../db/schema/user');
 var dbHelper = require('../db/dbHelper');
+var NodePDF = require('nodepdf');
+var fs = require('fs');
+
 router.get('/homepage', function(req, res, next) {
   res.render('homepage', { newList: 'Express', layout: 'main' });
 });
@@ -35,11 +38,26 @@ router.get('/', function(req, res, next) {
 		console.log('success');
 	})
 });
-router.get('/news', function(req, res, next) {
-	dbHelper.findNews(req.body, function (success, doc) {
-		// res.send(doc);
-		res.render('news', { entries: doc , layout: 'release'});
+// router.get('/news', function(req, res, next) {
+// 	dbHelper.findNews(req.body, function (success, doc) {
+// 		// res.send(doc);
+// 		res.render('news', { entries: doc , layout: 'release'});
+// 	})
+// });
+router.get('/blogs', function(req, res, next) {
+	dbHelper.findNews(req, function (success, data) {
+		res.render('blogs', {
+			entries: data.results,
+			pageCount: data.pageCount,//算总页数
+			pageNumber: data.pageNumber,
+			count: data.count,// 查询数量
+			layout: 'release'
+		});
 	})
 });
+
+
+
+
 
 module.exports = router;

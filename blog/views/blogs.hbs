@@ -1,0 +1,57 @@
+<div class="col-md-10 col-xs-9 col-2">
+    <section class="content-header">
+        <h1>技术新闻<small>关于H5/JS/CSS3/NODEJS的文章</small></h1>
+        </section>
+        <div class="row">
+            <div class="col-md-12">
+                <section class="content">
+                    {{#each entries}}
+                        <div class="box box-widget">
+                            <div class="box-header">
+                                <div class="user-block">
+                                    <img class="img-circle img-block" src="/img/user.jpg" alt="User Image">
+                                    <span class="title"><a href="#">{{title}}</a></span>
+                                    <span class="postdate"><b>发布于 {{formatDate meta.createAt}}</b><i>{{timeFromNow meta.createAt}}</i></span>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <p> {{{content}}}</p>
+                            </div>
+
+                        </div>
+                    {{/each}}
+                    <div class="box-footer">
+                        <nav>
+                            <ul class="pagination">
+                                <li>
+                                    <a href="{{#le pageNumber 1}}?{{else}}?page={{reduce pageNumber 1}}{{/le}}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                {{#times pageCount 1 pageCount}}
+                                    <li {{#equals pageNumber this.step}}class="active" {{/equals}}>
+                                        <a href="?page={{step}}{{#if recommend}}&recommend={{recommend}}{{/if}}{{#if type}}&type={{type}}{{/if}}">{{step}}</a>
+                                    </li>
+                                {{/times}}
+                                <li>
+                                    <a href="{{#ge pageNumber pageCount}}?page={{pageCount}}{{else}}?page={{add pageNumber 1}}{{/ge}}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+
+                </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="/lib/socket.io/socket.io.js"></script>
+<script src="/blog/common.js"></script>
+<script src="/blog/newsAdmin.js"></script>
+

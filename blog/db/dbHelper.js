@@ -4,6 +4,7 @@ var User = require('./schema/user');
 var News = require('./schema/news');
 var webHelper = require('../lib/webHelper');
 var md = webHelper.Remarkable();
+var async = require('async');
 
 exports.findUsr = function(data, cb) {
     User.findOne({
@@ -75,7 +76,7 @@ exports.addUser = function(data, cb) {
             }
         });
     }
-}
+};
 //     var user = new User({
 //         username: data.usr,
 //         password: data.pwd,
@@ -118,6 +119,7 @@ exports.addUser = function(data, cb) {
 // }
 //新闻
 exports.addNews = function(data, cb) {
+    //将markdown格式的新闻内容转换成html格式
     data.content = md.render(data.content);
     var news = new News({
         title: data.title,
@@ -128,74 +130,90 @@ exports.addNews = function(data, cb) {
         if (err) {
             cb(false,err);
         }else{
+            entries.data = doc.toObject();
+
             cb(true,entries);
         }
     })
 };
-exports.findNews = function(data, cb) {
-    News.find()
+// exports.findNews = function(data, cb) {
+//     News.find()
+//         .populate('author')
+//         .exec(function(err, docs) {
+//             var newsList=new Array();
+//             for(var i=0;i<docs.length;i++) {
+//                 newsList.push(docs[i].toObject());}
+//             cb(true,newsList);
+//         });
+// };
+
+
+var PAGE_SIZE = 5;
+exports.findNews = function(req, cb) {
+    // News.find()
+    //   .populate('author')
+    //     .exec(function(err, docs) {
+    //
+    //         var newsList=new Array();
+    //         for(var i=0;i<docs.length;i++) {
+    //             newsList.push(docs[i].toObject());
+    //         }
+    //         cb(true,newsList);
+    //     });
+
+    var page = req.query.page || 1 ;
+    this.pageQuery(page, PAGE_SIZE, News, 'author', {}, {
+        created_time: 'desc'
+    }, function(error, data){
+        if(error){
+            next(error);
+        }else{
+            cb(true,data);
+        }
+    });
+};
+
+
+
+exports.findNewsOne = function(req, id, cb) {
+    News.findOne({_id: id})
         .populate('author')
         .exec(function(err, docs) {
-            var newsList=new Array();
-            for(var i=0;i<docs.length;i++) {
-                newsList.push(docs[i].toObject());}
-            cb(true,newsList);
+            // var docs = (docs !== null) ? docs.toObject() : '';
+            // cb(true,docs);
+            var docs = (docs !== null) ? docs : '';
+            cb(true,docs);
         });
 };
 
-// exports.addUser = function(data, cb) {
-//     var user = new User({
-//         username: data.usr,
-//         password: data.pwd,
-//         email: data.email,
-//         address: data.adr
-//     });
-//     function pan() {
-//         User.count({username:data.usr},function(err,count){
-//             if(count===0){
-//                 return true;
-//             }
-//             else{
-//                 return false
-//             }
-//         });
-//     }
-//     user.save(function (err, data) {
-//         if (err) {
-//             cb(false, err);
-//             entries.code = 99;
-//             entries.msg = '注册失败！';
-//         }
-//         else if (data.username==="") {
-//             entries.code = 99;
-//             entries.msg = '用户名不能为空 ！';
-//             cb(false, entries);
-//         }
-//         else if (data.password==="") {
-//             entries.code = 99;
-//             entries.msg = '密码不能为空！';
-//             cb(false, entries);
-//         }
-//         else  if(!pan()){
-//             entries.code = 99;
-//             entries.msg = '该用户已存在';
-//             cb(false, entries);
-//         }
-//         // else if(User.findOne({
-//         //         username: data.username
-//         //     }, function(err, doc) {
-//         //         var user = (doc !== null) ? doc.toObject() : '';
-//         //         if (user.username === data.username) {
-//         //             entries.code = 99;
-//         //             entries.msg = '该用户已存在';
-//         //             cb(false, entries);
-//         //         }
-//         //     }));
-//         else {
-//             entries.code = 0;
-//             entries.msg = '注册成功！';
-//             cb(true, entries);
-//         }
-//     });
-// }
 
+exports.pageQuery = function (page, pageSize, Model, populate, queryParams, sortParams, callback) {
+    var start = (page - 1) * pageSize;
+    var $page = {
+        pageNumber: page//当前页码
+    };
+    async.parallel({//并行:parallel 的原理是同时并行处理每一个流程,最后汇总结果,如果某一个流程出错就退出.
+        count: function (done) {  // 查询数量
+            Model.count(queryParams).exec(function (err, count) {
+                done(err, count);
+            });
+        },
+
+        records: function (done) {   // 查询一页的记录
+            Model.find(queryParams).skip(start).limit(pageSize).populate(populate).sort(sortParams).exec(function (err, doc) {
+                done(err, doc);//通过skip,limit进行分页。
+                // 关于skip的效率问题，10W以下的记录，skip性能是可以接受的，10w以上的记录需要根据排序的字段，通过索引定位查询
+            });
+        }
+    }, function (err, results) {
+        var newsList=new Array();
+        for(var i=0;i<results.records.length;i++) {
+            newsList.push(results.records[i].toObject());
+        }
+        var count = results.count;
+        $page.pageCount = parseInt((count - 1) / pageSize + 1);//算总页数
+        $page.results = newsList;//当前页的记录
+        $page.count = count;
+        callback(err, $page);
+    });
+};

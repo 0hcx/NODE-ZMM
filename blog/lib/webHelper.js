@@ -1,5 +1,5 @@
 var Remarkable = require('remarkable');
- var hljs       = require('highlight.js');
+var hljs       = require('highlight.js');
 'use strict';
 
 module.exports = {

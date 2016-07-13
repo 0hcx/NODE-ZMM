@@ -8,7 +8,7 @@ var exphbs      = require('express-handlebars');
 var hbsHelper = require('./lib/hbsHelper');
 var mongoose = require('mongoose');
 var config = require('./config');
-var dbHelper = require('./db/dbHelper')
+var dbHelper = require('./db/dbHelper');
 var routes = require('./routes/index');
 var admin = require('./routes/admin');
 
@@ -41,9 +41,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/')));
+
+config.site.path = path.join(__dirname, 'public');
 
 app.use('/', routes);
-app.use('/admin', admin);
+
+app.use('/admin',  require('./routes/admin'));
+// app.use('/p', authority.isAuthenticated, require('./routes/index'));
+// app.use('/admin', authority.isAuthenticated, require('./routes/admin'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
