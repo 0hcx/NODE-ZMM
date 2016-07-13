@@ -248,3 +248,11 @@
   margin-left: 10px;
 }
 
+.box-menu {
+  padding:10px;
+  border-top: 1px dashed #dbdbdb;
+}
+
+.box-menu:after {
+  display:block;clear:both;content:"";visibility:hidden;height:0;
+}

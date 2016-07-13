@@ -56,7 +56,8 @@ function doAddNews() {
         alert(result.msg);
       } else {
          alert("发布成功！");
-        }
+        location.href = '/pdf/blogPdf/'+ result.data._id;
+      }
     }
   })
 }

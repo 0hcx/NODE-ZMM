@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, '/')));
 config.site.path = path.join(__dirname, 'public');
 
 app.use('/', routes);
-
+app.use('/pdf', require('./routes/pdf'));
 app.use('/admin',  require('./routes/admin'));
 // app.use('/p', authority.isAuthenticated, require('./routes/index'));
 // app.use('/admin', authority.isAuthenticated, require('./routes/admin'));
