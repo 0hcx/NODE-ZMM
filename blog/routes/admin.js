@@ -15,6 +15,36 @@ router.post('/news', function(req, res, next) {
     res.send(doc);
   })
 });
+
+
+//渲染新闻列表页面
+router.get('/newsList', function(req, res, next) {
+   var msg = req.message;
+   req.message = "";
+
+  dbHelper.findNews(req, function (success, data) {
+    res.render('./admin/newsList', {
+      entries: data.results,
+      pageCount: data.pageCount,
+      pageNumber: data.pageNumber,
+      count: data.count,
+      layout: 'admin',
+      message: msg
+    });
+  })
+});
+
+
+//删除新闻
+router.get('/newsDelete/:id', function(req, res, next) {
+  var id = req.params.id;
+  dbHelper.deleteNews(id, function (success, data) {
+    // req.session['message'] = data.msg;
+    req.message=data.msg;
+    res.redirect("/admin/newsList");
+  })
+});
+
 //上传图片
 router.post('/uploadImg', function(req, res, next) {
   var io = global.io;

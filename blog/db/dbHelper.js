@@ -77,46 +77,7 @@ exports.addUser = function(data, cb) {
         });
     }
 };
-//     var user = new User({
-//         username: data.usr,
-//         password: data.pwd,
-//         email: data.email,
-//         address: data.adr
-//     });
-//
-//     user.save(function (err, data) {
-//         if (err) {
-//             cb(false, err);
-//             entries.code = 99;
-//             entries.msg = '注册失败！';
-//         }
-//         else if(data.username){
-//             entries.code = 99;
-//             entries.msg = '用户名已存在 ！';
-//             cb(false, entries);
-//         }
-//         else if (data.username==="") {
-//             entries.code = 99;
-//             entries.msg = '用户名不能为空 ！';
-//             cb(false, entries);
-//         }
-//         else if (data.username) {
-//             entries.code = 99;
-//             entries.msg = '用户名已存在 ！';
-//             cb(false, entries);
-//         }
-//         else if (data.password==="") {
-//             entries.code = 99;
-//             entries.msg = '密码不能为空！';
-//             cb(false, entries);
-//         }
-//         else {
-//             entries.code = 0;
-//             entries.msg = '注册成功！';
-//             cb(true, entries);
-//         }
-//     });
-// }
+
 //新闻
 exports.addNews = function(data, cb) {
     //将markdown格式的新闻内容转换成html格式
@@ -147,6 +108,24 @@ exports.addNews = function(data, cb) {
 //         });
 // };
 
+exports.deleteNews = function(id, cb) {
+    News.findById(id, function (err, doc) {
+        if (doc) {
+            doc.remove(function (err, doc) {
+                if (err) {
+                    entries.msg = err;
+                    cb(false,entries);
+                }else{
+                    entries.msg = '删除新闻成功！';
+                    cb(true,entries);
+                }
+            });
+        } else {
+            next(err);
+        }
+    });
+
+};
 
 var PAGE_SIZE = 5;
 exports.findNews = function(req, cb) {
