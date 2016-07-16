@@ -16,6 +16,7 @@
   cursor: pointer;
 }
 .username ul {
+  color: rgba(0,0,0,0);
   float: right;
   right: 55%;
   position: absolute;

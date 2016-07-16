@@ -11,7 +11,8 @@ var config = require('./config');
 var dbHelper = require('./db/dbHelper');
 var routes = require('./routes/index');
 var admin = require('./routes/admin');
-
+var session     = require('express-session');
+var authority = require('./db/authority');
 var app = express();
 
 // view engine setup
@@ -45,9 +46,19 @@ app.use(express.static(path.join(__dirname, '/')));
 
 config.site.path = path.join(__dirname, 'public');
 
+//加入session支持
+app.use(session({
+  name:'Blog',//表示cookie的name，默认cookie的name是：connect.sid。
+  maxAge: 30 * 1000,//cookie过期时间，毫秒。
+  secret: 'mia-web-node-secret-key',//用来对session数据进行加密的字符串.这个属性值为必须指定的属性。
+  resave: false,//每次请求都重新设置session cookie,过期,请求都会再设置。
+  saveUninitialized: false//每次请求都设置个session cookie ，默认给个标示为 connect.sid
+}));
+
 app.use('/', routes);
 app.use('/pdf', require('./routes/pdf'));
-app.use('/admin',  require('./routes/admin'));
+app.use('/', authority.isAuthenticated, require('./routes/index'));
+app.use('/admin',authority.isAuthenticated, require('./routes/admin'));
 // app.use('/p', authority.isAuthenticated, require('./routes/index'));
 // app.use('/admin', authority.isAuthenticated, require('./routes/admin'));
 

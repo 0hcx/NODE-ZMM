@@ -19,9 +19,10 @@ router.post('/news', function(req, res, next) {
 
 //渲染新闻列表页面
 router.get('/newsList', function(req, res, next) {
-   var msg = req.message;
-   req.message = "";
-
+   // var msg = req.message;
+   // req.message = "";
+  var msg = req.session['message'] || '';
+  req.session['message'] = "";//写入session
   dbHelper.findNews(req, function (success, data) {
     res.render('./admin/newsList', {
       entries: data.results,
@@ -40,7 +41,7 @@ router.get('/newsDelete/:id', function(req, res, next) {
   var id = req.params.id;
   dbHelper.deleteNews(id, function (success, data) {
     // req.session['message'] = data.msg;
-    req.message=data.msg;
+    req.session['message'] = data.msg;
     res.redirect("/admin/newsList");
   })
 });
@@ -87,8 +88,6 @@ router.post('/uploadImg', function(req, res, next) {
     var callback="<script>alert('"+ttt+"');</script>";
     res.end(callback);
   });
-
-
 });
 
 
