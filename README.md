@@ -234,7 +234,8 @@ TestModel.remove(conditions, function(error){
 1. 查询：find查询返回符合条件一个、多个或者空数组文档结果。  
 2. 保存：model调用create方法，entity调用的save方法。  
 3. 更新：obj.update(查询条件,更新对象,callback)，根据条件更新相关数据。  
-4. 删除：obj.remove(查询条件,callback)，根据条件删除相关数据。  
+4. 删除：obj.remove(查询条件,callback)，根据条件删除相关数据。
+
 ###hbs
 ####配置(index.js)
 ```js
@@ -874,7 +875,6 @@ router.post('/uploadImg', function(req, res, next) {
   });
 });
 ```
-####路由
 
 [参考网站](http://www.cnblogs.com/yuanke/archive/2016/02/26/5221853.html)
 
@@ -940,7 +940,8 @@ module.exports = {
 ```js
 socket.join('sessionId');
 ```
-应用三：新闻列表的消息提示    
+
+应用三：新闻列表的消息提示  
 ```js
 //路由渲染新闻列表时新建一个msg将其写入session
 router.get('/newsList', function(req, res, next) {
@@ -971,3 +972,32 @@ function init() {
 //前端 
 <div class="box-msg hidden">{{message}}</div>
 }
+```
+***
+##2016/7/17
+###jquery validate
+目的：为表单提供了强大的验证功能，该插件捆绑了一套有用的验证方法，包括 URL 和电子邮件验证，也可自定义。
+[官网](https://jqueryvalidation.org/)
+####引入
+```css
+<script src="/lib/jquery/jquery.validate.js"></script>//导入js库
+<script src="/lib/jquery/jquery.validate.messages_cn.js"></script>//中文信息提示包
+```
+####使用方式  
+1、将校验规则写到控件中  
+```css
+<input type="text" class="form-control" placeholder="用户名" id="usr" required  minlength="3">
+//要求必填且最小3个字母
+```
+2、将校验规则写到 js 代码中  
+```js
+ $("#signupForm").validate({
+      rules: {
+        firstname: "required",//必填
+        lastname: "required",
+        username: {
+          required: true,
+          minlength: 2
+        }
+```
+[参考网站](http://www.runoob.com/jquery/jquery-plugin-validate.html)
