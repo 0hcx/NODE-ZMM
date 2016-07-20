@@ -234,8 +234,7 @@ TestModel.remove(conditions, function(error){
 1. 查询：find查询返回符合条件一个、多个或者空数组文档结果。  
 2. 保存：model调用create方法，entity调用的save方法。  
 3. 更新：obj.update(查询条件,更新对象,callback)，根据条件更新相关数据。  
-4. 删除：obj.remove(查询条件,callback)，根据条件删除相关数据。
-
+4. 删除：obj.remove(查询条件,callback)，根据条件删除相关数据。  
 ###hbs
 ####配置(index.js)
 ```js
@@ -1001,3 +1000,19 @@ function init() {
         }
 ```
 [参考网站](http://www.runoob.com/jquery/jquery-plugin-validate.html)
+***
+##2016/7/20
+###validate注意事项  
+###button type="submit"的性质
+1.`type=submit`是发送表单，使用`submit`后，页面支持键盘`enter`键操作,因此使用`submit`来提高页面易用性  
+2.`Submit`将表单提交(`form.submit())`作为其onclick后的默认事件，提交时，所有具有`name`属性的`html`输入元素都将作为键值对提交，除了`Submit`对象。`Submit`对象只有在自己被单击后的提交中才会作为键值对被提交.  
+###注册功能的完善
+```js
+<input type="email" class="form-control" placeholder="E-mail" id="new-email" name="email" required>
+//要求输入邮箱满足一定的格式要求
+...
+<input type="password" class="form-control" placeholder="密码" id="new-pwd" required minlength="3" maxlength="10">
+//要求密码满足一定的长度要求
+```
+今天写了慕课的创建和管理，出现了一点问题，明天更新并解决。
+ 
