@@ -3,9 +3,10 @@
         <h1>发布新闻<small>关于H5/JS/CSS3/NODEJS的文章</small></h1>
         <div class="row">
             <div class="col-md-12">
+                <form id="defaultForm" action="">
                 <div class="box">
                     <!-- <div class="box-header"> -->
-                    <input type="text" class="form-control" id="newsTitle" placeholder="文章标题">
+                    <input type="text" class="form-control" id="newsTitle" placeholder="文章标题" required>
                     <!-- </div> -->
                     <div>
                         <textarea class="textarea" id="newsContent" placeholder="文章内容" style=""></textarea>
@@ -20,6 +21,7 @@
 
                     </div>
                 </div>
+              </form>
             </div>
         </div>
     </div>

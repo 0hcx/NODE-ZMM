@@ -13,6 +13,7 @@ var routes = require('./routes/index');
 var admin = require('./routes/admin');
 var session     = require('express-session');
 var authority = require('./db/authority');
+
 var app = express();
 
 // view engine setup

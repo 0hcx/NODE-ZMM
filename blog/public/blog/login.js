@@ -1,11 +1,25 @@
 $(init);
-
 function init() {
+  $("#loginform").validate({
+    errorLabelContainer: "#errorMsg",
+    wrapper:"span",
+    submitHandler:function(form) {
+      doLogin();  //验证成功登陆
+    }
+  });
   $("body").on('click', '#loginBtn', doLogin);
+  // $(document).keyup(function(e){
+  //   if (e.keyCode == 13) {
+  //     doLogin();
+  //   }
+  // })
 }
 // function init() {
-//   $("body").on('click', '#registerBtn', doRegister);
+//   $("body").on('click', '#loginBtn', doLogin);
 // }
+// // function init() {
+// //   $("body").on('click', '#registerBtn', doRegister);
+// // }
 
 function doLogin() {
   $.ajax({

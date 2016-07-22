@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-var config = require('../config')
+var config = require('../config');
+
 console.log('建立mongoose连接...');
 mongoose.connect(config.db.url);
 mongoose.connection.on('connected', function(){

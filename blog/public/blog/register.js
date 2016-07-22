@@ -1,6 +1,13 @@
 $(init);
 
 function init() {
+  $("#registerform").validate({
+    errorLabelContainer: "#errorMsg",
+    wrapper:"span",
+    submitHandler:function(form) {
+      doRegister();  //验证注册
+    }
+  });
   $("body").on('click', '#registerBtn', doRegister);
 }
 

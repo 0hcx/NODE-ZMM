@@ -2,8 +2,11 @@ var entries = require('./jsonRes');
 var mongoose = require('./db.js');
 var User = require('./schema/user');
 var News = require('./schema/news');
+var Mooc = require('./schema/mooc');
+
 var webHelper = require('../lib/webHelper');
 var md = webHelper.Remarkable();
+var config = require('../config');
 var async = require('async');
 
 exports.findUsr = function(data, cb) {
@@ -34,7 +37,7 @@ exports.addUser = function(data, cb) {
         entries.msg = '请输入用户名 ！';
         cb(false, entries);
     }
-    else if (data.password === "") {
+    else if (data.pwd === "") {
         entries.code = 99;
         entries.msg = '请输入密码！';
         cb(false, entries);
@@ -92,7 +95,6 @@ exports.addNews = function(data, cb) {
             cb(false,err);
         }else{
             entries.data = doc.toObject();
-
             cb(true,entries);
         }
     })
@@ -196,3 +198,50 @@ exports.pageQuery = function (page, pageSize, Model, populate, queryParams, sort
         callback(err, $page);
     });
 };
+exports.addMooc = function(data, cb) {
+
+    var mooc = new Mooc({
+        moocName: data.moocName,
+        teacher: data.teacher,
+        moocThumb:data.moocThumb
+    });
+    for (var i = 0; i < data.weekCount; i++) {
+        for(var j = 0;j < data.classHour; j++) {
+            mooc.children.push({
+                content: ' ',
+                title: 'XXXX',
+                week: i,
+                chapter: j
+            });
+        }
+    }
+    mooc.save(function(err,doc){
+        cb(err, doc);
+    })
+};
+
+
+exports.findMooc = function(req, cb) {
+    var page = req.query.page || 1 ;
+    this.pageQuery(page, PAGE_SIZE, Mooc, 'author', {}, {
+        created_time: 'desc'
+    }, function(error, data){
+        if(error){
+            next(error);
+        }else{
+            cb(true,data);
+        }
+    });
+};
+
+exports.findMoocOne = function(id, cb) {
+
+    Mooc.findOne({_id: id}, function(err, docs) {
+        var mooc = docs.toObject() || '';
+
+        mooc.children = _.sortBy( mooc.children , "chapter");
+        mooc.children = _.groupBy( mooc.children , "week" );
+        cb(true,mooc);
+    });
+};
+

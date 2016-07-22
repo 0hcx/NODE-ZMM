@@ -4,6 +4,8 @@ var User = require('../db/schema/user');
 var dbHelper = require('../db/dbHelper');
 var NodePDF = require('nodepdf');
 var fs = require('fs');
+var config = require('../config');
+
 
 router.get('/homepage', function(req, res, next) {
   res.render('homepage', { newList: 'Express', layout: 'main' });

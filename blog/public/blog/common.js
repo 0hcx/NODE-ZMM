@@ -27,6 +27,7 @@
         }
     })
 })(jQuery);
+
 //格式
 $.format = function (source, params) {
     if (arguments.length == 1)

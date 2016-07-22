@@ -7,18 +7,17 @@ function init() {
     $(".pg-bar").progressbar( "option", "value", parseInt(percent));
     $(".pg-info").text( percent + '%');
   });
-
   $("#defaultForm").validate({
     wrapper:"span",
-    onfocusout:false,
-    submitHandler:function(form) {
-      doAddNews();  //验证成功则调用添加新闻函数
+    onfocusout:false,//触发方式,默认为true
+    submitHandler:function(form) {//通过验证后运行的函数
+      doAddMooc();  //验证成功，调用添加慕课函数
     }
   });
 
+
   $(".pg-bar").progressbar({value: 0});
   $(".pg-bar").progressbar( "option", "max", 100 );
-  $("body").on('click', '#addNewsBtn', doAddNews);
   $("body").on('click', '#UploadBtn', doUpload);
   $("body").on('change', '#uploadFile', preUpload);
 }
@@ -26,6 +25,7 @@ function init() {
 function preUpload() {
   $("#UploadBtn").removeClass('disabled');
 }
+
 function doUpload() {
   $(".pg-wrapper").show();
   var file = $("#uploadFile")[0].files[0];
@@ -41,31 +41,32 @@ function doUpload() {
     success: function(result) {
       startReq = false;
       if (result.code == 0) {
-        var picUrl = $.format("![Alt text]({0})",result.data);
-        $("#newsContent").insertAtCaret(picUrl);
+        $("#moocThumb").attr("src",result.data);
         $(".pg-wrapper").hide();
-        // console.log(result.data);
       }
     }
   });
 }
-function doAddNews() {
+
+function doAddMooc() {
   $.ajax({
     type: "POST",
-    url: "/admin/news",
+    url: "/admin/moocCreate",
     contentType: "application/json",
     dataType: "json",
     data: JSON.stringify({
-      'title': $("#newsTitle").val(),
-      'content': $("#newsContent").val(),
-      'id': $.cookie('id')
+      'moocName': $("#moocName").val(),
+      'teacher': $("#teacher").val(),
+      'weekCount': $("#weekCount").val(),
+      'classHour': $("#classHour").val(),
+      'moocThumb': $("#moocThumb").attr("src")
     }),
     success: function(result) {
-      if (result.code === 99) {
-        alert(result.msg);
+      if (result.code == 99) {
+        notifyInfo(result.msg);
       } else {
-         alert("发布成功！");
-        location.href = '/pdf/blogPdf/'+ result.data._id;
+        location.href = '/admin/moocList';
+        notifyInfo("发布成功！");
       }
     }
   })

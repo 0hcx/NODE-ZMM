@@ -22,7 +22,7 @@ newsSchema.pre('save', function (next) {
     this.meta.updateAt = Date.now();
   }
   next();
-})
+});
 
 
 module.exports = mongoose.model('News', newsSchema);
