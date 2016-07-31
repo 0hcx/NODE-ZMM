@@ -8,7 +8,7 @@ var config = require('../config');
 
 
 router.get('/homepage', function(req, res, next) {
-  res.render('homepage', { newList: 'Express', layout: 'main' });
+  res.render('homepage', {  layout: 'main' });
 });
 router.get('/login', function(req, res, next) {
   res.render('login', { layout: 'lg' });
@@ -51,12 +51,7 @@ router.get('/', function(req, res, next) {
 		console.log('success');
 	})
 });
-// router.get('/news', function(req, res, next) {
-// 	dbHelper.findNews(req.body, function (success, doc) {
-// 		// res.send(doc);
-// 		res.render('news', { entries: doc , layout: 'release'});
-// 	})
-// });
+
 router.get('/blogs', function(req, res, next) {
 	dbHelper.findNews(req, function (success, data) {
 		res.render('blogs', {
@@ -64,11 +59,43 @@ router.get('/blogs', function(req, res, next) {
 			pageCount: data.pageCount,//算总页数
 			pageNumber: data.pageNumber,
 			count: data.count,// 查询数量
-			layout: 'release'
+			layout: 'main'
 		});
 	})
 });
 
+
+router.get('/moocs', function(req, res, next) {
+	dbHelper.findMooc(req, function (success, data) {
+
+		res.render('./moocs', {
+			entries: data.results,
+			pageCount: data.pageCount,
+			pageNumber: data.pageNumber,
+			count: data.count,
+			layout: 'main'
+		});
+	})
+});
+
+
+router.get('/mooc/:id', function(req, res, next) {
+	var id = req.params.id;
+	dbHelper.findMoocOne( id,  function (success, doc) {
+		res.render('./mooc', { entries: doc, layout: 'main' });
+	})
+});
+
+
+router.post('/moocGetChapContentOnly', function(req, res, next) {
+	var moocId    = req.body.moocId;
+	var chapId    = req.body.chapId;
+	var preChapId = req.body.preChapId;
+	var content   = req.body.content;
+	dbHelper.findMoocChapContentOnly( moocId, chapId, preChapId, content, function (success, doc) {
+		res.send(doc);
+	})
+});
 
 
 

@@ -40,7 +40,7 @@ function doUpload() {
     contentType: false,
     success: function(result) {
       startReq = false;
-      if (result.code == 0) {
+      if (result.code === 0) {
         $("#moocThumb").attr("src",result.data);
         $(".pg-wrapper").hide();
       }

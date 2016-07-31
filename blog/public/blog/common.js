@@ -1,3 +1,12 @@
+var urlMoocSetChapTitle = "/admin/moocSetChapTitle";
+var urlMoocDelChap      = "/admin/moocDeleteChap";
+var urlMoocAddChap      = "/admin/moocAddChap";
+var urlMoocUpChap       = "/admin/moocUpChap";
+var urlMoocDownChap     =  "/admin/moocDownChap";
+var urlMoocGetChapTitle = "/admin/moocGetChapTitle";
+var urlMoocGetChapCont  = "/admin/moocGetChapContent";
+var urlMoocGetChapContOnly  = "/moocGetChapContentOnly";
+
 //定点插入
 (function($){
     $.fn.extend({
@@ -30,7 +39,7 @@
 
 //格式
 $.format = function (source, params) {
-    if (arguments.length == 1)
+    if (arguments.length === 1)
         return function () {
             var args = $.makeArray(arguments);
             args.unshift(source);

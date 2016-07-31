@@ -38,6 +38,7 @@ function doLogin() {
         $.cookie('username', result.data.username, {expires:30});
         $.cookie('password', result.data.password, {expires:30});
         $.cookie('id', result.data._id, {expires:30});
+        $.cookie('imgUrl',   result.data.imgUrl,   {expires:30});
         location.href = "/homepage";
       }
     }
