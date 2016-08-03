@@ -32,4 +32,7 @@ router.get('/blogPdf/:id', function(req, res, next) {
   })
 });
 
+
+
+
 module.exports = router;

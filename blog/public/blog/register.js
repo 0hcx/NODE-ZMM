@@ -55,7 +55,7 @@ function doUpload() {
   var form = new FormData();
   form.append("file", file);
   $.ajax({
-    url: "/admin/uploadImg",
+    url: "/uploadImg",
     type: "POST",
     data: form,
     async: true,
