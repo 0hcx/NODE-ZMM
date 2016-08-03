@@ -232,150 +232,12 @@ app.use(function (err, req, res, next) {
 ####3.log日志的处理方法
 ####4.nodepdf转换模型
 ####5.formidable图片上传模块
-`详见项目进程`
+详见项目进程
 ***
 ###handlebar 
 ####1.了解handlebar的基本处理方法{{v}},{{{v}}},{{>v}}
-#####handlebars 表达式
-```css
-<h1>{{title}}</h1>  <!-- 在上下文中找 title 属性，获取它的值 -->
-```
-#####点分割表达式
-```css
-<h1>{{article.title}}</h1>  
-```
-tip:不合法的标识符用 “[]” 包装
-```css
-{{#each articles.[10].[#comments]}}
-  <h1>{{subject}}</h1>
-  <div>
-    {{body}}
-  </div>
-{{/each}}
-```
 ####2.了解partials模型，掌握组织页面结构
 ####3.了解基本块的处理方法，with/each/list/if
-#####with helper
-根据模板传递的上下文解析模板
-```css
-<div class="entry">  
-  <h1>{{title}}</h1>
-  {{#with story}}
-    <div class="intro">{{{intro}}}</div>
-    <div class="body">{{{body}}}</div>
-  {{/with}}
-</div>  
-```
-当 JSON 对象包含嵌套属性时，不必再三重复父属性的名字。比如以下数据：
-```css
-{
-  title: "First Post",
-  story: {
-    intro: "Before the jump",
-    body: "After the jump"
-  }
-}
-```
-helper 接收参数，参数为 JSON 属性的 上下文。
-```
-Handlebars.registerHelper('with', function(context, options) {  
-  return options.fn(context);
-});
-```
-#####简单迭代器 each helper
-Handlebars 内建了　each　迭代器
-```css
-<div class="comments">  
-  {{#each comments}}
-    <div class="comment">
-      <h2>{{subject}}</h2>
-      {{{body}}}
-    </div>
-  {{/each}}
-</div>  
-```
-实现原理如下：　把 comments 数组的每一个元素作为上下文解析模板
-```js
-Handlebars.registerHelper('each', function(context, options) {  
-  var ret = "";
-
-  for(var i=0, j=context.length; i<j; i++) {
-    ret = ret + options.fn(context[i]);
-  }
-
-  return ret;
-});
-```
-可以用 this 引用迭代元素
-```csws
-<ul class="people_list">  
-  {{#each people}}
-  <li>{{this}}</li>
-  {{/each}}
-</ul>  
-```
-上下文：
-
-{
-  people: [
-    "Yehuda Katz",
-    "Alan Johnson",
-    "Charles Jolley"
-  ]
-}
-结果：
-```css
-<ul class="people_list">  
-  <li>Yehuda Katz</li>
-  <li>Alan Johnson</li>
-  <li>Charles Jolley</li>
-</ul> 
-``` 
-当某一项为空时，可以用{{else}}表达式
-```css
-{{#each paragraphs}}
-  <p>{{this}}</p>
-{{else}}
-  <p class="empty">No content</p>
-{{/each}}
-```
-通{{@index}}可以引用当前的循环索引
-```css
-{{#each array}}
-  {{@index}}: {{this}}
-{{/each}}
-```
-用{{@key}}引用当前的键名：
-```
-{{#each object}}
-  {{@key}}: {{this}}
-{{/each}}
-```
-数组迭代的第一步和最后一步用 @first 和 @last 变量表示， 对象迭代时仅 @first 可用。
-#####条件语句 if helper
-如果条件参数返回 false, undefined, null, "" 或 []（非真的值）时，Handlebars 将不渲染该块
-Handlebars 内建了 if 和 unless 语句
-```css
-{{#if isActive}}
-  <img src="star.gif" alt="Active">
-{{/if}}
-```
-实现原理：根据传入的条件参数，判断是否解析模板
-```js
-Handlebars.registerHelper('if', function(conditional, options) {  
-  if(conditional) {
-    return options.fn(this);
-  }
-});
-```
-Handlebars 还提供了 else 语句
-```css
-{{#if isActive}}
-  <img src="star.gif" alt="Active">
-{{else}}
-  <img src="cry.gif" alt="Inactive">
-{{/if}}
-```
 ####4.了解如何使用helper
 ***
 ###数据库的相关操作（mongoose）
@@ -385,7 +247,7 @@ Handlebars 还提供了 else 语句
 ####4.了解statics方法和methods的区别
 ####5.了解pre和post的差别
 ####6.了解mvc里m的作用，以及什么样的代码应该放到模型里
-####7.了解索引优化
+###7.了解索引优化
 ***
 ###promise/a+规范，合理规避回调陷阱
 ####1.了解node的异步
@@ -942,6 +804,18 @@ function init() {
 <input type="password" class="form-control" placeholder="密码" id="new-pwd" required minlength="3" maxlength="10">
 //要求密码满足一定的长度要求
 ```
+##2016/8/3
+###头像上传及显示
+###思路
+模仿mooc及news图片上传打码，user添加userThumb属性
+###遇到的问题
+####1. uploadimg
+一会儿可以上传，一会儿又不能，最后发现，只有在用户登录过才能上传上去，于是乎经过反复思考发现，
+这个与`authority`有关系，重新刷新之后的`user`没有`authorized`，因此不能上传，没有权限。因此做出调整：
+取消对于`index`的授权，将`uploadimg`放在`index`的路由下面。但是`admin`的权限并没有取消（处于实际考虑）
+####2. 图片显示
+通过调用 `{{entries.author.userThumb}}`并不能显示，最后通过`initBlog`中的`imgUrl`获取`cookie`中的
+`userThumb`，然后`class`中`uig`绑定`imgUrl`中`userThumb`中的`src`，然后调用。
 ***
 ##软件下载
 ***
