@@ -236,33 +236,371 @@ app.use(function (err, req, res, next) {
 ***
 ###handlebar 
 ####1.了解handlebar的基本处理方法{{v}},{{{v}}},{{>v}}
+#####{{v}}
+1.1 handlebars 表达式
+```css
+<h1>{{title}}</h1>  <!-- 在上下文中找 title 属性，获取它的值 -->
+```
+1.2 点分割表达式
+```css
+<h1>{{article.title}}</h1> <!--  当前上下文找 article 属性，再找它的 title 属性 -->
+```
+#####{{{v}}}
+```css
+  <div class="body">
+    {{{body}}}<!-- 不希望Handlebars来编码这些值 -->
+  </div>
+```
+#####{{>v}}
+```css
+{{> partialName}}<!-- 引入局部模板，局部模板可以是字符串，也可以是编译模板的函数。 -->
+```
 ####2.了解partials模型，掌握组织页面结构
+比较推崇使用分页来实现组件化。分页跟helper一样需要先注册。在hbs模块中可以批量注册，比较简单。
+```js
+hbs.registerPartials(__dirname + '/views/partials');
+```
+当使用块级表达式时，我们通常添加`#`，而分页是`>`，
+```js
+{ {#> layout } }
+  My Content
+{ {/layout} }//layout分页不存在则显示块内的内容My Content。
+```
 ####3.了解基本块的处理方法，with/each/list/if
+####3.1 with
+可以在模板的某个区域切换上下文，使用内置的 `with helper`即可。
+```css
+<div class="entry">
+  <h1>{{title}}</h1>
+
+  {{#with author}}
+  <h2>By {{firstName}} {{lastName}}</h2>
+  {{/with}}
+</div>
+```
+在使用下面数据作为上下文时：
+```js
+{
+  title: "My first post!",
+  author: {
+    firstName: "Charles",
+    lastName: "Jolley"
+  }
+}
+```
+会得到如下结果：
+```css
+<div class="entry">
+  <h1>My first post!</h1>
+
+  <h2>By Charles Jolley</h2>
+</div>
+```
+####3.2 each
+你可以使用内置的`each helper`来循环一个列表，循环中可以使用`this`来代表当前被循环的列表项。
+```css
+<ul class="people_list">
+  {{#each people}}
+  <li>{{this}}</li>
+  {{/each}}
+</ul>
+```
+```js
+{
+  people: [
+    "Yehuda Katz",
+    "Alan Johnson",
+    "Charles Jolley"
+  ]
+}
+```
+会得到：
+```css
+<ul class="people_list">
+  <li>Yehuda Katz</li>
+  <li>Alan Johnson</li>
+  <li>Charles Jolley</li>
+</ul>
+```
+so,可以使用`this`表达式在任何上下文中表示对当前的上下文的引用
+还可以选择性的使用`else`，当被循环的是一个空列表的时候会显示其中的内容。
+```css
+{{#each paragraphs}}
+  <p>{{this}}</p>
+{{else}}
+  <p class="empty">No content</p>
+{{/each}}
+```
+在使用`each`来循环列表的时候，可以使用`{{@index}}`来表示当前循环的索引值。
+```hbs
+{{#each array}}
+  {{@index}}: {{this}}
+{{/each}}
+```
+对于`object`类型的循环，可以使用`{{@key}}`来表示：
+```hbs
+{{#each object}}
+  {{@key}}: {{this}}
+{{/each}}
+```
+####3.3 list
+```js
+{{#list people}}{{firstName}} {{lastName}}{{/list}}
+```
+并使用下面的上下文（数据）：
+```js
+{
+  people: [
+    {firstName: "Yehuda", lastName: "Katz"},
+    {firstName: "Carl", lastName: "Lerche"},
+}
+```
+此时需要创建一个 名为`list`的`helper`来生成这段`HTML`列表。这个`helper`使用`people`作为第一个参数，还有一个 `options`对象（hash哈希）作为第二个参数。这个`options`对象有一个叫`fn`的属性，你可以传递一个上下文给它（`fn`），就跟执行一个普通的`Handlebars`模板一样：
+```js
+Handlebars.registerHelper('list', function(items, options) {
+  var out = "<ul>";
+  for(var i=0, l=items.length; i<l; i++) {
+    out = out + "<li>" + options.fn(items[i]) + "</li>";
+  }
+  return out + "</ul>";
+});
+```
+执行之后，这个模板就会渲染出：
+```css
+<ul>
+  <li>Yehuda Katz</li>
+  <li>Carl Lerche</li>
+  <li>Alan Johnson</li>
+</ul>
+```
+####3.4 if
+`if`表达式可以选择性的渲染一些区块。如果它的参数返回`false`,`undefined`, `0`,`null`, `""` 或 
+`[]`（都是JS中的“假”值），`Handlebars`就不会渲染这一块内容：
+```css
+<div class="entry">
+  {{#if author}}
+  <h1>{{firstName}} {{lastName}}</h1>
+  {{/if}}
+</div>
+```
+当时用一个空对象（{}）作为上下文时，会得到：
+```css
+<div class="entry"></div>
+```
+在使用`if`表达式的时候，可以配合`{{else}}`来使用，这样当参数返回`假`值时，可以渲染`else`区块：
+```css
+<div class="entry">
+  {{#if author}}
+    <h1>{{firstName}} {{lastName}}</h1>
+  {{else}}
+    <h1>Unknown Author</h1>
+  {{/if}}
+</div>
+```
 ####4.了解如何使用helper
+`Handlebars`的`helpers`在模板中可以访问任何的上下文。可以通过`Handlebars.registerHelper`方法注册一个`helper`。
+`Helpers`会把当前的上下文作为函数中的`this`上下文。
+如果你不希望你的`helper`返回的`HTML`值被编码，就请务必返回一个`new Handlebars.SafeString`
+参考网站：[英文](http://handlebarsjs.com/)，[中文](https://segmentfault.com/a/1190000000342636#articleHeader3)
 ***
 ###数据库的相关操作（mongoose）
 ####1.crud(增删查改)
+#####1.1 增加记录
+```js
+TestModel.create({username: '张三', password: 'md5-pass'}, 
+function(err, user){
+ if(!err){
+     console.log(user.username + ' 保存成功!');
+ }else{
+    console.log('数据保存失败：' + err);
+ }
+});
+```
+```js
+var Entity = new TestModel({});
+Enity.save(function(error,doc){
+console.log(doc);});
+```
+>model调用的是create方法，entity调用的是save方法
+#####1.2 删除记录
+```
+var conditions = { name: 'tom' };
+TestModel.remove(conditions, function(error){
+if(error) {
+console.log(error);
+} else {
+console.log('Delete success!');
+}
+});
+```
+>删除： obj.remove(查询条件,callback)， 根据条件删除相关数据。
+#####1.3 查询记录
+```js
+TestModel.find({'age' : 28},function(error,data) {
+console.log(data);
+})//无查询参数时默认查出表中所有数据
+findOne(Conditions,callback);//单条数据查询
+findById(_id, callback);//单条数据查询，但它只接收文档的_id作为参数
+//可以使用$gt(>)、$lt(<)、$lte(<=)、$gte(>=)操作符进行排除性的查询
+```
+#####1.4 修改记录
+```js
+User.findOneAndUpdate({_id: req.params.userId}, {
+ username: newUsername
+}, function (err, raw) {
+...
+});
+```
 ####2.了解分页
+总结  
+1.前端雏形bootstrap-paginator
+2.后端查询mongoose
+查询参数：    
+>q，查询条件
+>col，数据返回字段
+>pageNumber，当前是第几页，如果不存在默认为第1页
+r>esultsPerPage，每页多少条记录
+分页的返回值    
+>null：空错误，因为错误已经通过if处理了  
+>pageCount：一共有多少页  
+>results：数据结果集  
+
+3.结果返回页面(后端->前端)    
+>limit:5，每页限制5条记录  
+>num:1，查询的页面  
+>pageCount，一共有多少页  
+>size，当前页面有多少条记录  
+>numberOf，分页用几个标签显示  
+
+4.查询参数传递(前端->后端)   
+前端向后端：参数传递过程  
+>通过javascript，从页面向控制器传参数p.  
+>通过composeUrlParams函数，封装原表单的查询参数  
+>通过pageUrl函数，拼接带分布的url请求  
+后端向前端：参数传递过程  
+>如果page1的div增加自定义属性  
+>在页面渲染时，通过js解析div增加自定义属性，赋值给bootstrap-paginator控件 
+
+5.完整展现  
+[参考网站](http://blog.fens.me/nodejs-bootstrap-paginator/)  
+代码详见项目进度  
 ####3.了解关系（1对1，1对多）在mongoose里如何实现
+```js
+SendDeliverySchema = new Schema({
+  ...
+  user_from: {
+    type: Schema.ObjectId,
+    ref: 'UserModel'
+  },
+  ...
+});
+```
+populate的用法：
+```js
+Send.findOne({ status:2 }).populate('user_from').exec(function (err,doc){
+  console.log(doc.user_from.username);
+});
+```
+只取出部分字段：
+```js
+.populate('user', 'name') // only return the Persons name
+```
+1.populate关联多个表，可以连续使用多个populate
+2.populate返回一个promise对象
+```js
+.populate('user_from').populate('express')
+.then(function (sendReqs){
+})
+```
 ####4.了解statics方法和methods的区别
+#####statics
+```js
+UserSchema.statics.find_by_openid = function(openid, cb) {
+  return this.findOne({
+    openid: openid
+  }, cb);
+};
+```
+调用：
+```js
+User.find_by_openid(openid, cb)
+```
+#####methods
+```js
+UserSchema.methods.is_exist = function(cb) {
+  var query;
+  query = {
+    username: this.username,
+    password: this.password
+  };
+  return this.model('UserModel').findOne(query, cb);
+};
+```
+调用：
+```
+var user = new User({});
+user.is_exist(cb)
+```
 ####5.了解pre和post的差别
+```js
+UserSchema.pre('save', function(next) {
+    var user = this;
+    if (!user.isModified('password')) return next();
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+      if (err) return next(err);
+      bcrypt.hash(user.password, salt, function (err, hash) {
+        if (err) return next(err);
+          user.password = hash;
+          next();
+        });
+    });
+});
+```
+pre 方法表示在执行操作之前，先执行回调函数
+post方法表示在执行操作之后，再执行回调函数
 ####6.了解mvc里m的作用，以及什么样的代码应该放到模型里
-###7.了解索引优化
+M = mongodb
+![Alt text](http://nodeonly.com/nodesang/images/mvc.png)
+####7.了解索引优化
+索引或者复合索引能让搜索更加高效，默认索引就是主键索引ObjectId，属性名为_id， 索引会作为一个专题来讲解
+```js
+ContactSchema = new Schema({
+    ...
+    owner: {
+      type: Schema.ObjectId,
+      required: true,
+      index: true
+    }
+});
+```
+也可以这样的
+```
+ContactSchema.ensureIndexes(owner);
+```
+[参考](https://libraries.io/github/mwn-notes/mongoose)
 ***
 ###promise/a+规范，合理规避回调陷阱
 ####1.了解node的异步
+
 ####2.了解异步基本场景，如何处理事务，使用async的parallel和waterfall处理异步
+
 ####3.了解如何重构流程，以及代码的可读性
+
 ***
 ###代码调试
 ####1.node-inspector
+
 ####2.webstorm内置调试方法
+
 http://i5ting.github.io/node-debug-tutorial/
 ***
 ###消息处理
 ####1.socket-io
+
 ####2.复杂消息系统 设计
+
 ####3.状态机逻辑
+
 ***
 ##项目进程
 ***
@@ -534,7 +872,7 @@ exports.pageQuery = function (page, pageSize, Model, populate, queryParams, sort
         {{#times pageCount 1 pageCount}}<!-- 进入分页展示 -->
         <li {{#equals pageNumber this.step}}class="active" {{/equals}}><!-- 当前页 -->
           <a href="?page={{step}}{{#if recommend}}&recommend={{recommend}}{{/if}}{{#if type}}&type={{type}}{{/if}}">{{step}}</a>
-        </li>
+      </li>
          {{/times}}
         <li>
           <a href="{{#ge pageNumber pageCount}}?page={{pageCount}}{{else}}?page={{add pageNumber 1}}{{/ge}}"
