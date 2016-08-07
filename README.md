@@ -581,26 +581,127 @@ ContactSchema.ensureIndexes(owner);
 ***
 ###promise/a+规范，合理规避回调陷阱
 ####1.了解node的异步
-
+优点：高效
+异步虽然能够极大的提升node.js处理请求的性能，但是同时也让错误处理变得复杂。
+即一切都是异步的同步是奢求，要查Api，
 ####2.了解异步基本场景，如何处理事务，使用async的parallel和waterfall处理异步
-
+而当异步处理遇到for循环的话，就有麻烦；采用递归调用取代for，然而递归深的话，代码可读性差。
+首先看waterfall，顾名思义，像流水线一样有序执行：
+```js
+async.waterfall([
+  function (callback){
+    var a=5;
+    console.log('OK1'); 
+    setTimeout(function (){callback(null,a*2)},1000);},
+  function(data,callback){
+    console.log('OK2');
+    setTimeout(function(){callback(null,data+7,data)},2000);},
+  function(result1,result2,callback){
+    console.log('OK3');
+    setTimeout(function (){callback(null,result1-9,result2)},3000);}
+],function(err,kk,jj){console.log(kk);console.log(jj);})，所以第一个函数的callback就是他后面的那个函数，
+//自然数组最后一个函数的callback是finalFunction，对应递归写法的callback。
+//除了这点还有一点需要注意，callback的第一个参数表示错误的信息，即使没错误，也要填上null，
+//后面才是你想要传递的数据，而且除了finalFunction都不能显示接收错误信息，虽然callback有显式传递，waterfall的运行机制是只要数组中的任意一个函数出错立马跳到finalFunction，finalFunction会接收错误信息
+//所以第一个函数的callback就是他后面的那个函数，自然数组最后一个函数的callback是finalFunction，对应递归写法的callback。
+```
+async.parallel
+```js
+async.auto({
+result1:function(callback){setTimeout(function(){
+  callback(null,'functionResult1')},2000)},
+result2:function(callback){setTimeout(function(){
+  callback(null,'functionResult2')},1000)},//result1与result2是独立的，result3依赖于result1和result2
+result3:['result1','result2',function(callback,replyData){  
+  setTimeout(function(){callback(null,replyData.result1+replyData.result2);},1000)}]
+  //注意result3的执行函数的参数输入与参数引用
+},function(err,data){console.log(data)});
+```
+输出
+```js
+{
+result2:functionResult2,
+result1:functionResult1,
+result3:functionResult1functionResult2
+}
+//结果是一个对象，和输入是函数组成的对象一样，对象元素出现的先后顺序决定于哪个结果先得到，当然依赖于另一个函数的计算结果的函数的结果当然就在其所依赖的后面。
+```
 ####3.了解如何重构流程，以及代码的可读性
-
+在你开始动手重构代码之前，认真对待单元测试，那样你的项目的稳定性将得到改善，而你甚至还没有开始考虑可扩展性。单元测试带来的另一个好处是你不再需要无时无刻担心你的改动会无意中破坏原有功能。  
+Rebecca Murphey 写了一篇很棒的文章关于如何为现有代码写[单元测试](https://rmurphey.com/blog/2014/07/13/unit-tests)。  
+为你的重构工作开一个新的分支，千万别总是在主线 (master) 上改。在 GitHub 
+上有一份[有趣的指导](https://guides.github.com/introduction/flow/)，是关于如何使用他们的版本控制流程的。
 ***
 ###代码调试
 ####1.node-inspector
-
+1.1 全局安装`node-inspector`
+```js
+npm install -g node-inspector
+```
+1.2 测试是否安装成功？
+输入`node-inspector`,若出现版本即可。
+1.3 进行debug调试
+安装完成之后，通常可以直接这样启动在后台：
+```js
+node-inspector &
+```
+可用
+```js
+node —debug[=port] filename //指定端口(默认5858)
+node —debug-brk[=port] filename //强调断点在第一行
+```
 ####2.webstorm内置调试方法
-
-http://i5ting.github.io/node-debug-tutorial/
+新建debug配置项->选择浏览器Chrome->打断点->运行Debug模式
 ***
+
 ###消息处理
 ####1.socket-io
-
-####2.复杂消息系统 设计
-
-####3.状态机逻辑
-
+Socket.io的出现就是为了完善WebSocket。  
+Socket.IO实现了实时、双向、基于事件的通讯机制,它解决了实时的通信问题，并统一了服务端与客户端的编程方式。  
+在使用Node的http模块创建服务器同时还要Express应用，因为这个服务器对象需要同时充当Express服务和Socket.io服务。  
+```js
+//服务端
+var app = require('express')(); //Express服务
+var server = require('http').Server(app); //原生Http服务
+var io = require('socket.io')(server); //Socket.io服务
+io.on('connection', function(socket){
+    /* 具体操作 */
+});
+server.listen(3000);
+```
+```css
+//客户端
+<script src="/lib/socket.io/socket.io.js"></script>
+<script>
+   var socket = io();
+   socket.on('connect', function() {
+           /* 具体操作 */
+   });
+</script>
+```
+####2.复杂消息系统设计
+配置Socket.io服务器  
+ 首先安装安装Socket.IO、connect-mongo、cookie-parser依赖我们先将依赖报引入，然后定义服务器对象。 
+配置Socket.io Session  
+  为了是Socket.io seesion 和Express session一起工作，我们必须让他们信息共享。`Express Session`  
+  默认是存储在内存，我们需要把它存在mongoDB以便Socket.io能获取。 
+配置chat控制器 
+  回调函数来控制数据格式的建立和分发。    
+[官网](http://socket.io/docs/#sending-and-getting-data-(acknowledgements))
+####3.状态逻辑
+客户端socket.on()监听的事件：
+connect：连接成功  
+connecting：正在连接  
+disconnect：断开连接  
+connect_failed：连接失败  
+error：错误发生，并且无法被其他事件类型所处理  
+message：同服务器端message事件  
+anything：同服务器端anything事件  
+reconnect_failed：重连失败  
+reconnect：成功重连  
+reconnecting：正在重连  
+当第一次连接时，事件触发顺序为：connecting->connect；当失去连接时，事件触发顺序为：disconnect->reconnecting（可能进行多次）->connecting->reconnect->connect。  
+[参考](http://www.cnblogs.com/edwardstudy/p/4358202.html)
 ***
 ##项目进程
 ***
