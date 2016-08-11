@@ -1307,3 +1307,87 @@ npm就是Node的软件包管理器，可以用它安装所需软件包并发布�
 ***
 ##读书笔记
 ***
+###flex教程总结
+####语法
+ps:第一个为默认
+#####1.容器的属性
+* 1.1 flex-direction
+```css
+.box {
+  flex-direction: row | row-reverse | column | column-reverse;
+}
+```
+属性决定主轴的方向（即项目的排列方向）。默认`row`主轴方向，及→
+
+* 1.2 flex-wrap  
+```css
+.box{
+  flex-wrap: nowrap | wrap | wrap-reverse;
+}
+```
+`flex-wrap`属性定义，如果一条轴线排不下，如何换行。
+>`flex-flow`属性是`flex-direction`属性和`flex-wrap`属性的简写形式，默认值为`row nowrap`。  
+
+*  1.3 justify-content  
+```css
+.box {
+  justify-content: flex-start | flex-end | center | space-between | space-around;
+}
+```  
+![](https://css-tricks.com/wp-content/uploads/2013/04/justify-content.svg)
+
+*  1.4 align-items  
+```css
+.box {
+  align-items: flex-start | flex-end | center | baseline | stretch;
+}
+```
+![](https://css-tricks.com/wp-content/uploads/2014/05/align-items.svg)
+
+*  1.5 align-content  
+
+```css
+.box {
+  align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+}
+```
+属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。  
+![](https://css-tricks.com/wp-content/uploads/2013/04/align-content.svg)  
+#####2.项目属性
+* 2.1 order   
+order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0.  
+```css
+.item {
+  order: <integer>;
+}
+```
+* 2.2 flex-grow  
+`flex-grow`属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。
+如果一个项目的`flex-grow`属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。    
+* 2.3 flex-shrink  
+与`flex-grow`相反，及等比缩小   
+* 2.4 flex-basis    
+定义了在分配多余空间之前，项目占据的主轴空间（`main size`）。浏览器根据这个属性，计算主轴是否有多余空间。  
+```css
+.item {
+  flex-basis: <length> | auto; /* default auto */
+}
+```
+* 2.4 flex  
+该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。
+```css
+.item {
+  flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
+}
+```
+* 2.5 align-self  
+该属性可能取6个值，除了auto，其他都与align-items属性完全一致。  
+```css
+.item {
+  align-self: auto | flex-start | flex-end | center | baseline | stretch;
+}
+```
+>tip:对于`margin:10px;`的`item`的`width`设为1/3会出现`bug`，可做以下改动.
+```css
+width:calc(33.333333%-20px) 
+```
