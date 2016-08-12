@@ -1,44 +1,82 @@
-/*.login-page{*/
-  /*padding: 50px;*/
-  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
-  /*background-image: url("/img/2.jpg");*/
-/*}*/
-.login-body{
-  background-image: url("/img/2.jpg");
+
+/* Some CSS Setup - nothing to do with flexbox */
+html {
+  box-sizing: border-box;
 }
-a {
-  color: #00B7FF;
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
-.login-box{
-  padding: 100px 0 0 -100px;
-  float:left;
-  margin-top: 60px;
-  border: none;
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  overflow: hidden;
+  /*background-image: linear-gradient(260deg, #2376ae 0%, #c16ecf 100%);*/
 }
-.login-logo h1{
-  font-size: 40px;
-  color: white;
-  margin-left: 500px;
+
+.cover  {
+  height:100vh;
+  width:100%;
+}
+
+/*Video*/
+
+.dog {
+  position: absolute;
+  top: 0;
+}
+.flex-form {
   position: relative;
+  z-index: 10;
+  display:flex;
+  border:20px solid rgba(1, 1,1,0.3);
+  border-radius:5px;
+  flex-direction: column;
+  flex: 0.1 1 300px;
+  align-items: stretch;
+  padding-top: 10px;
+  /*height: 40vh;*/
 }
-.login-box-body{
-  padding: 20px;
-  width: 300px;
-  height: 200px;
-  margin-left: 500px;
+.form-group{
+  display:flex;
+  flex: 1 1 100%;
+  justify-content: center;
 }
-#loginBtn{
-  color: 	#515151;
-  border-radius: 3px;
-  border: none;
-  width:40%;
-  float: left;
+.form-group> * {
+  width: 80%;
+  border:0;
+  padding:10px;
+  background:white;
+  line-height:30px;
+  font-size: 15px;
+  border-radius:5px;
+  outline:0;
+  /*border: 1px solid rgba(0,0,0,0.3);*/
+  -webkit-appearance:none;
+  margin: 5px;
 }
-#registerBtn{
-  color: 	#515151;
-  border-radius: 3px;
-  border: none;
-  width:40%;
-  float: right;
+/*Flexbox Starts Here*/
+.button{
+  display: flex;
+  margin-bottom: 5px;
+  align-items: center;
+  background: rgba(0,0,0,0);
+  flex: 1 1 100%;
+  justify-content: space-around;
+  height: 40px;
+  /*padding: 20px;*/
+}
+.button .form-control{
+  width: 30%;
+
+}
+.cover {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+#registerBtn a{
+  color: #555;
 }
 

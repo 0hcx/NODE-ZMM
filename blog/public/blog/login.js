@@ -39,7 +39,7 @@ function doLogin() {
         $.cookie('password', result.data.password, {expires:30});
         $.cookie('id', result.data._id, {expires:30});
         $.cookie('userThumb',   result.data.userThumb,   {expires:30});
-        location.href = "/homepage";
+        location.href = "/blogs";
       }
     }
   })

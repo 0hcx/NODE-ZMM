@@ -7,9 +7,7 @@ var fs = require('fs');
 var config = require('../config');
 var formidable = require('formidable');
 var entries = require('../db/jsonRes');
-router.get('/homepage', function(req, res, next) {
-  res.render('homepage', {  layout: 'main' });
-});
+
 router.get('/login', function(req, res, next) {
   res.render('login', { layout: 'lg' });
 });

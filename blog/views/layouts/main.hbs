@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <!--<script src="/js/blog.js"></script>-->
     {{>head}}
 </head>
 <body>
-<div class="wrapper">
+<div class="flex-wrapper">
     {{>header}}
-    {{>sidebar}}
+<div class="Content">
+    {{>self-introduce}}
     {{{body}}}
 </div>
-{{>footer}}
+    {{>footer}}
+    </div>
 </body>
 </html>

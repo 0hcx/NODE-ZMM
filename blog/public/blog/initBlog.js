@@ -6,5 +6,5 @@ function init() {
     
     // var usr=$.cookie('username');
     // $(".aaa").attr("text",usr);
-    alert($.cookie("username"));
+    // alert($.cookie("username"));
 }

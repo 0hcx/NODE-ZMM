@@ -1,37 +1,50 @@
-<div class="row Menu">
-    <div class="col-md-12">
-        <div class="col-md-2">
-            <span class="menu-1">BLOG</span></div>
-        <div class="col-md-8"></div>
-        <div class="col-md-2 username">
 
-            <span>mm</span>
-            <img class="user-image uig" src="/img/user.png" alt="User Image">
+<header class="header">
+    <span class="Blog">Blog</span>
+    <nav class="nav">
+        <ul>
+            <li><a href="/blogs">Home</a></li>
+            <li><a href="/blogs">News</a></li>
+            <li><a href="/moocs">Mooc</a></li>
+            <li id="admin"><a href="#">Admin</a>
+                <div class="admin">
+                    <a href="/admin/newsList" class="btn btn-default btn-flat ">News</a>
+                    <a href="/admin/moocList" class="btn btn-default btn-flat ">Mooc</a>
+                </div></li>
 
-            <ul>
-                <li class="Userimage">
-
-                    <img class="img-circle uig" alt="User Image">
-
-                    <!--<img src="/img/1.jpg" class="img-circle">-->
-
-                </li>
-                <li class="Userfunction">
-                    <a href="/admin/newsList" class="btn btn-default btn-flat left">后台管理</a>
-                    <a href="/login" class="btn btn-default btn-flat right">Sign out</a>
-                </li>
-        </ul> </div>
+        </ul>
+    </nav>
+    <div class="end">
+        <div class="user"><a href="#">Mia{{entries._id.username}}</a>
+            <div class="detail">
+                <img class="user-img uig" alt="User Image">
+                <!--<img src="1.jpg" class="user-img">-->
+                <a href="#" class="btn btn-default btn-flat ">Log out</a>
+                <a href="#" class="btn btn-default btn-flat ">Setings</a>
+            </div>
+        </div>
+        <form class="search-form">
+            <input type="text" class="form-control" placeholder="Search...">
+        </form>
     </div>
-</div>
+</header>
 
 <script>
-    $(document).ready(function() {
-        $(".username ul").hide();
-        $(".username").click(function(){
-            $(".username ul").show();
+    $(document).ready(function()
+    {
+        $(".admin").hide();
+        $("#admin").hover(function(){
+            $(".admin").show();
         });
-        $(".username").mouseleave(function(){
-            $(".username ul").hide();
-        })
+        $("#admin").mouseleave(function(){
+            $(".admin").hide();
+        });
+        $(".detail").hide();
+        $(".user").hover(function(){
+            $(".detail").show();
+        });
+        $(".user").mouseleave(function(){
+            $(".detail").hide();
+        });
     });
 </script>

@@ -1,60 +1,44 @@
-<div class="login-box">
-    <div class="login-logo">
-        <h1>Mia's Blog</h1>
-    </div>
+
     <!-- /.login-logo -->
-    <div class="login-box-body">
-        <form id="registerform" action="">
-        <p class="register-box-msg "></p>
-        <div class="form-group has-feedback">
-            <input type="email" class="form-control" placeholder="E-mail" id="new-email" name="email" required>
-            <span class="glyphicon form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="用户名" id="new-usr" required  minlength="3">
-            <span class="glyphicon  form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-            <input type="password" class="form-control" placeholder="密码" id="new-pwd" required minlength="3" maxlength="10">
-            <span class="glyphicon  form-control-feedback"></span></div>
-        <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="住所" id="new-address">
-            <span class="glyphicon  form-control-feedback"></span>
-        </div>
+    <div class="cover">
+        <form  class="flex-form" id="registerform" action="">
+            <p class="register-box-msg "></p>
             <div class="form-group has-feedback">
-            <div class="form-thumb">
-                <img  class="img-thumbnail" id="userThumb">
+                <input type="email" class="form-control" placeholder="E-mail" id="new-email" name="email" required>
+                <!--<span class="glyphicon form-control-feedback"></span>-->
             </div>
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="用户名" id="new-usr" required  minlength="3">
+                <!--<span class="glyphicon  form-control-feedback"></span>-->
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="密码" id="new-pwd" required minlength="3" maxlength="10">
+                <!--<span class="glyphicon  form-control-feedback"></span>-->
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="住所" id="new-address">
+                <!--<span class="glyphicon  form-control-feedback"></span>-->
+            </div>
+            <div class="form-group has-feedback">
+                <div class="form-thumb">
+                    <img  class="img-thumbnail" id="userThumb">
+                </div>
             </div>
             <div class="form-group has-feedback">
                 <div class="box-footer">
                     <input type="file" id="uploadFile" multiple="multiple"  accept="image/*">
                     <a class="btn btn-primary"><i class="fa fa-camera fa-fw"></i> 选择文件</a>
                     <a class="btn btn-primary disabled" id="UploadBtn"><i class="fa fa-upload fa-fw"></i> 上传</a>
-                    <button type="submit" class="btn btn-primary pull-right" id="doRegister">注册</button>
                 </div>
-       </div>
-        <!--<div class="form-group has-feedback">-->
-            <!--<div class="form-thumb">-->
-                <!--<img  class="img-thumbnail" id="userThumb">-->
-            <!--</div>-->
-        <!--</div>-->
-            <!--<div class="box-footer">-->
-                <!--<input type="file" id="uploadFile" multiple="multiple"  accept="image/*">-->
-                <!--<a class="btn btn-primary"><i class="fa fa-camera fa-fw"></i> 选择文件</a>-->
-                <!--<a class="btn btn-primary disabled" id="UploadBtn"><i class="fa fa-upload fa-fw"></i> 上传</a>-->
-            <!--</div>-->
-        <!--<div class="row">-->
-            <!--<div class="col-xs-8">-->
-            <!--</div>-->
-            <!--<div class="col-xs-12">-->
-                <!--<button type="submit" class="form-control" id="registerBtn">注册</button>-->
-            <!--</div>-->
-        <!--</div>-->
-      </form>
+            </div>
+            <div class="button">
+                <button type="submit" class="btn btn-primary pull-right" id="doRegister">注册</button>
+            </div>
+        </form>
     </div>
-    </div>
-<div class="pg-wrapper">
+    <video class="dog" src="/lib/Fish-Tank.mp4" autoplay loop ></video>
+
+    <div class="pg-wrapper">
     <div class="pg-layer">
         <div class="pg-bar"></div>
         <span class="pg-info">0%</span>

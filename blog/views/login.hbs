@@ -1,29 +1,22 @@
-<div class="login-box">
-    <div class="login-logo">
-        <h1>Mia's Blog</h1>
-    </div>
-    <!-- /.login-logo -->
-    <div class="login-box-body">
-        <form id="loginform" action="">
-            <p class="login-box-msg "></p>
-            <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="用户名" id="usr" required  minlength="3">
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
+
+<div class="cover">
+    <form  id="loginform" action="" class="flex-form">
+        <p class="login-box-msg "></p>
+        <div class="form-group has-feedback">
+            <input type="text" class="form-control" placeholder="用户名" id="usr" required >
+             <!--<span class="glyphicon glyphicon-envelope form-control-feedback"></span>-->
+        </div>
         <div class="form-group has-feedback">
             <input type="password" class="form-control" placeholder="密码" id="pwd">
-            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+             <!--<span class="glyphicon glyphicon-lock form-control-feedback"></span>-->
         </div>
-        <div class="row">
-            <div class="col-xs-8">
-            </div>
-            <div class="col-xs-12">
-                <button type="submit" class="form-control" id="loginBtn">登录</button>
-                <a href="/register"><button type="button" class="form-control" id="registerBtn">注册</button></a>
-            </div>
+        <div class="button">
+            <button type="button" class="form-control" id="registerBtn"><a href="/register">注册</a></button>
+            <button type="submit" class="form-control" id="loginBtn">登录</button>
         </div>
     </form>
-    </div>
-    </div>
+</div>
+<video class="dog" src="/lib/For-Ems.mp4" autoplay loop ></video>
+
 <script src="blog/login.js"></script>
 <script src="/blog/common.js"></script>

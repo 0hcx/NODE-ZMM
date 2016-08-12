@@ -1,30 +1,37 @@
-<div class="col-md-10 col-xs-9 col-2">
-    <section class="content-header">
-        <h1>技术新闻<small>关于H5/JS/CSS3/NODEJS的文章</small></h1>
-        </section>
-        <div class="row">
-            <div class="col-md-12">
-                <section class="content">
-                    {{#each entries}}
-                        <div class="box box-widget">
-                            <div class="box-header">
-                                <div class="user-block">
-                                    <img class="img-circle img-block" src="{{author.userThumb}}" alt="User Image">
 
-                                    <!--<img class="img-circle img-block" src="/img/user.jpg" alt="User Image">-->
-                                    <span class="title"><a href="#">{{title}}</a></span>
-                                    <span class="postdate"><b>发布于 {{formatDate meta.createAt}}</b><i>{{timeFromNow meta.createAt}}</i></span>
-                                </div>
-                            </div>
-                            <div class="box-body box-limit">
-                                <p> {{{content}}}</p>
-                            </div>
-                            <div class="box-menu">
-                                <a href="/pdf/{{_id}}" class="btn btn-primary btn-sm">导出pdf</a>
-                                <a href="/pdf/blogPdf/{{_id}}" class="btn btn-primary btn-sm">Read More</a>
-                            </div>
-                        </div>
-                    {{/each}}
+ <section class="content">
+       {{#each entries}}
+           <div class="News">
+               <div class="title"><a href="#">{{title}}</a></div>
+           <span class="release">
+                <img class="user-img" src="{{author.userThumb}}" alt="User Image">
+                <b>发布于 {{formatDate meta.createAt}}</b><i>{{timeFromNow meta.createAt}}</i>
+           </span>
+               <content><p> {{{content}}}</p></content>
+               <div class="button">
+                   <a href="/pdf/{{_id}}" class="btn btn-default btn-flat ">read more</a>
+                   <a href="/pdf/blogPdf/{{_id}}" class="btn btn-default btn-flat ">导出pdf</a>
+               </div>
+           </div>
+                        <!--<div class="box box-widget">-->
+                            <!--<div class="box-header">-->
+                                <!--<div class="user-block">-->
+                                    <!--<img class="img-circle img-block" src="{{author.userThumb}}" alt="User Image">-->
+
+                                    <!--&lt;!&ndash;<img class="img-circle img-block" src="/img/user.jpg" alt="User Image">&ndash;&gt;-->
+                                    <!--<span class="title"><a href="#">{{title}}</a></span>-->
+                                    <!--<span class="postdate"><b>发布于 {{formatDate meta.createAt}}</b><i>{{timeFromNow meta.createAt}}</i></span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="box-body box-limit">-->
+                                <!--<p> {{{content}}}</p>-->
+                            <!--</div>-->
+                            <!--<div class="box-menu">-->
+                                <!--<a href="/pdf/{{_id}}" class="btn btn-primary btn-sm">导出pdf</a>-->
+                                <!--<a href="/pdf/blogPdf/{{_id}}" class="btn btn-primary btn-sm">Read More</a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+          {{/each}}
                     <div class="box-footer">
                         <nav>
                             <ul class="pagination">
@@ -48,14 +55,7 @@
                             </ul>
                         </nav>
                     </div>
-
-
-                </section>
-                </div>
-            </div>
-        </div>
-    </div>
-
+ </section>
 <script src="/lib/socket.io/socket.io.js"></script>
 <script src="/blog/common.js"></script>
 <script src="/blog/newsAdmin.js"></script>
