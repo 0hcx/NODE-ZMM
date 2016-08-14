@@ -8,18 +8,9 @@ function init() {
     }
   });
   $("body").on('click', '#loginBtn', doLogin);
-  // $(document).keyup(function(e){
-  //   if (e.keyCode == 13) {
-  //     doLogin();
-  //   }
-  // })
+
 }
-// function init() {
-//   $("body").on('click', '#loginBtn', doLogin);
-// }
-// // function init() {
-// //   $("body").on('click', '#registerBtn', doRegister);
-// // }
+
 
 function doLogin() {
   $.ajax({
@@ -38,7 +29,7 @@ function doLogin() {
         $.cookie('username', result.data.username, {expires:30});
         $.cookie('password', result.data.password, {expires:30});
         $.cookie('id', result.data._id, {expires:30});
-        $.cookie('userThumb',   result.data.userThumb,   {expires:30});
+        $.cookie('userThumb',result.data.userThumb,{expires:30});
         location.href = "/blogs";
       }
     }

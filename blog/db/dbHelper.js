@@ -135,6 +135,37 @@ exports.deleteNews = function(id, cb) {
 
 var PAGE_SIZE = 5;
 exports.findNews = function(req, cb) {
+    // var keyword = req.query.keyword;
+    // console.log(keyword);
+    // var pattern = new RegExp(keyword, "i");
+    // var page = req.query.p? parseInt(req.query.p) : 1;
+    //
+    // News.count({author:entries.data._id},function(err,count){
+    // 	if(err){
+    // 		console.log(err);
+    // 	}else{
+    // 		entries.pageCount = parseInt((count - 1) / 5 + 1);
+    // 		console.log(entries.pageCount);
+    // 	}
+    // });
+    // News.find({title:pattern})
+    // 	.skip((page-1)*5)
+    // 	.limit(5)
+    // 	.exec(function(err, docs) {
+    // 		var newsList = new Array();
+    // 		for(var i=0;i<docs.length;i++) {
+    // 			newsList.push(docs[i].toObject());
+    // 		}
+    // 		res.render('blog',{
+    // 			data: newsList,
+    // 			layout: 'main',
+    // 			page:page,
+    // 			pageCount:entries.pageCount
+    // 		});
+    // 	});
+    
+    
+    
     // News.find()
     //   .populate('author')
     //     .exec(function(err, docs) {
@@ -158,6 +189,16 @@ exports.findNews = function(req, cb) {
     });
 };
 
+exports.findNewsContent = function(req, pattern, cb) {
+    News.findOne({title:pattern})
+        .populate('author')
+        .exec(function(err, docs) {
+            // var docs = (docs !== null) ? docs.toObject() : '';
+            // cb(true,docs);
+            var docs = (docs !== null) ? docs : '';
+            cb(true,docs);
+        });
+};
 
 
 exports.findNewsOne = function(req, id, cb) {

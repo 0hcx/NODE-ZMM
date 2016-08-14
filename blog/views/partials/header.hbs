@@ -15,17 +15,22 @@
         </ul>
     </nav>
     <div class="end">
-        <div class="user"><a href="#">Mia{{entries._id.username}}</a>
+        <div class="user">
+
+
+    <a href="#">{{user.username}}</a>
+
             <div class="detail">
-                <img class="user-img uig" alt="User Image">
+                <img class="user-img" src="{{user.userThumb}}" alt="User Image">
                 <!--<img src="1.jpg" class="user-img">-->
                 <a href="#" class="btn btn-default btn-flat ">Log out</a>
                 <a href="#" class="btn btn-default btn-flat ">Setings</a>
             </div>
         </div>
-        <form class="search-form">
-            <input type="text" class="form-control" placeholder="Search...">
-        </form>
+        <div class="search-form">
+            <form action="/search" method="GET"><input type="text" name="keyword" placeholder="Search.." class="form-control" /></form>
+            <!--<input type="text" class="form-control" placeholder="Search...">-->
+        </div>
     </div>
 </header>
 

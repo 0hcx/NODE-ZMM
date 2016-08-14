@@ -56,7 +56,7 @@ app.use(session({
   saveUninitialized: false//每次请求都设置个session cookie ，默认给个标示为 connect.sid
 }));
 
-app.use('/', routes);
+// app.use('/', routes);
 app.use('/pdf', require('./routes/pdf'));
 app.use('/',require('./routes/index'));
 app.use('/admin',authority.isAuthenticated, require('./routes/admin'));

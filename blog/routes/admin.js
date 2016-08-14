@@ -3,7 +3,7 @@ var router = express.Router();
 var dbHelper = require('../db/dbHelper');
 var formidable = require('formidable');
 var entries = require('../db/jsonRes');
-//var NodePDF = require('nodepdf');
+// var NodePDF = require('nodepdf');
 
 //渲染新建新闻页面
 router.get('/news', function(req, res, next) {
@@ -29,7 +29,9 @@ router.get('/newsList', function(req, res, next) {
       pageNumber: data.pageNumber,
       count: data.count,
       layout: 'admin',
-      message: msg
+      message: msg,
+      user: req.session.user
+
     });
   })
 });
@@ -95,7 +97,9 @@ router.get('/moocList', function(req, res, next) {
       pageCount: data.pageCount,
       pageNumber: data.pageNumber,
       count: data.count,
-      layout: 'admin'
+      layout: 'admin',
+      user: req.session.user
+
     });
   })
 

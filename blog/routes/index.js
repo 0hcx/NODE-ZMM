@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../db/schema/user');
+// var User = require('../db/schema/user');
 var dbHelper = require('../db/dbHelper');
 var NodePDF = require('nodepdf');
 var fs = require('fs');
@@ -36,17 +36,40 @@ router.post('/register', function(req, res, next) {
 		res.send(doc);
 	})
 });
+//
+// router.get('/', function(req, res, next) {
+// 	var user = new User({
+// 		username: 'tom',
+// 		password: '1'
+// 	});
+// 	user.save(function (err) {
+// 		if(err){
+// 			console.log('保存失败');
+// 		}
+// 		console.log('success');
+// 	})
+// });
+router.get('/search',function (req, res, next) {
+	var keyword = req.query.keyword;
+	var pattern = new RegExp(keyword, "i");
 
-router.get('/', function(req, res, next) {
-	var user = new User({
-		username: 'tom',
-		password: '1'
-	});
-	user.save(function (err) {
-		if(err){
-			console.log('保存失败');
-		}
-		console.log('success');
+
+
+	// News.find()
+	//   .populate('author')
+	//     .exec(function(err, docs) {
+	//
+	//         var newsList=new Array();
+	// 	        for(var i=0;i<docs.length;i++) {
+	//             newsList.push(docs[i].toObject());
+	//         }
+	//         cb(true,newsList);
+	//     });
+
+	dbHelper.findNewsContent(req, pattern, function (success, data) {
+		res.render('blog', {
+			entries: data
+		});
 	})
 });
 //上传图片
@@ -98,7 +121,9 @@ router.get('/blogs', function(req, res, next) {
 			pageCount: data.pageCount,//算总页数
 			pageNumber: data.pageNumber,
 			count: data.count,// 查询数量
-			layout: 'main'
+			layout: 'main',
+			user: req.session.user
+
 		});
 	})
 });
@@ -111,7 +136,9 @@ router.get('/moocs', function(req, res, next) {
 			pageCount: data.pageCount,
 			pageNumber: data.pageNumber,
 			count: data.count,
-			layout: 'main'
+			layout: 'main',
+			user: req.session.user
+
 		});
 	})
 });
@@ -134,6 +161,7 @@ router.post('/moocGetChapContentOnly', function(req, res, next) {
 		res.send(doc);
 	})
 });
+
 
 
 

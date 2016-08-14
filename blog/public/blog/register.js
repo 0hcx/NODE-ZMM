@@ -89,10 +89,10 @@ function doRegister() {
         console.log("注册失败！");
       } else {
         console.log("注册成功！");
-        // $.cookie('username', result.data.username, {expires:30});
-        // $.cookie('password', result.data.password, {expires:30});
-        // $.cookie('id', result.data._id, {expires:30});
-        // $.cookie('userThumb',   result.data.userThumb, {expires:30});
+        $.cookie('username', result.data.username, {expires:30});
+        $.cookie('password', result.data.password, {expires:30});
+        $.cookie('id', result.data._id, {expires:30});
+        $.cookie('userThumb',   result.data.userThumb, {expires:30});
         location.href = "/login";
       }
     }
