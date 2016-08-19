@@ -4,7 +4,8 @@ var User = require('./schema/user');
 var News = require('./schema/news');
 var Mooc = require('./schema/mooc');
 var chapter = require('./schema/chapter');
-var _ = require('underscore');//？
+var Comment = require('./schema/comment');
+var _ = require('underscore');
 
 var webHelper = require('../lib/webHelper');
 var md = webHelper.Remarkable();
@@ -103,17 +104,6 @@ exports.addNews = function(data, cb) {
         }
     })
 };
-// exports.findNews = function(data, cb) {
-//     News.find()
-//         .populate('author')
-//         .exec(function(err, docs) {
-//             var newsList=new Array();
-//             for(var i=0;i<docs.length;i++) {
-//                 newsList.push(docs[i].toObject());}
-//             cb(true,newsList);
-//         });
-// };
-
 exports.deleteNews = function(id, cb) {
     News.findById(id, function (err, doc) {
         if (doc) {
@@ -132,51 +122,8 @@ exports.deleteNews = function(id, cb) {
     });
 
 };
-
 var PAGE_SIZE = 5;
 exports.findNews = function(req, cb) {
-    // var keyword = req.query.keyword;
-    // console.log(keyword);
-    // var pattern = new RegExp(keyword, "i");
-    // var page = req.query.p? parseInt(req.query.p) : 1;
-    //
-    // News.count({author:entries.data._id},function(err,count){
-    // 	if(err){
-    // 		console.log(err);
-    // 	}else{
-    // 		entries.pageCount = parseInt((count - 1) / 5 + 1);
-    // 		console.log(entries.pageCount);
-    // 	}
-    // });
-    // News.find({title:pattern})
-    // 	.skip((page-1)*5)
-    // 	.limit(5)
-    // 	.exec(function(err, docs) {
-    // 		var newsList = new Array();
-    // 		for(var i=0;i<docs.length;i++) {
-    // 			newsList.push(docs[i].toObject());
-    // 		}
-    // 		res.render('blog',{
-    // 			data: newsList,
-    // 			layout: 'main',
-    // 			page:page,
-    // 			pageCount:entries.pageCount
-    // 		});
-    // 	});
-    
-    
-    
-    // News.find()
-    //   .populate('author')
-    //     .exec(function(err, docs) {
-    //
-    //         var newsList=new Array();
-    //         for(var i=0;i<docs.length;i++) {
-    //             newsList.push(docs[i].toObject());
-    //         }
-    //         cb(true,newsList);
-    //     });
-
     var page = req.query.page || 1 ;
     this.pageQuery(page, PAGE_SIZE, News, 'author', {}, {
         created_time: 'desc'
@@ -202,11 +149,13 @@ exports.findNewsContent = function(req, pattern, cb) {
 
 
 exports.findNewsOne = function(req, id, cb) {
+    News.update({_id:id},{$inc:{pv:1}},function (err) {
+        if(err)
+            console.log(err)
+    })
     News.findOne({_id: id})
         .populate('author')
         .exec(function(err, docs) {
-            // var docs = (docs !== null) ? docs.toObject() : '';
-            // cb(true,docs);
             var docs = (docs !== null) ? docs : '';
             cb(true,docs);
         });
@@ -243,6 +192,7 @@ exports.pageQuery = function (page, pageSize, Model, populate, queryParams, sort
         callback(err, $page);
     });
 };
+//mooc
 exports.addMooc = function(data, cb) {
 
     var mooc = new Mooc({
@@ -362,12 +312,8 @@ exports.queryMoocChapTitle = function( moocId, chapId, cb) {
 
 
 exports.deleteMoocChap = function( moocId, chapId, cb) {
-
-
     Mooc.findOne({"_id": moocId, "children._id": chapId },function(err,doc){
         var week,chap,index,count = 0,pos = 0;
-
-
         for( var i =0;i<doc.children.length;i++) {
             var item = doc.children[i];
             if(item._id.toString() == chapId){
@@ -425,10 +371,8 @@ exports.deleteMoocChap = function( moocId, chapId, cb) {
 
 
 exports.addMoocChap = function( moocId, chapId, cb) {
-
     Mooc.findOne({"_id": moocId },function(err,doc){
         var week,chap,index,chapCount=0;
-
         //计算当前chap的位置index
         for( index =0;index<doc.children.length;index++) {
             var item = doc.children[index];
@@ -531,10 +475,6 @@ exports.upMoocChap = function( moocId, chapId, cb) {
             doc.children[index].chapter--;
         }
 
-
-
-
-
         // console.log("index:" + index + " subling:" +count + " sIndex:" + pos);
 
         doc.save(function(err) {
@@ -547,7 +487,6 @@ exports.upMoocChap = function( moocId, chapId, cb) {
 
 
 exports.downMoocChap = function( moocId, chapId, cb) {
-
     Mooc.findOne({"_id": moocId, "children._id": chapId },function(err,doc){
         var week,chap,index,chapCount = 0,pos = 0, lastWeek=0;
 
@@ -604,11 +543,8 @@ exports.downMoocChap = function( moocId, chapId, cb) {
                 doc.children[index].chapter = 0;
             }
         }else{
-
             var nextIndex;
-
             var curChap = (chap+1>chapCount)?chapCount:(chap+1);
-
             for(var i =0;i<doc.children.length;i++) {
                 var item = doc.children[i];
                 if (( parseInt(item.week) === week )&&( parseInt(item.chapter) === curChap )) {
@@ -625,4 +561,56 @@ exports.downMoocChap = function( moocId, chapId, cb) {
             cb(err, doc);
         });
     })
+};
+
+
+//评论
+exports.addComment = function(data, cb) {
+    //将markdown格式的新闻内容转换成html格式
+    data.content = md.render(data.content);
+    if(data.comment) {
+        Comment.findById(data.comment, function (err, comment) {
+            console.log(comment);
+            var reply = new Comment({
+                commentId: data.comment,
+                from: data.from,
+                to: data.to,
+                content: data.content
+            });
+            comment.reply.push(reply);//新增评论
+            comment.save(function (err, doc) {
+                if (err) {
+                    cb(false,err);
+                }else{
+                    cb(true,err);
+                }
+            })
+        });
+    }
+    else {
+        var comment = new Comment({
+            news: data.news,
+            from: data.from,
+            to: data.to,
+            content: data.content
+        });
+        comment.save(function(err,doc){
+            if (err) {
+                cb(false,err);
+            }else{
+                cb(true,err);
+            }
+        })
+    }
+
+};
+
+//查找评论
+exports.findComment = function (id, cb) {
+    Comment.find({news: id})
+        .populate('from')
+        .populate('reply.from reply.to', 'username')
+        .exec(function (err, docs) {
+            cb(true,docs);
+        })
 };

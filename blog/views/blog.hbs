@@ -6,9 +6,40 @@
     </span>
     </span>
     <content><p> {{{entries.content}}}</p></content>
-    <div class="button">
-        <a href="#" class="btn btn-default btn-flat ">read more</a>
-        <a href="#" class="btn btn-default btn-flat ">导出pdf</a>
-    </div>
+    <div class="pv">pv:{{entries.pv}}</div>
+    <section class="comments">
+        <h2>评论区</h2>
+        <ul class="comment-list">
+            {{#each comments}}
+                <li>
+                    <img src="{{from.userThumb}}" class="user-img">
+                    <div><span>{{from.username}}</span>
+                     <a href="#respond" data-toggle="select" data-cid="{{_id}}" data-rid="{{from._id}}"><i class="fa fa-comment"></i></a>
+                     </div><div class="comment-body">{{{content}}}</div>
+                    <ul>
+                      {{#if reply}}
+                         {{#each reply}}
+                            <li>
+                              <span>{{from.username}}</span><span id="reply">to</span><span>{{to.username}}</span>
+                              <a href="#respond" data-toggle="select" data-cid="{{commentId}}" data-rid="{{from._id}}"><i class="fa fa-comment"></i></a>
+                               <div class="comment-body">{{{content}}}</div>
+                            </li>
+                            {{/each}}
+                        {{/if}}
+                    </ul>
+                </li>
+            {{/each}}
+        </ul>
+        <div id="respond">
+            <form id="commentForm" action="">
+                <div class="res-body">
+                    <!--添加news id-->
+                    <input type="hidden" id="news" value="{{entries._id}}">
+                    <textarea id="resContent" placeholder="评论内容" required></textarea>
+                    <button type="submit" class="btn btn-primary" id="respondBtn">发表</button>
+                </div>
+            </form>
+        </div>
+    </section>
 </section>
-
+<script src="/blog/comment.js"></script>

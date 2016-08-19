@@ -24,31 +24,6 @@ function init() {
 function preUpload() {
   $("#UploadBtn").removeClass('disabled');
 }
-
-// function doUpload() {
-//   $(".pg-wrapper").show();
-//   var file = $("#uploadFile")[0].files[0];
-//   var form = new FormData();
-//   form.append("file", file);
-//
-//   $.ajax({
-//     url: "/admin/uploadImg",
-//     type: "POST",
-//     data: form,
-//     async: true,
-//     processData: false,
-//     contentType: false,
-//     success: function(result) {
-//       startReq = false;
-//       if (result.code === 0) {
-//       //  var picUrl = $.format("![Alt text]({0})",result.data)
-//         $("#userThumb").attr("src",result.data);
-//       //  $(".pg-wrapper").hide();
-//         // console.log(result.data);
-//       }
-//     }
-//   });
-// }
 function doUpload() {
   $(".pg-wrapper").show();
   var file = $("#uploadFile")[0].files[0];

@@ -3,7 +3,9 @@ var router = express.Router();
 var dbHelper = require('../db/dbHelper');
 var formidable = require('formidable');
 var entries = require('../db/jsonRes');
-// var NodePDF = require('nodepdf');
+
+
+
 
 //渲染新建新闻页面
 router.get('/news', function(req, res, next) {
@@ -217,4 +219,6 @@ router.post('/moocDownChap', function(req, res, next) {
     }
   })
 });
+
+
 module.exports = router;

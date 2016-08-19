@@ -26,8 +26,9 @@ router.get('/blogPdf/:id', function(req, res, next) {
 
   var id = req.params.id;
   dbHelper.findNewsOne(req, id, function (success, data) {
-    res.render('blog', {
-      entries: data
+    res.render('blogpdf', {
+      entries: data,
+
     });
   })
 });

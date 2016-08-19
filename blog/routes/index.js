@@ -7,10 +7,11 @@ var fs = require('fs');
 var config = require('../config');
 var formidable = require('formidable');
 var entries = require('../db/jsonRes');
+var Comment=require('../db/schema/comment');
 
 router.get('/login', function(req, res, next) {
   res.render('login', { layout: 'lg' });
-});
+}); 
 router.post('/login', function(req, res, next) {
   dbHelper.findUsr(req.body, function (success, doc) {
 	  req.session.user = doc.data;
@@ -29,45 +30,20 @@ router.post('/', function(req, res, next) {
 
 
 router.get('/register', function(req, res, next) {
-	res.render('register', { layout: 'register' });
+	res.render('register', { layout: 'lg' });
 });
 router.post('/register', function(req, res, next) {
 	dbHelper.addUser(req.body, function (success, doc) {
 		res.send(doc);
 	})
 });
-//
-// router.get('/', function(req, res, next) {
-// 	var user = new User({
-// 		username: 'tom',
-// 		password: '1'
-// 	});
-// 	user.save(function (err) {
-// 		if(err){
-// 			console.log('保存失败');
-// 		}
-// 		console.log('success');
-// 	})
-// });
+
 router.get('/search',function (req, res, next) {
 	var keyword = req.query.keyword;
 	var pattern = new RegExp(keyword, "i");
-
-
-
-	// News.find()
-	//   .populate('author')
-	//     .exec(function(err, docs) {
-	//
-	//         var newsList=new Array();
-	// 	        for(var i=0;i<docs.length;i++) {
-	//             newsList.push(docs[i].toObject());
-	//         }
-	//         cb(true,newsList);
-	//     });
-
 	dbHelper.findNewsContent(req, pattern, function (success, data) {
 		res.render('blog', {
+			layout: 'main',
 			entries: data
 		});
 	})
@@ -142,6 +118,21 @@ router.get('/moocs', function(req, res, next) {
 		});
 	})
 });
+router.get('/:id', function(req, res, next) {
+	var id = req.params.id;
+	dbHelper.findNewsOne(req, id, function (success, data) {
+		dbHelper.findComment(id, function (success, comments) {
+			// Comment.find({news:id}, function (success, comments) {
+			res.render('blog',{
+				layout: 'main',
+				entries: data,
+				comments: comments,
+				user: req.session.user
+
+			});
+		});
+	});
+});
 
 
 router.get('/mooc/:id', function(req, res, next) {
@@ -162,7 +153,11 @@ router.post('/moocGetChapContentOnly', function(req, res, next) {
 	})
 });
 
-
-
-
+router.post('/addComment', function(req, res, next) {
+	//发表评论
+	console.log("发表评论");
+	dbHelper.addComment(req.body, function (success, doc) {
+		res.send(doc);
+	})
+});
 module.exports = router;

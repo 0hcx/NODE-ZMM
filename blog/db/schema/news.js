@@ -9,6 +9,10 @@ var newsSchema = new Schema({
         updateAt: {type:Date, default: Date.now()},
         createAt: {type:Date, default: Date.now()}
     },
+    pv:{
+        type:Number,
+        default:0
+    },
     author: {
       type: Schema.Types.ObjectId,
       ref: 'User'
