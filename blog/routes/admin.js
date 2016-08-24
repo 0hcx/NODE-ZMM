@@ -5,11 +5,14 @@ var formidable = require('formidable');
 var entries = require('../db/jsonRes');
 
 
-
-
 //渲染新建新闻页面
 router.get('/news', function(req, res, next) {
-  res.render('./admin/news', { title: 'Express', layout: 'admin' });
+  res.render('./admin/news', {
+    title: 'Express',
+    layout: 'admin' ,
+    user: req.session.user
+
+  });
 });
 //创建新闻
 router.post('/news', function(req, res, next) {
@@ -43,54 +46,12 @@ router.get('/newsList', function(req, res, next) {
 router.get('/newsDelete/:id', function(req, res, next) {
   var id = req.params.id;
   dbHelper.deleteNews(id, function (success, data) {
-    // req.session['message'] = data.msg;
     req.session['message'] = data.msg;
     res.redirect("/admin/newsList");
   })
 });
 
-//上传图片
-router.post('/uploadImg', function(req, res, next) {
-  var io = global.io;
-  var form = new formidable.IncomingForm();
-  var path = "";
-  var fields = [];
-  form.encoding = 'utf-8';
-  form.uploadDir = "./public/upload";
-  form.keepExtensions = true;
-  form.maxFieldsSize = 30000 * 1024 * 1024;
-  var uploadprogress = 0;
-  console.log("start:upload----"+uploadprogress);
-  form.parse(req);
-  form.on('field', function(field, value) {
-    console.log(field + ":" + value);
-  })
-      .on('file', function(field, file) {
-        path = '\\' + file.path;
-      })
-      .on('progress', function(bytesReceived, bytesExpected) {
 
-        uploadprogress = (bytesReceived / bytesExpected * 100).toFixed(0);
-        console.log("upload----"+ uploadprogress);
-        io.sockets.in('sessionId').emit('uploadProgress', uploadprogress);
-      })
-      .on('end', function() {
-        console.log('-> upload done\n');
-        entries.code = 0;
-        entries.data = path;
-        res.writeHead(200, {
-          'content-type': 'text/json'
-        });
-        res.end(JSON.stringify(entries));
-      })
-      .on("err",function(err){
-        var callback="<script>alert('"+err+"');</script>";
-        res.end(callback);//这段文本发回前端就会被同名的函数执行
-      }).on("abort",function(){
-    var callback="<script>alert('"+ttt+"');</script>";
-    res.end(callback);
-  });
-});
 //渲染新建新闻页面
 router.get('/moocList', function(req, res, next) {
   dbHelper.findMooc(req, function (success, data) {
@@ -115,6 +76,8 @@ router.get('/moocCreate', function(req, res, next) {
 router.post('/moocCreate', function(req, res, next) {
   dbHelper.addMooc(req.body, function (success, doc) {
     res.send(doc);
+    user: req.session.user
+
   })
 });
 
@@ -220,5 +183,4 @@ router.post('/moocDownChap', function(req, res, next) {
   })
 });
 
-
-module.exports = router;
+  module.exports = router;

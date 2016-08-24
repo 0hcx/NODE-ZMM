@@ -18,7 +18,7 @@ function init() {
 
   $(".pg-bar").progressbar({value: 0});
   $(".pg-bar").progressbar( "option", "max", 100 );
-  $("body").on('click', '#addNewsBtn', doAddNews);
+  // $("body").on('click', '#addNewsBtn', doAddNews);
   $("body").on('click', '#UploadBtn', doUpload);
   $("body").on('change', '#uploadFile', preUpload);
 }
@@ -32,7 +32,7 @@ function doUpload() {
   var form = new FormData();
   form.append("file", file);
   $.ajax({
-    url: "/admin/uploadImg",
+    url: "/uploadImg",
     type: "POST",
     data: form,
     async: true,
@@ -64,8 +64,8 @@ function doAddNews() {
       if (result.code === 99) {
         alert(result.msg);
       } else {
-         alert("发布成功！");
-        location.href = '/pdf/blogPdf/'+ result.data._id;
+        notifyInfo("发布成功！");
+        location.href = '/'+ result.data._id;
       }
     }
   })
