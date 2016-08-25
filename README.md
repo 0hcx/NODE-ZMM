@@ -1,5 +1,857 @@
 #学习报告
+#项目进程
+##2016/8/25
+###grunt配置
+####1.安装
+全局安装grunt，并安装`grunt-concurrent`，`grunt-contrib-jshint`，`grunt-contrib-less`，`grunt-contrib-ugli
+fy`，`grunt-contrib-watch，grunt-nodemon`插件，用于慢任务，语法检测，压缩，入口文件及文件修改的监听
+####2.根目录下创建gruntfile.js
+```js
+module.exports=function(grunt){
+    //定义的任务
+    grunt.initConfig({
+        watch: {
+            hbs: {
+                files: ['views/**'],
+                options: {
+                    livereload: true
+                }
+            },
+            js: {
+                files: ['public/blog/**', 'models/**/*.js', 'schemas/**/*.js', 'db/schema/**'],
+                options: {
+                    livereload: true//文件改动重新启动
+                }
+            }
+        },
+
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc',
+                ignores: ['public/libs/**/*.js']
+            },
+            all: ['public/blog/*.js', 'db/*.js', 'db/schema/*.js']
+        },
+
+        nodemon: {
+          // ```
+        },
+        //压缩配置
+        less: {
+            development: {
+                options: {
+                    compress: true,
+                    yuicompress: true,
+                    optimization: 2
+                },
+                files: {
+                    // 'public/lib/adminlte/css/AdminLTE.min.css': 'public/stylesheets/index.less'
+                }
+            }
+        },
+        uglify: {
+            development: {//压缩环境
+                files: {
+                    'public/build/common.min.js': 'public/blog/common.js',
+                    'public/build/detail.js': [
+                        'public/blog/comment.js','public/blog/public/blog/initBlog.js',
+                        ````
+                    ]
+                }
+            }
+        },
+        concurrent: {
+            tasks: ['nodemon', 'watch'],
+            options: {
+                logConcurrentOutput: true
+            }
+        }
+    });
+    //插件加载
+    grunt.loadNpmTasks('grunt-contrib-watch');//只要文件添加修改就会重新执行
+    grunt.loadNpmTasks('grunt-nodemon');//实时监听app.js
+    grunt.loadNpmTasks('grunt-concurrent');//针对慢任务
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    
+    grunt.option('force',true);//防止中断整个任务
+    grunt.registerTask('default',['concurrent']);//默认任务
+};
+```
+####3.jshint配置文件+创建相应目录文件+运行事件
+```
+grunt
+grunt jshint
+grunt less
+grunt uglify
+
+```
+***
+##2016/8/24
+###gulp插件的使用
+####1.gulp和gulp-autoprefixe安装
+####2.根目录创建gulpfile.js
+```js
+var gulp = require('gulp');
+var autoprefixer = require('gulp-autoprefixer');
+gulp.task('styles',function() {
+  gulp.src('public/lib/adminlte/css/AdminLTE.min.css')//处理文件
+    .pipe(autoprefixer())
+    .pipe(gulp.dest('public/stylesheets'))//输出目标文件
+});
+
+gulp.task('watch',function() {//监听文件
+  gulp.watch('css/styles.css', ['styles']);
+});
+
+```
+参考即flex视频文件
+***
+##2016/8/22
+###手机端设计
+考虑到屏幕变小后导航条会显得比较拥挤不美观以及自我介绍栏位置的蜜汁尴尬，将屏幕缩小后，新增菜单，隐藏介绍栏
+，将内容居中,增加内容如下
+```css
+@media all and (max-width:500px) {
+    .nav{
+        flex-basis: 100%;
+        border-top:1px solid #ccc;
+        background-color: #38b7ea;
+        order:2;
+    }
+    .Writer{
+        display: none;
+    }
+    .News{
+        flex-basis: 100%;
+        max-width: 100vh;
+    }
+    .mooc{
+        width: 100vh;
+    }
+    .Content{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+```
+***
+##2016/8/19
+###评论回复
+```js
+/* 评论定义 */
+var commentSchema = new Schema({
+    commentId: String,
+    news: {type: ObjectId, ref: 'News'},//当前评论页面
+    from: {type: ObjectId, ref: 'User'},//评论人
+    to: {type: ObjectId, ref: 'User'},
+    content: String,
+    reply: [{//回复数组
+        commentId: String, 
+        from: {type: ObjectId, ref: 'User'},
+        to: {type: ObjectId, ref: 'User'},
+        content: String
+    }],
+   ....
+    }
+});
+```
+```js
+//dbHelper 评论
+exports.addComment = function(data, cb) {
+    //将markdown格式的新闻内容转换成html格式
+    data.content = md.render(data.content);
+    if(data.comment) {//新增回复
+        Comment.findById(data.comment, function (err, comment) {
+            console.log(comment);
+            var reply = new Comment({
+              ......
+            });
+            comment.reply.push(reply);
+            comment.save(function (err, doc) {
+              ......
+    }
+    else {//新增评论
+        var comment = new Comment({
+          .....
+        });
+        comment.save(function(err,doc){
+           .....
+        })
+    }
+
+};
+
+//查找评论
+exports.findComment = function (id, cb) {
+    Comment.find({news: id})
+        .populate('from')//酱紫前段就可以调用from内部数据
+        .populate('reply.from reply.to', 'username')//populate真神奇呀
+        .exec(function (err, docs) {
+            cb(true,docs);
+        })
+};
+```
+```js
+//comment.js
+$('[data-toggle="select"]').on('click', function (e) {
+    e.preventDefault();
+    var $this = $(this);
+    var cid = $this.data('cid');//主评论id，即comment-id
+    var rid = $this.data('rid');//当前评论人id即to-id
+//评论显示
+    //判断input隐藏域是否有了
+    if($('#cid').length > 0) {
+        $('#cid').val(cid);//赋值
+    }
+    else {
+        //插入的隐藏域
+        $('<input>').attr({//传入对象，有多个键值对
+            id: 'cid',
+            type: 'hidden',
+            value: cid
+        }).appendTo('#commentForm');//插入表单
+    }
+//回复显示
+        if($('#rid').length > 0) {
+        $('#rid').val(rid);
+    }
+    else {
+        $('<input>').attr({
+            id: 'rid',
+            type: 'hidden',
+            value: rid
+        }).appendTo('#commentForm');
+    }
+});
+function doRespond() {
+    $.ajax({
+        type: "POST",
+        url: "/addComment",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({
+            'news': $("#news").val(),
+            'content': $("#resContent").val(),
+            'from': $.cookie('id'),
+            'to': $("#rid").val(),
+            'comment': $("#cid").val()
+        }),
+        ······
+}
+```
+[参考网站](http://www.imooc.com/video/3836)
+***
+##2016/8/16
+###站点统计
+在`news`的`Schema`下定义`pv`,默认为0.在`dbHelper`的`findNewsOne`函数下添加如下一行
+```js
+ News.update({_id:id},{$inc:{pv:1}},function (err) {//每次查找自动更新pv使其自增1
+        if(err)
+            console.log(err)
+    });
+```
+***
+##2016/8/14
+###文章检索
+在dbHelper里定义`findNewsContent`函数后在route内调用
+```js
+////返回通过标题关键字查询的所有文章信息
+exports.findNewsContent = function(req, pattern, cb) {
+    News.findOne({title:pattern})//将得到的pattern进行模糊查询
+        .populate('author')
+        .exec(function(err, docs) {
+            var docs = (docs !== null) ? docs : '';
+            cb(true,docs);
+        });
+};
+router.get('/search',function (req, res, next) {
+  var keyword = req.query.keyword;
+  var pattern = new RegExp(keyword, "i");
+  //正则表达式：对字符串执行模式匹配  
+  //属性i 执行对大小写不敏感的匹配。
+  dbHelper.findNewsContent(req, pattern, function (success, data) {
+    res.render('blog', {
+      layout: 'main',
+      entries: data
+    });
+  })
+});
+```
+碰到的困难：搜索之后不能调到相应的页面上去
+```html
+<div class="search-form">
+//我原来把这个div写成form里面那个form，应该是直接到／search，然而外边那个应该是form是我的blogs
+  <form action="/search" method="GET">
+    <input type="text" name="keyword" placeholder="Search.." class="form-control" /></form>
+</div>
+```
+[参考网站](https://github.com/nswbmw/N-blog/wiki/%E7%AC%AC11%E7%AB%A0--%E5%A2%9E%E5%8A%A0%E6%96%87%E7%AB%A0%E6%A3%80%E7%B4%A2%E5%8A%9F%E8%83%BD)
+***
+##2016/8/8
+##header头像的显示
+在route文件夹下添加`user: req.session.user`，这样相应页面就可以调用user内的数据，通过`{{user.userThumb}}`和`{{user.username}}`显示用户名及头像
+***
+##2016/8/3
+###头像上传及显示
+###思路
+模仿mooc及news图片上传打码，user添加userThumb属性
+###遇到的问题
+####1. uploadimg
+一会儿可以上传，一会儿又不能，最后发现，只有在用户登录过才能上传上去，于是乎经过反复思考发现，
+这个与`authority`有关系，重新刷新之后的`user`没有`authorized`，因此不能上传，没有权限。因此做出调整：
+取消对于`index`的授权，将`uploadimg`放在`index`的路由下面。但是`admin`的权限并没有取消（处于实际考虑）
+####2. 图片显示
+通过调用 `{{entries.author.userThumb}}`并不能显示，最后通过`initBlog`中的`imgUrl`获取`cookie`中的
+`userThumb`，然后`class`中`uig`绑定`imgUrl`中`userThumb`中的`src`，然后调用。
+***
+##2016/7/20
+###validate注意事项  
+###button type="submit"的性质
+1.`type=submit`是发送表单，使用`submit`后，页面支持键盘`enter`键操作,因此使用`submit`来提高页面易用性  
+2.`Submit`将表单提交(`form.submit())`作为其onclick后的默认事件，提交时，所有具有`name`属性的`html`输入元素都将作为键值对提交，除了`Submit`对象。`Submit`对象只有在自己被单击后的提交中才会作为键值对被提交.  
+###注册功能的完善
+```js
+<input type="email" class="form-control" placeholder="E-mail" id="new-email" name="email" required>
+//要求输入邮箱满足一定的格式要求
+...
+<input type="password" class="form-control" placeholder="密码" id="new-pwd" required minlength="3" maxlength="10">
+//要求密码满足一定的长度要求
+```
+***
+##2016/7/17
+###jquery validate
+目的：为表单提供了强大的验证功能，该插件捆绑了一套有用的验证方法，包括 URL 和电子邮件验证，也可自定义。
+[官网](https://jqueryvalidation.org/)
+####引入
+```css
+<script src="/lib/jquery/jquery.validate.js"></script>//导入js库
+<script src="/lib/jquery/jquery.validate.messages_cn.js"></script>//中文信息提示包
+```
+####使用方式  
+1、将校验规则写到控件中  
+```css
+<input type="text" class="form-control" placeholder="用户名" id="usr" required  minlength="3">
+//要求必填且最小3个字母
+```
+2、将校验规则写到 js 代码中  
+```js
+ $("#signupForm").validate({
+      rules: {
+        firstname: "required",//必填
+        lastname: "required",
+        username: {
+          required: true,
+          minlength: 2
+        }
+```
+[参考网站](http://www.runoob.com/jquery/jquery-plugin-validate.html)
+***
+##2016/7/14
+###加入session支持
+目的：获取当前用户的会话对象，以维护用户相关的信息。  
+`session`的认证机制必须依赖`cookie`，所以还应该同时安装一个`cookie-parser`，然后再app.js中导入这两个中间件：  
+```js
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+```
+定义cookie解析器，注意，该定义必须写在路由分配之前:  
+```js
+app.use(cookieParser());
+app.use(session({
+  name:'Blog',//表示cookie的name，默认cookie的name是：connect.sid。
+  maxAge: 30 * 1000,//cookie过期时间，毫秒。
+  secret: 'mia-web-node-secret-key',//用来对session数据进行加密的字符串.这个属性值为必须指定的属性。
+  resave: false,//每次请求都重新设置session cookie,过期,请求都会再设置。
+  saveUninitialized: false//每次请求都设置个session cookie ，默认给个标示为 connect.sid
+}));
+```
+之后在处理请求时直接通过以下方式对session进行读写：  
+
+```js
+req.session['message'] = "";//写入session
+res.redirect(req.session.lastpage);//从session中读取
+```
+##2016/7/16
+###session的应用
+应用一：登陆权限验证  
+```js
+module.exports = {
+    isAuthenticated: function (req, res, next) {
+        if(typeof(req.session.user) != 'undefined') {//查看session中user是否定义
+            return next();
+        }else{
+            res.redirect('/login');//否则，跳转到登陆界面
+        }
+    }
+};
+```
+应用二：支持socket.io  
+```js
+socket.join('sessionId');
+```
+
+应用三：新闻列表的消息提示  
+```js
+//路由渲染新闻列表时新建一个msg将其写入session
+router.get('/newsList', function(req, res, next) {
+  var msg = req.session['message'] || '';
+  req.session['message'] = "";
+  ....}
+//执行操作的时候将信息写入msg
+exports.deleteNews = function(id, cb) {
+    News.findById(id, function (err, doc) {
+        if (doc) {
+            doc.remove(function (err, doc) {
+                if (err) {
+                    entries.msg = err;
+                    cb(false,entries);
+                }else{
+                    entries.msg = '删除新闻成功！';
+                    cb(true,entries);
+            ....
+//路由 如果msg不为空，则弹出框
+$(init);
+function init() {
+  var msg = $(".box-msg").text();
+  if (msg!=="") {
+    notifyInfo(msg);
+    $(".box-msg").text("");
+  }
+}
+//前端 
+<div class="box-msg hidden">{{message}}</div>
+}
+```
+***
+##2016/7/13
+###pdf
+####问题解决  
+1. docs对象为空  
+原因：` var docs = (docs !== null) ? docs.toObject() : '';`这句报错。内容：`toObject() is undefined`  
+解决：不用`toObject()`函数,直接可以取比如`doc._id`。这是model对象的一个特点.
+
+2.页面跳转id并未传入    
+```js
+entries.data = doc.toObject();//addnews时将doc转为对象，并将数据传给entries
+cb(true,entries);
+location.href = '/pdf/blogPdf/'+ result.data._id;//回掉函数返回
+```
+####理解
+[参考网站1](https://github.com/TJkrusinski/NodePDF)  
+[参考网站2](http://phantomjs.org/api/webpage/property/cookies.html)
+***
+##2016/7/11
+###文件显示问题
+遇到的问题：图片无法显示    
+尝试1：发现如果把upload的文件放在public路径下面，图片可以显示。   
+尝试2：将加载路径 改为"./public/upload";图片可以传进来啦，但是图片还是无法显示。  
+思考：可能是路径配置有问题    
+解决方法：将`app.use(express.static(path.join(__dirname, '/')));`加入app.js。  
+解释：静态文件从应用程序目录中的“根目录”目录中的应用静态内容  
+[参考网站](http://expressjs.com/en/api.html)  
+***
+***  
+###pdf  
+问题1:出现error：conversation failed with exits of 1  
+解决方法:在terminal打上`npm install phantomjs -g`
+
+问题2：pdf显示全部数据，而不是单条数据  
+解决方法：新建一个blog.hbs,改变pdf的路由  
+
+问题3：发布成功后，不能跳转到相应id的路径上，是unsigned  
+思考：`location.href = '/pdf/blogPdf/'+ result.data._id;`这里参数没有传进来  
+暂未解决  
+[参考网站](http://yijiebuyi.com/blog/be234394cd350de16479c583f6f6bcb6.html)  
+***
+##2016/7/10
+###文件上传
+遇到的问题：进度条没有加载,socket没连上  
+解决方法：
+`admin.js`里面`var io = global.io`
+这里的`io`就是传说中的全局变量，要在`www`初始化，保存到全局，然后传给`router`，原来是这样子！
+*** 
+##2016/7/12
+###图片代码理解
+####前端
+```js
+function init() {
+  var socket = io();
+  socket.on('uploadProgress' , function(percent){
+    console.log(percent);
+    $(".pg-bar").progressbar( "option", "value", parseInt(percent));
+    $(".pg-info").text( percent + '%');
+  });
+  $(".pg-bar").progressbar({value: 0});
+  $(".pg-bar").progressbar( "option", "max", 100 );
+  $("body").on('click', '#addNewsBtn', doAddNews);
+  $("body").on('click', '#UploadBtn', doUpload);
+  $("body").on('change', '#uploadFile', preUpload);
+}
+
+function preUpload() {
+  $("#UploadBtn").removeClass('disabled');//上传按钮生效
+}
+function doUpload() {
+  $(".pg-wrapper").show();//进度条显示
+  var file = $("#uploadFile")[0].files[0];
+  var form = new FormData();
+  form.append("file", file);
+  $.ajax({
+    url: "/admin/uploadImg",
+    type: "POST",
+    data: form,
+    async: true,
+    processData: false,
+    contentType: false,
+    success: function(result) {
+      startReq = false;
+      if (result.code == 0) {
+        var picUrl = $.format("![Alt text]({0})",result.data);
+        $("#newsContent").insertAtCaret(picUrl);//插入图片
+        $(".pg-wrapper").hide();//进度条图层隐藏
+        // console.log(result.data);
+      }
+    }
+  });
+}
+```
+####后端
+```js
+var formidable = require('formidable');//载入 formidable
+router.post('/uploadImg', function(req, res, next) {
+  var io = global.io;
+  var form = new formidable.IncomingForm();//创建新的表单
+  var path = "";
+  var fields = [];
+  form.encoding = 'utf-8';//编码方式
+  form.uploadDir = "./public/upload";//保存路径
+  form.keepExtensions = true;//包含源文件的扩展名
+  form.maxFieldsSize = 30000 * 1024 * 1024;//限制的内存量。如果超过此值，“错误”事件被发射。
+  var uploadprogress = 0;//进度条
+  console.log("start:upload----"+uploadprogress);
+  form.parse(req);//会转换请求中所包含的表单数据
+  form.on('field', function(field, value) {//每当一个字段/值对已经收到时会触发该事件
+    console.log(field + ":" + value); //上传的参数数据
+  })
+      .on('file', function(field, file) {//每当文件已经接收到，便会触发该事件
+        path = '\\' + file.path; //上传文件路径
+      })
+      .on('progress', function(bytesReceived, bytesExpected) {//当有数据块被处理之后会触发该事件，对于创建进度条非常有用。
+        uploadprogress = (bytesReceived / bytesExpected * 100).toFixed(0);//计算进程
+        console.log("upload----"+ uploadprogress);
+        io.sockets.in('sessionId').emit('uploadProgress', uploadprogress);
+      })
+      .on('end', function() {// 当所有的请求已经接收到，且所有的文件都已上传到服务器中，该事件会触发。
+        console.log('-> upload done\n');// //上传完发送成功的json数据
+        entries.code = 0;
+        entries.data = path;
+        res.writeHead(200, {
+          'content-type': 'text/json'
+        });
+        res.end(JSON.stringify(entries));
+      })
+      .on("err",function(err){//当上传流中出现错误便会触发该事件
+        var callback="<script>alert('"+err+"');</script>";
+        res.end(callback);//这段文本发回前端就会被同名的函数执行
+      }).on("abort",function(){
+    var callback="<script>alert('"+ttt+"');</script>";
+    res.end(callback);
+  });
+});
+```
+
+[参考网站](http://www.cnblogs.com/yuanke/archive/2016/02/26/5221853.html)
+***
+##2016/7/9
+###分页关键代码的理解
+1.后端
+```js
+exports.pageQuery = function (page, pageSize, Model, populate, queryParams, sortParams, callback) {
+    var start = (page - 1) * pageSize;
+    var $page = {
+        pageNumber: page//当前页码
+    };
+    async.parallel({//并行:parallel 
+                   //的原理是同时并行处理每一个流程,最后汇总结果,如果某一个流程出错就退出.
+        count: function (done) {  // 查询数量
+            Model.exec(function (err, count) {  
+                done(err, count);
+            });
+        },
+        records: function (done) {   // 查询一页的记录
+            Model.find(queryParams).skip(start).limit(pageSize).populate(populate).sort(
+            sortParams).exec(function (err, doc) {
+                done(err, doc);//通过skip,limit进行分页。
+// 关于skip效率问题，10W以下的记录，是可以接受的，10w以上的记录需要根据排序的字段，通过索引定位查询
+            });
+        }
+    }, function (err, results) {
+        var newsList=new Array();
+        for(var i=0;i<results.records.length;i++) {
+            newsList.push(results.records[i].toObject());
+        }
+        var count = results.count;
+        $page.pageCount = parseInt((count - 1) / pageSize + 1);//算总页数
+        $page.results = newsList;//当前页的记录
+        $page.count = count;
+        callback(err, $page);
+    });
+};
+```
+2.前端
+```css
+<div class="box-footer">
+    <nav>
+      <ul class="pagination"><!-- 引入pagination类,用于分页 -->
+        <li>
+          <a href="{{#le pageNumber 1}}?{{else}}?page={{reduce pageNumber 1}}{{/le}}"
+            aria-label="Previous"><!-- 如果数据有前页,那个上一页的按钮有效 -->
+           <span aria-hidden="true">&laquo;</span><!-- 转义字符<< -->
+          </a>
+        </li>
+        {{#times pageCount 1 pageCount}}<!-- 进入分页展示 -->
+        <li {{#equals pageNumber this.step}}class="active" {{/equals}}><!-- 当前页 -->
+          <a href="?page={{step}}{{#if recommend}}&recommend={{recommend}}{{/if}}{{#if type}}&type={{type}}{{/if}}">{{step}}</a>
+      </li>
+         {{/times}}
+        <li>
+          <a href="{{#ge pageNumber pageCount}}?page={{pageCount}}{{else}}?page={{add pageNumber 1}}{{/ge}}"
+          aria-label="Previous">
+            <span aria-hidden="true">&raquo;</span><!-- 转义字符>> -->
+          </a>
+        </li>
+      </ul>
+    </nav>
+</div>
+```
+`news.js`用户定义，`newsAdmin.js`定义ajax对象，`dbHelper.js`实现联系前两者，在`index.js`.添加路由，在
+`news.hbs`应用渲染到前端(运算符在`hbsHelper.helper`中定义)。
+*** 
+##2016/7/6
+###集成Markdown编辑器并渲染显示
+在项目中集成Markdown，最简单的方法就是直接放一个textarea，然后后台通过`remarkable`进行渲染。
+这里有一个Remarkable在线演示示例：<https://jonschlinkert.github.io/remarkable/demo/>
+####使用Remarkable
+为了能够支持代码高亮，所以用到了另外一个中间件`highlight`  
+1.首先安装集成  
+```js
+npm install --save remarkable
+npm install --save highlight.js
+```
+2.定义
+```js
+var Remarkable = require('remarkable');
+var hljs = require('highlight.js');
+```
+```js
+ Remarkable: function () {
+        return new Remarkable('full', {
+            linkify: true,         // 自动转换链接
+            highlight: function (str, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    try {return hljs.highlight(lang, str).value;
+                    } catch (err) {
+                    }
+                }try {
+                    return hljs.highlightAuto(str).value;
+                } catch (err) {}
+               return ''; // 使用外部默认溢出
+            }
+        });
+    }
+};
+```
+3.使用
+```js
+var md = webHelper.Remarkable();
+data.content = md.render(data.content);
+```
+4.前台正常渲染代码高亮(这个好像可以不用欸)  
+在前台我们还需要在前台引入highlight.js的相关css。
+```html
+<link rel="stylesheet" href="/stylesheets/default.css">
+<script src="/js/highlight.js"></script>
+```
+出现问题：无法识别标题的那个＃  
+[参考网页](http://www.jianshu.com/p/2a533f47a6d7)
+***
+##2016/7/6
+###注册功能
+```js
+exports.addUser = function(data, cb) {
+    if (data.usr === "") {                //未输入用户名
+        entries.code = 99;
+        entries.msg = '请输入用户名 ！';
+        cb(false, entries);
+    }
+    else if (data.password === "") {...} //未输入密码
+    else if (data.email === "") {...}    //未输入邮箱
+    else {User.findOne({username: data.usr}, function (err, usr) {
+            if (err) { ...}
+            else if (usr) {...}          //当用户存在
+              else {
+                var user = new User({...});
+                user.save(function (err, usr) {
+                    if (err) {...}
+                    else {
+                        entries.code = 0;
+                        entries.msg = '注册成功 ！';
+                        cb(true, entries);
+                        ...
+```
+***
+##2016/7/4
+###网页发布一些问题的解决  
+formatDate&timeFromNow
+这两个都是用来对时间进行格式化，但是系统报错说无法识别，经检验在`var hbs = exphbs.create`加入`helpers: hbsHelper`
+###网页布局的改变
+在原来基础上，我加了homepage，将新闻发布放在/news下
+***
+##2016/7/2
+###news发布大概流程
+1.首先是 newsSchema的定义（db：schema:user.js）
+```js
+author: {
+  type: Schema.Types.ObjectId,
+  ref: 'User'
+```
+newsSchema 的属性 author，对应是一个 ObjectId 的数组。ref表示关联User
+(注意: 被关联的model的 type 必须是 ObjectId, Number, String, 和 Buffer 才有效)。
+
+2.然后是与之对应的json对象（/blog/newsAdmin.js）
+```js
+data: JSON.stringify({
+  'usr': $("#usr").val(),
+  'pwd': $("#pwd").val()
+```
+3.然后是两者之间的联系dbHelper.js
+```js
+exports.addNews = function(data, cb) {
+     data.content = md.render(data.content); //这与highlight相关
+      var news = new News({
+        title: data.title,
+        content: data.content,
+        author:data.id
+    }); 
+     news.save(function(err,doc){
+        if (err) {
+            cb(false,err);
+        }else{
+            cb(true,entries);
+        }
+    })
+};
+```
+4.Object类型的时，就是把 populate 的参数封装到一个对象里。如下，就是填充News的author字段
+[参考网页](https://segmentfault.com/a/1190000002727265#articleHeader3)
+```js
+exports.findNewsOne = function(req, id, cb) {
+    News.findOne({_id: id})
+        .populate('author')
+        .exec(function(err, docs) {
+            cb(true,docs.toObject());
+        });
+};
+```
+hbsHelper跟time有关系  
+webHelper跟highlight有关系,但是好像有问题  
+5.admin.js
+```js
+router.get('/news', function(req, res, next) {
+  res.render('./admin/news', { title: 'Express', layout: 'admin' });
+});
+router.post('/news', function(req, res, next) {
+  dbHelper.addNews(req.body, function (success, doc) {
+    res.send(doc);
+  })
+});
+```
+##2016/6/29
+###登录功能的实现
+1. 定义数据模型
+```js
+var Schema = mongoose.Schema;
+/* 用户定义 */
+var userSchema = new Schema({
+    username: String,
+    password: String,
+    email:    String,
+    address:  String,
+    meta: {
+        updateAt: {type:Date, default: Date.now()},
+        createAt: {type:Date, default: Date.now()}
+    }
+});
+```
+
+2.开放接口
+```
+module.exports = mongoose.model('User', userSchema);
+```
+
+3.监听事件
+```js
+$(init);
+function init() {
+  $("body").on('click', '#loginBtn', doLogin);
+}
+function doLogin() {
+  $.ajax({
+    type: "POST",
+    url: "/login",//路径
+    contentType: "application/json",
+    dataType: "json",
+    data: JSON.stringify({
+      'usr': $("#usr").val(),//用于从一个对象解析出字符串!
+      'pwd': $("#pwd").val()//改变当前地址
+    }),
+    success: function(result) {
+      if (result.code == 99) {//表示成功
+        $(".login-box-msg").text(result.msg);
+      } else {
+        $.cookie('username', result.data.username, {expires:30});
+        //将result.data.username写入cookies中的username去
+        ...
+        location.href = "/blog";
+      }
+    }
+  })
+}
+```  
+4.findUsr
+```js
+exports.findUsr = function(data, cb) {
+    User.findOne({
+        username: data.usr
+    }, function(err, doc) {
+        var user = (doc !== null) ? doc.toObject() : '';
+        //将user转为一个对象(在密码和用户名匹配的前提下)
+       else if (user.password === data.pwd) {
+         ....
+            cb(true, entries);
+}
+```
+
+5.添加路由
+```js
+router.get('/login', function(req, res, next) {
+    res.render('login', { layout: 'lg' });
+});
+
+router.post('/login', function(req, res, next) {
+    dbHelper.findUsr(req.body, function (success, doc) {//`callback`函数
+        res.send(doc);
+    })
+});
+```
+***
+
+***
 ##知识点总结
+***
 ###http协议
 ####1.绝对地址和相对地址  
 #####1.1绝对URL  
@@ -702,559 +1554,7 @@ reconnect：成功重连
 reconnecting：正在重连  
 当第一次连接时，事件触发顺序为：connecting->connect；当失去连接时，事件触发顺序为：disconnect->reconnecting（可能进行多次）->connecting->reconnect->connect。  
 [参考](http://www.cnblogs.com/edwardstudy/p/4358202.html)
-***
-##项目进程
-***
-##2016/6/29
-###登录功能的实现
-1. 定义数据模型
-```js
-var Schema = mongoose.Schema;
-/* 用户定义 */
-var userSchema = new Schema({
-    username: String,
-    password: String,
-    email:    String,
-    address:  String,
-    meta: {
-        updateAt: {type:Date, default: Date.now()},
-        createAt: {type:Date, default: Date.now()}
-    }
-});
-```
 
-2.开放接口
-```
-module.exports = mongoose.model('User', userSchema);
-```
-
-3.监听事件
-```js
-$(init);
-function init() {
-  $("body").on('click', '#loginBtn', doLogin);
-}
-function doLogin() {
-  $.ajax({
-    type: "POST",
-    url: "/login",//路径
-    contentType: "application/json",
-    dataType: "json",
-    data: JSON.stringify({
-      'usr': $("#usr").val(),//用于从一个对象解析出字符串!
-      'pwd': $("#pwd").val()//改变当前地址
-    }),
-    success: function(result) {
-      if (result.code == 99) {//表示成功
-        $(".login-box-msg").text(result.msg);
-      } else {
-        $.cookie('username', result.data.username, {expires:30});
-        //将result.data.username写入cookies中的username去
-        ...
-        location.href = "/blog";
-      }
-    }
-  })
-}
-```  
-4.findUsr
-```js
-exports.findUsr = function(data, cb) {
-    User.findOne({
-        username: data.usr
-    }, function(err, doc) {
-        var user = (doc !== null) ? doc.toObject() : '';
-        //将user转为一个对象(在密码和用户名匹配的前提下)
-       else if (user.password === data.pwd) {
-         ....
-            cb(true, entries);
-}
-```
-
-5.添加路由
-```js
-router.get('/login', function(req, res, next) {
-    res.render('login', { layout: 'lg' });
-});
-
-router.post('/login', function(req, res, next) {
-    dbHelper.findUsr(req.body, function (success, doc) {//`callback`函数
-        res.send(doc);
-    })
-});
-```
-***
-##2016/7/2
-###news发布大概流程
-1.首先是 newsSchema的定义（db：schema:user.js）
-```js
-author: {
-  type: Schema.Types.ObjectId,
-  ref: 'User'
-```
-newsSchema 的属性 author，对应是一个 ObjectId 的数组。ref表示关联User
-(注意: 被关联的model的 type 必须是 ObjectId, Number, String, 和 Buffer 才有效)。
-
-2.然后是与之对应的json对象（/blog/newsAdmin.js）
-```js
-data: JSON.stringify({
-  'usr': $("#usr").val(),
-  'pwd': $("#pwd").val()
-```
-3.然后是两者之间的联系dbHelper.js
-```js
-exports.addNews = function(data, cb) {
-     data.content = md.render(data.content); //这与highlight相关
-      var news = new News({
-        title: data.title,
-        content: data.content,
-        author:data.id
-    }); 
-     news.save(function(err,doc){
-        if (err) {
-            cb(false,err);
-        }else{
-            cb(true,entries);
-        }
-    })
-};
-```
-4.Object类型的时，就是把 populate 的参数封装到一个对象里。如下，就是填充News的author字段
-[参考网页](https://segmentfault.com/a/1190000002727265#articleHeader3)
-```js
-exports.findNewsOne = function(req, id, cb) {
-    News.findOne({_id: id})
-        .populate('author')
-        .exec(function(err, docs) {
-            cb(true,docs.toObject());
-        });
-};
-```
-hbsHelper跟time有关系  
-webHelper跟highlight有关系,但是好像有问题  
-5.admin.js
-```js
-router.get('/news', function(req, res, next) {
-  res.render('./admin/news', { title: 'Express', layout: 'admin' });
-});
-router.post('/news', function(req, res, next) {
-  dbHelper.addNews(req.body, function (success, doc) {
-    res.send(doc);
-  })
-});
-```
-##2016/7/4
-###网页发布一些问题的解决  
-formatDate&timeFromNow
-这两个都是用来对时间进行格式化，但是系统报错说无法识别，经检验在`var hbs = exphbs.create`加入`helpers: hbsHelper`
-###网页布局的改变
-在原来基础上，我加了homepage，将新闻发布放在/news下
-***
-##2016/7/6
-###注册功能
-```js
-exports.addUser = function(data, cb) {
-    if (data.usr === "") {                //未输入用户名
-        entries.code = 99;
-        entries.msg = '请输入用户名 ！';
-        cb(false, entries);
-    }
-    else if (data.password === "") {...} //未输入密码
-    else if (data.email === "") {...}    //未输入邮箱
-    else {User.findOne({username: data.usr}, function (err, usr) {
-            if (err) { ...}
-            else if (usr) {...}          //当用户存在
-              else {
-                var user = new User({...});
-                user.save(function (err, usr) {
-                    if (err) {...}
-                    else {
-                        entries.code = 0;
-                        entries.msg = '注册成功 ！';
-                        cb(true, entries);
-                        ...
-```
-***
-##2016/7/6
-###集成Markdown编辑器并渲染显示
-在项目中集成Markdown，最简单的方法就是直接放一个textarea，然后后台通过`remarkable`进行渲染。
-这里有一个Remarkable在线演示示例：<https://jonschlinkert.github.io/remarkable/demo/>
-####使用Remarkable
-为了能够支持代码高亮，所以用到了另外一个中间件`highlight`  
-1.首先安装集成  
-```js
-npm install --save remarkable
-npm install --save highlight.js
-```
-2.定义
-```js
-var Remarkable = require('remarkable');
-var hljs = require('highlight.js');
-```
-```js
- Remarkable: function () {
-        return new Remarkable('full', {
-            linkify: true,         // 自动转换链接
-            highlight: function (str, lang) {
-                if (lang && hljs.getLanguage(lang)) {
-                    try {return hljs.highlight(lang, str).value;
-                    } catch (err) {
-                    }
-                }try {
-                    return hljs.highlightAuto(str).value;
-                } catch (err) {}
-               return ''; // 使用外部默认溢出
-            }
-        });
-    }
-};
-```
-3.使用
-```js
-var md = webHelper.Remarkable();
-data.content = md.render(data.content);
-```
-4.前台正常渲染代码高亮(这个好像可以不用欸)  
-在前台我们还需要在前台引入highlight.js的相关css。
-```html
-<link rel="stylesheet" href="/stylesheets/default.css">
-<script src="/js/highlight.js"></script>
-```
-出现问题：无法识别标题的那个＃  
-[参考网页](http://www.jianshu.com/p/2a533f47a6d7)
-***
-##2016/7/9
-###分页关键代码的理解
-1.后端
-```js
-exports.pageQuery = function (page, pageSize, Model, populate, queryParams, sortParams, callback) {
-    var start = (page - 1) * pageSize;
-    var $page = {
-        pageNumber: page//当前页码
-    };
-    async.parallel({//并行:parallel 
-                   //的原理是同时并行处理每一个流程,最后汇总结果,如果某一个流程出错就退出.
-        count: function (done) {  // 查询数量
-            Model.exec(function (err, count) {  
-                done(err, count);
-            });
-        },
-        records: function (done) {   // 查询一页的记录
-            Model.find(queryParams).skip(start).limit(pageSize).populate(populate).sort(
-            sortParams).exec(function (err, doc) {
-                done(err, doc);//通过skip,limit进行分页。
-// 关于skip效率问题，10W以下的记录，是可以接受的，10w以上的记录需要根据排序的字段，通过索引定位查询
-            });
-        }
-    }, function (err, results) {
-        var newsList=new Array();
-        for(var i=0;i<results.records.length;i++) {
-            newsList.push(results.records[i].toObject());
-        }
-        var count = results.count;
-        $page.pageCount = parseInt((count - 1) / pageSize + 1);//算总页数
-        $page.results = newsList;//当前页的记录
-        $page.count = count;
-        callback(err, $page);
-    });
-};
-```
-2.前端
-```css
-<div class="box-footer">
-    <nav>
-      <ul class="pagination"><!-- 引入pagination类,用于分页 -->
-        <li>
-          <a href="{{#le pageNumber 1}}?{{else}}?page={{reduce pageNumber 1}}{{/le}}"
-            aria-label="Previous"><!-- 如果数据有前页,那个上一页的按钮有效 -->
-           <span aria-hidden="true">&laquo;</span><!-- 转义字符<< -->
-          </a>
-        </li>
-        {{#times pageCount 1 pageCount}}<!-- 进入分页展示 -->
-        <li {{#equals pageNumber this.step}}class="active" {{/equals}}><!-- 当前页 -->
-          <a href="?page={{step}}{{#if recommend}}&recommend={{recommend}}{{/if}}{{#if type}}&type={{type}}{{/if}}">{{step}}</a>
-      </li>
-         {{/times}}
-        <li>
-          <a href="{{#ge pageNumber pageCount}}?page={{pageCount}}{{else}}?page={{add pageNumber 1}}{{/ge}}"
-          aria-label="Previous">
-            <span aria-hidden="true">&raquo;</span><!-- 转义字符>> -->
-          </a>
-        </li>
-      </ul>
-    </nav>
-</div>
-```
-`news.js`用户定义，`newsAdmin.js`定义ajax对象，`dbHelper.js`实现联系前两者，在`index.js`.添加路由，在
-`news.hbs`应用渲染到前端(运算符在`hbsHelper.helper`中定义)。
-*** 
-##2016/7/12
-###图片代码理解
-####前端
-```js
-function init() {
-  var socket = io();
-  socket.on('uploadProgress' , function(percent){
-    console.log(percent);
-    $(".pg-bar").progressbar( "option", "value", parseInt(percent));
-    $(".pg-info").text( percent + '%');
-  });
-  $(".pg-bar").progressbar({value: 0});
-  $(".pg-bar").progressbar( "option", "max", 100 );
-  $("body").on('click', '#addNewsBtn', doAddNews);
-  $("body").on('click', '#UploadBtn', doUpload);
-  $("body").on('change', '#uploadFile', preUpload);
-}
-
-function preUpload() {
-  $("#UploadBtn").removeClass('disabled');//上传按钮生效
-}
-function doUpload() {
-  $(".pg-wrapper").show();//进度条显示
-  var file = $("#uploadFile")[0].files[0];
-  var form = new FormData();
-  form.append("file", file);
-  $.ajax({
-    url: "/admin/uploadImg",
-    type: "POST",
-    data: form,
-    async: true,
-    processData: false,
-    contentType: false,
-    success: function(result) {
-      startReq = false;
-      if (result.code == 0) {
-        var picUrl = $.format("![Alt text]({0})",result.data);
-        $("#newsContent").insertAtCaret(picUrl);//插入图片
-        $(".pg-wrapper").hide();//进度条图层隐藏
-        // console.log(result.data);
-      }
-    }
-  });
-}
-```
-####后端
-```js
-var formidable = require('formidable');//载入 formidable
-router.post('/uploadImg', function(req, res, next) {
-  var io = global.io;
-  var form = new formidable.IncomingForm();//创建新的表单
-  var path = "";
-  var fields = [];
-  form.encoding = 'utf-8';//编码方式
-  form.uploadDir = "./public/upload";//保存路径
-  form.keepExtensions = true;//包含源文件的扩展名
-  form.maxFieldsSize = 30000 * 1024 * 1024;//限制的内存量。如果超过此值，“错误”事件被发射。
-  var uploadprogress = 0;//进度条
-  console.log("start:upload----"+uploadprogress);
-  form.parse(req);//会转换请求中所包含的表单数据
-  form.on('field', function(field, value) {//每当一个字段/值对已经收到时会触发该事件
-    console.log(field + ":" + value); //上传的参数数据
-  })
-      .on('file', function(field, file) {//每当文件已经接收到，便会触发该事件
-        path = '\\' + file.path; //上传文件路径
-      })
-      .on('progress', function(bytesReceived, bytesExpected) {//当有数据块被处理之后会触发该事件，对于创建进度条非常有用。
-        uploadprogress = (bytesReceived / bytesExpected * 100).toFixed(0);//计算进程
-        console.log("upload----"+ uploadprogress);
-        io.sockets.in('sessionId').emit('uploadProgress', uploadprogress);
-      })
-      .on('end', function() {// 当所有的请求已经接收到，且所有的文件都已上传到服务器中，该事件会触发。
-        console.log('-> upload done\n');// //上传完发送成功的json数据
-        entries.code = 0;
-        entries.data = path;
-        res.writeHead(200, {
-          'content-type': 'text/json'
-        });
-        res.end(JSON.stringify(entries));
-      })
-      .on("err",function(err){//当上传流中出现错误便会触发该事件
-        var callback="<script>alert('"+err+"');</script>";
-        res.end(callback);//这段文本发回前端就会被同名的函数执行
-      }).on("abort",function(){
-    var callback="<script>alert('"+ttt+"');</script>";
-    res.end(callback);
-  });
-});
-```
-
-[参考网站](http://www.cnblogs.com/yuanke/archive/2016/02/26/5221853.html)
-##2016/7/10
-###文件上传
-遇到的问题：进度条没有加载,socket没连上  
-解决方法：
-`admin.js`里面`var io = global.io`
-这里的`io`就是传说中的全局变量，要在`www`初始化，保存到全局，然后传给`router`，原来是这样子！
-***  
-##2016/7/11
-###文件显示问题
-遇到的问题：图片无法显示    
-尝试1：发现如果把upload的文件放在public路径下面，图片可以显示。   
-尝试2：将加载路径 改为"./public/upload";图片可以传进来啦，但是图片还是无法显示。  
-思考：可能是路径配置有问题    
-解决方法：将`app.use(express.static(path.join(__dirname, '/')));`加入app.js。  
-解释：静态文件从应用程序目录中的“根目录”目录中的应用静态内容  
-[参考网站](http://expressjs.com/en/api.html)  
-***
-***  
-###pdf  
-问题1:出现error：conversation failed with exits of 1  
-解决方法:在terminal打上`npm install phantomjs -g`
-
-问题2：pdf显示全部数据，而不是单条数据  
-解决方法：新建一个blog.hbs,改变pdf的路由  
-
-问题3：发布成功后，不能跳转到相应id的路径上，是unsigned  
-思考：`location.href = '/pdf/blogPdf/'+ result.data._id;`这里参数没有传进来  
-暂未解决  
-[参考网站](http://yijiebuyi.com/blog/be234394cd350de16479c583f6f6bcb6.html)  
-
-##2016/7/13
-###pdf
-####问题解决  
-1. docs对象为空  
-原因：` var docs = (docs !== null) ? docs.toObject() : '';`这句报错。内容：`toObject() is undefined`  
-解决：不用`toObject()`函数,直接可以取比如`doc._id`。这是model对象的一个特点.
-
-2.页面跳转id并未传入    
-```js
-entries.data = doc.toObject();//addnews时将doc转为对象，并将数据传给entries
-cb(true,entries);
-location.href = '/pdf/blogPdf/'+ result.data._id;//回掉函数返回
-```
-####理解
-[参考网站1](https://github.com/TJkrusinski/NodePDF)  
-[参考网站2](http://phantomjs.org/api/webpage/property/cookies.html)
-***
-##2016/7/14
-###加入session支持
-目的：获取当前用户的会话对象，以维护用户相关的信息。  
-`session`的认证机制必须依赖`cookie`，所以还应该同时安装一个`cookie-parser`，然后再app.js中导入这两个中间件：  
-```js
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-```
-定义cookie解析器，注意，该定义必须写在路由分配之前:  
-```js
-app.use(cookieParser());
-app.use(session({
-  name:'Blog',//表示cookie的name，默认cookie的name是：connect.sid。
-  maxAge: 30 * 1000,//cookie过期时间，毫秒。
-  secret: 'mia-web-node-secret-key',//用来对session数据进行加密的字符串.这个属性值为必须指定的属性。
-  resave: false,//每次请求都重新设置session cookie,过期,请求都会再设置。
-  saveUninitialized: false//每次请求都设置个session cookie ，默认给个标示为 connect.sid
-}));
-```
-之后在处理请求时直接通过以下方式对session进行读写：  
-
-```js
-req.session['message'] = "";//写入session
-res.redirect(req.session.lastpage);//从session中读取
-```
-##2016/7/16
-###session的应用
-应用一：登陆权限验证  
-```js
-module.exports = {
-    isAuthenticated: function (req, res, next) {
-        if(typeof(req.session.user) != 'undefined') {//查看session中user是否定义
-            return next();
-        }else{
-            res.redirect('/login');//否则，跳转到登陆界面
-        }
-    }
-};
-```
-应用二：支持socket.io  
-```js
-socket.join('sessionId');
-```
-
-应用三：新闻列表的消息提示  
-```js
-//路由渲染新闻列表时新建一个msg将其写入session
-router.get('/newsList', function(req, res, next) {
-  var msg = req.session['message'] || '';
-  req.session['message'] = "";
-  ....}
-//执行操作的时候将信息写入msg
-exports.deleteNews = function(id, cb) {
-    News.findById(id, function (err, doc) {
-        if (doc) {
-            doc.remove(function (err, doc) {
-                if (err) {
-                    entries.msg = err;
-                    cb(false,entries);
-                }else{
-                    entries.msg = '删除新闻成功！';
-                    cb(true,entries);
-            ....
-//路由 如果msg不为空，则弹出框
-$(init);
-function init() {
-  var msg = $(".box-msg").text();
-  if (msg!=="") {
-    notifyInfo(msg);
-    $(".box-msg").text("");
-  }
-}
-//前端 
-<div class="box-msg hidden">{{message}}</div>
-}
-```
-***
-##2016/7/17
-###jquery validate
-目的：为表单提供了强大的验证功能，该插件捆绑了一套有用的验证方法，包括 URL 和电子邮件验证，也可自定义。
-[官网](https://jqueryvalidation.org/)
-####引入
-```css
-<script src="/lib/jquery/jquery.validate.js"></script>//导入js库
-<script src="/lib/jquery/jquery.validate.messages_cn.js"></script>//中文信息提示包
-```
-####使用方式  
-1、将校验规则写到控件中  
-```css
-<input type="text" class="form-control" placeholder="用户名" id="usr" required  minlength="3">
-//要求必填且最小3个字母
-```
-2、将校验规则写到 js 代码中  
-```js
- $("#signupForm").validate({
-      rules: {
-        firstname: "required",//必填
-        lastname: "required",
-        username: {
-          required: true,
-          minlength: 2
-        }
-```
-[参考网站](http://www.runoob.com/jquery/jquery-plugin-validate.html)
-##2016/7/20
-###validate注意事项  
-###button type="submit"的性质
-1.`type=submit`是发送表单，使用`submit`后，页面支持键盘`enter`键操作,因此使用`submit`来提高页面易用性  
-2.`Submit`将表单提交(`form.submit())`作为其onclick后的默认事件，提交时，所有具有`name`属性的`html`输入元素都将作为键值对提交，除了`Submit`对象。`Submit`对象只有在自己被单击后的提交中才会作为键值对被提交.  
-###注册功能的完善
-```js
-<input type="email" class="form-control" placeholder="E-mail" id="new-email" name="email" required>
-//要求输入邮箱满足一定的格式要求
-...
-<input type="password" class="form-control" placeholder="密码" id="new-pwd" required minlength="3" maxlength="10">
-//要求密码满足一定的长度要求
-```
-##2016/8/3
-###头像上传及显示
-###思路
-模仿mooc及news图片上传打码，user添加userThumb属性
-###遇到的问题
-####1. uploadimg
-一会儿可以上传，一会儿又不能，最后发现，只有在用户登录过才能上传上去，于是乎经过反复思考发现，
-这个与`authority`有关系，重新刷新之后的`user`没有`authorized`，因此不能上传，没有权限。因此做出调整：
-取消对于`index`的授权，将`uploadimg`放在`index`的路由下面。但是`admin`的权限并没有取消（处于实际考虑）
-####2. 图片显示
-通过调用 `{{entries.author.userThumb}}`并不能显示，最后通过`initBlog`中的`imgUrl`获取`cookie`中的
-`userThumb`，然后`class`中`uig`绑定`imgUrl`中`userThumb`中的`src`，然后调用。
 ***
 ##软件下载
 ***
