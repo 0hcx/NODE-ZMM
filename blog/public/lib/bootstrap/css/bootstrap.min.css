@@ -1168,7 +1168,7 @@ p {
   }
 }
 .small, small {
-  font-size: 85%
+  font-size: 55%
 }
 .mark, mark {
   padding: .2em;
@@ -2712,6 +2712,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 .btn-primary {
   color: #fff;
   background-color: #337ab7;
+  border: none;
   border-color: #2e6da4
 }
 .btn-primary.focus, .btn-primary:focus {

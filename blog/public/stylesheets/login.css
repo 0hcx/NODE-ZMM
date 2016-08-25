@@ -58,4 +58,6 @@
 #registerBtn a{
   color: #555;
 }
-
+#registerBtn a:hover {
+  background-color: #fff;
+}

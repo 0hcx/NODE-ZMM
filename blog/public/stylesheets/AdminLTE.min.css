@@ -245,6 +245,7 @@ small{
 .button a:hover{
 	background-color: #38b7ea;
 	color: white;
+	text-decoration: none;
 }
 .admin-wrapper{
 	padding: 10px;
@@ -262,6 +263,10 @@ small{
 
 }
 
+textarea{
+	padding: 6px;
+	border-radius: 5px;
+}
 
 .limit{
 	max-height: 300px;
