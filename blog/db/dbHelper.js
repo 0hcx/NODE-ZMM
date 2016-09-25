@@ -45,6 +45,11 @@ exports.addUser = function(data, cb) {
         entries.msg = '请输入密码！';
         cb(false, entries);
     }
+    else if (data.pwd !== data.newpwd) {
+        entries.code = 99;
+        entries.msg = '请重新输入密码！';
+        cb(false, entries);
+    }
     else if (data.email === "") {
         entries.code = 99;
         entries.msg = '邮箱不能为空！';
@@ -67,7 +72,6 @@ exports.addUser = function(data, cb) {
                     password: data.pwd,
                     address:data.adr,
                     userThumb:data.userThumb
-                    // imgUrl: data.imgUrl
                 });
                 user.save(function (err, usr) {
                     if (err) {
@@ -83,6 +87,35 @@ exports.addUser = function(data, cb) {
                 });
             }
         });
+    }
+};
+
+exports.updateUser = function(data, cb) {
+    if (data.usr === "") {
+        entries.code = 99;
+        entries.msg = '请输入用户名 ！';
+        cb(false, entries);
+    }
+    else if (data.pwd === "") {
+        entries.code = 99;
+        entries.msg = '请输入密码！';
+        cb(false, entries);
+    }
+    else if (data.email === "") {
+        entries.code = 99;
+        entries.msg = '邮箱不能为空！';
+        cb(false, entries);
+    }
+    else {
+        User.update({_id: data.id},{
+                username: data.usr,
+                email: data.email,
+                password: data.pwd,
+                userThumb: data.userThumb
+            }
+            , function (err, result) {
+                cb(err, result);
+            });
     }
 };
 
@@ -152,7 +185,7 @@ exports.findNewsOne = function(req, id, cb) {
     News.update({_id:id},{$inc:{pv:1}},function (err) {
         if(err)
             console.log(err)
-    })
+    });
     News.findOne({_id: id})
         .populate('author')
         .exec(function(err, docs) {
@@ -232,7 +265,6 @@ exports.findMooc = function(req, cb) {
 exports.findMoocOne = function(id, cb) {
     Mooc.findOne({_id: id}, function(err, docs) {
         var mooc = docs.toObject() || '';
-
         mooc.children = _.sortBy( mooc.children , "chapter");
         mooc.children = _.groupBy( mooc.children , "week" );
         cb(true,mooc);
@@ -241,14 +273,12 @@ exports.findMoocOne = function(id, cb) {
 
 
 exports.findMoocChapContentOnly = function(moocId, chapId, preChapId, content, cb) {
-
     //取出章节内容显示
     Mooc.findOne({"_id": moocId, "children._id": chapId }, function(err, docs) {
-
         var doc = _.find(docs.children,function(item) {
             if (item._id.toString() === chapId)
                 return this;
-        })
+        });
         cb(err, doc);
     });
 
@@ -257,19 +287,16 @@ exports.findMoocChapContentOnly = function(moocId, chapId, preChapId, content, c
 exports.findMoocChapContent = function(moocId, chapId, preChapId, content, cb) {
     async.waterfall([
         function (callback) {
-
             //取出章节内容显示
             Mooc.findOne({"_id": moocId, "children._id": chapId }, function(err, docs) {
-
                 var doc = _.find(docs.children,function(item) {
                     if (item._id.toString() === chapId)
                         return this;
-                })
+                });
                 callback(err,doc);
             });
         },
         function (doc, callback) {
-
             //如果章节相同的话，不保存编辑内容
             if (chapId !== preChapId) {
                 Mooc.update({"_id": moocId, "children._id": preChapId },{$set :{
@@ -304,7 +331,7 @@ exports.queryMoocChapTitle = function( moocId, chapId, cb) {
         var doc = _.find(result.children,function(item) {
             if (item._id.toString() === chapId)
                 return item;
-        })
+        });
 
         cb(err, doc);
     })
@@ -358,7 +385,7 @@ exports.deleteMoocChap = function( moocId, chapId, cb) {
         //删除选中chap
         doc.children = _.filter(doc.children, function (item) {
             return item._id.toString() !== chapId;
-        })
+        });
 
         // console.log("index:" + index + " subling:" +count + " sIndex:" + pos);
 
@@ -489,7 +516,6 @@ exports.upMoocChap = function( moocId, chapId, cb) {
 exports.downMoocChap = function( moocId, chapId, cb) {
     Mooc.findOne({"_id": moocId, "children._id": chapId },function(err,doc){
         var week,chap,index,chapCount = 0,pos = 0, lastWeek=0;
-
         //计算当前chap的位置index
         for( index =0;index<doc.children.length;index++) {
             var item = doc.children[index];

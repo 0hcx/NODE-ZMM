@@ -3,18 +3,6 @@ var router = express.Router();
 var dbHelper = require('../db/dbHelper');
 var fs = require('fs');
 var entries = require('../db/jsonRes');
-// var Comment=require('../db/schema/comment');
-
-
-router.get('/Setting', function(req, res, next) {
-	// dbHelper.findNews(req, function (success, data) {
-		res.render('Setting', {
-			layout: 'main',
-			user: req.session.user
-
-		});
-	// })
-});
 
 
 router.get('/search',function (req, res, next) {
@@ -42,6 +30,12 @@ router.get('/blogs', function(req, res, next) {
 	})
 });
 
+router.get('/detail',function (req, res, next) {
+		res.render('detail', {
+			layout: 'main',
+			user: req.session.user
+		});
+});
 
 router.get('/moocs', function(req, res, next) {
 	dbHelper.findMooc(req, function (success, data) {

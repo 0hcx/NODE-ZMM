@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-
 var fs = require('fs');
 var NodePDF = require('nodepdf');
 var config = require('../config');
@@ -23,17 +22,13 @@ router.get('/:id', function (req, res, next) {
 });
 
 router.get('/blogPdf/:id', function(req, res, next) {
-
   var id = req.params.id;
   dbHelper.findNewsOne(req, id, function (success, data) {
-    res.render('blogpdf', {
+    res.render('blogPdf', {
       entries: data,
-
+      layout:'lg'
     });
   })
 });
-
-
-
 
 module.exports = router;

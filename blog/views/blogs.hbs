@@ -1,10 +1,9 @@
-<section class="content">
-       {{#each entries}}
-           <div class="News">
-               <div class="title"><a href="#">{{title}}</a></div>
+ <section class="News">
+           {{#each entries}}
+                   <div class="title">{{title}}</div>
                     <span class="release">
                         <img class="user-img" src="{{author.userThumb}}" alt="User Image">
-                        <b>发布于{{formatDate meta.createAt}}</b><i>{{timeFromNow meta.createAt}}</i>
+                        {{author.username}}<b>发布于{{formatDate meta.createAt}}</b><i>{{timeFromNow meta.createAt}}</i>
                     </span>
                <div class="new-body limit">
                     <content><p> {{{content}}}</p></content>
@@ -13,7 +12,6 @@
                    <a href="/{{_id}}" class="btn btn-default btn-flat ">read more</a>
                    <a href="/pdf/{{_id}}" class="btn btn-default btn-flat ">导出pdf</a>
                </div>
-           </div>
           {{/each}}
                 <div class="box-footer">
                         <nav>
@@ -38,12 +36,11 @@
                             </ul>
                         </nav>
                     </div>
-
  </section>
+
 <script src="/lib/socket.io/socket.io.js"></script>
 <script src="/blog/common.js"></script>
 <script src="/blog/newsAdmin.js"></script>
- <script src="/blog/gulpfile.js"></script>
 
 
 

@@ -1,12 +1,10 @@
 <section class="News">
-    <div class="title"><a href="#">{{entries.title}}</a></div>
+    <div class="title">{{entries.title}}</div>
     <span class="release">
          <img class="user-img" src="{{entries.author.userThumb}}" alt="User Image">
-        <b>发布于 {{formatDate entries.meta.createAt}}</b><i>{{timeFromNow entries.meta.createAt}}</i>
-    </span>
+        {{entries.author.username}}<b>发布于 {{formatDate entries.meta.createAt}}</b><i>{{timeFromNow entries.meta.createAt}}</i>
     </span>
     <content><p> {{{entries.content}}}</p></content>
     <div class="button">
     </div>
-
 </section>

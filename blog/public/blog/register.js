@@ -54,6 +54,7 @@ function doRegister() {
     data: JSON.stringify({
       'usr': $("#new-usr").val(),
       'pwd': $("#new-pwd").val(),
+      'newpwd': $("#confirm-pwd").val(),
       'email':$("#new-email").val(),
       'adr':$("#new-address").val(),
       'userThumb':$("#userThumb").attr("src")

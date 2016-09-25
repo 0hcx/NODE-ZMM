@@ -1,11 +1,13 @@
 <section class="News">
-    <div class="title"><a href="#">{{entries.title}}</a></div>
+    <div class="title">{{entries.title}}</div>
     <span class="release">
          <img class="user-img" src="{{entries.author.userThumb}}" alt="User Image">
-        <b>发布于 {{formatDate entries.meta.createAt}}</b><i>{{timeFromNow entries.meta.createAt}}</i>
+        {{entries.author.username}}<b>发布于{{formatDate entries.meta.createAt}}</b><i>{{timeFromNow entries.meta.createAt}}</i>
     </span>
     </span>
+    <div class="new-body">
     <content><p> {{{entries.content}}}</p></content>
+     </div>
     <div class="pv">pv:{{entries.pv}}</div>
     <section class="comments">
         <h2>评论区</h2>

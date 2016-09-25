@@ -10,5 +10,5 @@ gulp.task('styles',function() {
 
 
 gulp.task('watch',function() {
-  gulp.watch('css/styles.css', ['styles']);
+  gulp.watch('public/lib/adminlte/css/AdminLTE.min.css', ['styles']);
 });
