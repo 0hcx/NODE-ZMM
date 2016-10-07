@@ -1,0 +1,289 @@
+body {
+  margin: 0;
+  padding: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+html{
+  -ms-text-size-adjust:100%;
+  -webkit-text-size-adjust:100%
+}
+body{
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6
+}
+input,textarea,button,a{
+  outline:0
+}
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,dl,dd,fieldset,textarea {
+  margin:0
+}
+a {
+  color: #000000;
+  text-decoration: none;
+}
+ul{
+  list-style: none;
+  word-wrap: break-word;
+}
+.cover{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:95vh;
+  width: 100%;
+  background: whitesmoke;
+}
+.flex-form {
+  position: relative;
+  z-index: 10;
+  display:flex;
+  border:20px solid rgba(1, 1,1,0.3);
+  border-radius:5px;
+  flex-direction: column;
+  flex: 0.1 1 200px;
+  align-items: stretch;
+  padding-top: 10px;
+  width:40%;
+}
+.form-group{
+  display:flex;
+  flex: 1 1 100%;
+  justify-content: center;
+}
+.form-group> * {
+  width: 80%;
+  border:0;
+  padding:10px;
+  background:white;
+  font-size: 15px;
+  border-radius:5px;
+  margin: 5px;
+}
+.button{
+  display: flex;
+  margin: 5px;
+  align-items: center;
+  background: rgba(0,0,0,0);
+  justify-content: space-around;
+}
+.button .form-control{
+  padding: 5px;
+  width: 20%;
+}
+
+.img-thumbnail{
+  display: flex;
+  height: 150px;
+  width: 150px;
+  border:5px solid rgba(0,0,0,0.1);
+}
+
+#uploadFile{
+  opacity: 0;
+  width: 104px;
+  float: left;
+  position: absolute;
+
+}
+
+.pg-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999999990;
+  display: none;
+}
+
+.chat{
+  display: flex;
+}
+nav{
+  height: 100vh;
+  width: 280px;
+  flex: 1 1 280px;
+  background-color: #2e3238;
+}
+#chatArea{
+  width: 80%;
+  text-align: center;
+  height: 100vh;;
+  background-color: rgb(238, 238, 238);
+  /*background-color: #fff;*/
+  display: flex;
+  flex-direction: column;
+}
+.title_wrap{
+    position:relative;
+    padding:10px 0;
+    margin:10px 19px;
+    border-bottom:1px solid #d6d6d6;
+    z-index:1024
+}
+.message {
+  margin-bottom: 16px;
+  float: left;
+  width: 100%;
+}
+.message.me {
+  float: right;
+  text-align: right;
+  clear: right;
+}
+.bubble.bubble_primary {
+  background-color: rgb(178, 226, 129);
+}
+.bubble {
+  max-width: 500px;
+  min-height: 1em;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  text-align: left;
+  font-size: 14px;
+  border-radius: 3px;
+  margin: 0px 10px;
+}
+
+.bubble_cont .plain {
+  padding: 9px 13px;
+}
+.you{
+  display: flex;
+}
+.bubble.bubble_default {
+  background-color: rgb(255, 255, 255);
+}
+.chat .box_ft {
+  height: 100px;
+  margin-right: 19px;
+  border-top: 1px solid rgb(214, 214, 214);
+}
+
+.toolbar{
+  display: flex;
+}
+.web_wechat_face {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  display: inline-block;
+  background: url("/lib/images/sprite308b49.png") 0px -805px;
+}
+.web_wechat_screencut {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  display: inline-block;
+  background: url("/lib/images/sprite308b49.png") 0px -1916px;
+}
+.web_wechat_pic {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  display: inline-block;
+  background: url("/lib/images/sprite308b49.png") 0px -1638px;
+}
+.content{
+  text-align: left;
+}
+.kiki{
+  height: 60%;
+}
+#editArea{
+  padding: 5px;
+  width: 88%;
+  height: 100px;
+  margin: 10px;
+}
+
+.header{
+  padding: 18px;
+  display: flex;
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-right: 2px;
+}
+ .nickname{
+   font-weight: 400;
+   color: #fff;
+   font-size: 18px;
+   align-self: center;
+}
+.search_bar .wechat_search {
+  position: absolute;
+}
+.frm_search {
+  width: 204px;
+  height: 32px;
+  line-height: 32px;
+  border: 0;
+  border-radius: 2px;
+  background-color: #26292E;
+  color: #fff;
+  padding-left: 30px;
+  font-size: 12px;
+}
+.wechat_search{
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    display: inline-block;
+    background: url("/lib/images/sprite308b49.png") 0px -1946px;
+}
+.tab{
+  display: flex;
+  justify-content: space-around;
+}
+.web_wechat_chat{
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+  display: inline-block;
+  background: url("/lib/images/sprite308b49.png") 0px -2083px;
+}
+.web_wechat_public{
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+  display: inline-block;
+  background: url("/lib/images/sprite308b49.png") 0px -2232px;
+}
+.web_wechat_friends{
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+  display: inline-block;
+  background: url("/lib/images/sprite308b49.png") 0px -240px;
+}
+.chat_item{
+  overflow-x: hidden;
+  overflow-y: hidden;
+  cursor: pointer;
+  position: relative;
+  padding: 12px 18px 11px;
+  border-bottom: 1px solid rgb(41, 44, 51);
+}
+.chat_item.active {
+  background: #3A3F45;
+}
+.chat_item{
+  display: flex;
+  font-size: 13px;
+  color: rgb(255, 255, 255);
+  line-height: 20px;
+}
+.info{
+  width: 70%;
+}
+.btn{
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 3px;
+}
