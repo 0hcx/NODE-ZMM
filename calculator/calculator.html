@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
+        <title>calculator</title>
+        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <link rel="stylesheet" href="calculator.css" />
+        <!-- <script type="text/javascript" src="js/calculator.js"></script> -->
+    </head>
+
+     <body>
+        <div class="main">
+            <div class="show">
+                <div id="express"></div>
+                <div id="show"></div>
+            </div>
+            <div class="buttons">
+                <div class="row">
+                    <span class="span" id="reset">CE</span>
+                    <span class="span" id="remove">←</span>
+                    <span class="span">C</span>
+                    <span class="span" class="tool">/</span>
+                </div>
+                <div class="row">
+                    <span class="span">7</span>
+                    <span class="span">8</span>
+                    <span class="span">9</span>
+                    <span class="span tool">*</span>
+                </div>
+                <div class="row">
+                    <span class="span">4</span>
+                    <span class="span">5</span>
+                    <span class="span">6</span>
+                    <span class="span tool">-</span>
+                </div>
+                <div class="row">
+                    <span class="span">1</span>
+                    <span class="span">2</span>
+                    <span class="span">3</span>
+                    <span class="span tool">+</span>
+                </div>
+                <div class="row">
+                    <span class="span zero">0</span>
+                    <span class="span">.</span>
+                    <span class="span tool"  id="equals">=</span>
+                </div>
+        </div>
+    </body>
+    <script src="js/calculator.js"></script>
+   <!--  <script type="text/javascript">
+        var $express = $("#express");
+        var $show = $("#show");
+
+            $(function(){
+                $(".buttons .span").bind({
+                    click:function(){
+                        var $this = $(this);
+                        onSpanClick($this,$express,$show);
+                     }
+                      
+                 });
+                
+            });
+    
+    </script> -->
+
+</html>
