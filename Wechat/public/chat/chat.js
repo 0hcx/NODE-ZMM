@@ -15,8 +15,8 @@ function init() {
   $('body').on('click', '.wrapper-content .list li' , doChatSession);
   $('body').on('keydown', '#editArea' , doSend);
   $('body').on('click', '#emoji' , showEmoji);
-  $('body').on('click', '#UploadBtn' , doUploadImage);
-
+  $('body').on('change', '#sendImage' , doShowimg);
+  // $('body').on('click', '#emoji img' , getEmoji);
 }
 //初始化socketio
 function initSocket() {
@@ -49,8 +49,6 @@ function initSocket() {
 
 //初始化好友列表
 function initFriendList() {
-  console.log("init friend1");
-
   var jsonData = JSON.stringify({ 'uid': _id });
   postData(urlGetFriendList, jsonData, cbInitFreind);
 }
@@ -67,7 +65,6 @@ function doAddFreind() {
 
 //渲染好友列表
 function cbInitFreind(result) {
-  console.log("init friend");
   var friendList = "";
   for(var i=0;i<result.length;i++){
     var friend = $.format(FRIEND_MODULE,result[i].fid.userThumb,result[i].fid._id,result[i].fid.username);
@@ -138,14 +135,14 @@ function initOfflineMsg() {
 
 //渲染离线消息列表
 function cbInitOfflineMsg(result) {
-  console.log("mimaia");
-  console.log(result);
   for(var i=0;i<result.length;i++){
     var fid = result[i].from._id;
+
     var msg = $.format(TO_MSG, result[i].from.userThumb, result[i].msg);
     if ($("#v"+fid).length == 0) {
       $(".title_wrap .message-content").prepend('<div class="box-content" id="v'+fid+'"></div>');
     }
+
     $("#v"+fid).append(msg);
     var count = $("#"+fid).children('.count');
     console.log("before:"+count);
@@ -175,10 +172,27 @@ function doSend(e) {
   if (e.which  === 13) {
     e.preventDefault();
     var msg = $(this).val();
+    msg =  _showEmoji(msg);
+    //var msg = $(this)._showEmoji(msg);
     console.log(msg);
-    $(this).val('');
+   $(this).val('');
     socket.send(_id,fid,msg);
   }
+}
+function _showEmoji(msg) {
+  var match, result = msg,
+      reg = /\[emoji:\d+\]/g,
+      emojiIndex,
+      totalEmojiNum = document.getElementById('emojiWrapper').children.length;
+  while (match = reg.exec(msg)) {
+    emojiIndex = match[0].slice(7, -1);
+    if (emojiIndex > totalEmojiNum) {
+      result = result.replace(match[0], '[X]');
+    } else {
+      result = result.replace(match[0], '<img class="emoji" src="/emoji/' + emojiIndex + '.gif" />');//todo:fix this in chrome it will cause a new request for the image
+    };
+  };
+  return result;
 }
 function initEmoji() {
   var emojiContainer = document.getElementById('emojiWrapper'),
@@ -194,31 +208,50 @@ function initEmoji() {
 function showEmoji() {
   var emojiwrapper = document.getElementById('emojiWrapper');
   emojiwrapper.style.display = 'block';
-}
-function doUploadImage() {
-  var file = $("#sendImage")[0].files[0];
-  var form = new FormData();
-  form.append("file", file);
-  $.ajax({
-    url: "/uploadImg",
-    type: "POST",
-    data: form,
-    async: true,
-    processData: false,
-    contentType: false,
-    success: function(result) {
-      startReq = false;
-      if (result.code == 0) {
-        var picUrl = $.format("![Alt text]({0})",result.data);
-        console.log(picUrl);
-
-        $("#editArea").insertAtCaret(picUrl);
-        // $(".title_wrap .message-content").prepend('<img id="img">');
-        // $("#img").attr("src",result.data);
-        // $("#editArea").prepend('<img id="img">');
-        // $("#img").attr("src",result.data);
-        //$(".title_wrap .message-content").insertAtCaret(picUrl);
-      }
-    }
+  document.getElementById('emoji').addEventListener('click', function(e) {
+    var emojiwrapper = document.getElementById('emojiWrapper');
+    emojiwrapper.style.display = 'block';
+    e.stopPropagation();
+  }, false);
+  document.body.addEventListener('click', function(e) {
+    var emojiwrapper = document.getElementById('emojiWrapper');
+    if (e.target != emojiwrapper) {
+      emojiwrapper.style.display = 'none';
+    };
   });
+  document.getElementById('emojiWrapper').addEventListener('click', function(e) {
+    var target = e.target;
+    if (target.nodeName.toLowerCase() == 'img') {
+      var messageInput = document.getElementById('editArea');
+      messageInput.focus();
+     //  var message = $.format(EMOJI, target.src);
+     //  $("#editArea").append(message);
+      messageInput.value = messageInput.value + '[emoji:' + target.title + ']';
+    };
+  }, false);
+}
+function  doShowimg() {
+  if (this.files.length != 0) {
+    var file = this.files[0];
+    var    reader = new FileReader();
+    if (!reader) {
+      alert('!your browser doesn\'t support fileReader');
+      this.value = '';
+      return;
+    };
+    reader.onload = function(e) {
+      this.value = '';
+      console.log( e.target.result);
+     _displayImage( e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+}
+function _displayImage(imgData) {
+    var messageInput = document.getElementById('editArea');
+    messageInput.focus();
+  messageInput.value = messageInput.value + '<img class="img-thumbnail" src="' + imgData + '"/>';
+
+  var container = document.getElementById('chatArea');
+  container.scrollTop = container.scrollHeight;
 }

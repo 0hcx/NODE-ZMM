@@ -104,12 +104,16 @@ nav{
 	display: flex;
 	flex-direction: column;
 }
+#UploadBtn{
+	margin-left: 20px;
+}
 .title_wrap{
 	position:relative;
 	padding:10px 0;
 	margin:10px 19px;
 	border-bottom:1px solid #d6d6d6;
-	z-index:1024
+	z-index:1024;
+	height: 500px;
 }
 .message {
 	margin-bottom: 16px;

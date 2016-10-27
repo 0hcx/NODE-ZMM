@@ -9,11 +9,10 @@ var urlSetOfflineMsg    = "/chat/setOfflineMsg";
 // USER_MODULE = "<li><img src='{0}'><p class='info'><span class='title'>{1}</span><span class='cnt'>{2}</span></p><label href='#' class='addFriendBtn'>添加</label></li>";
 FRIEND_MODULE = "<li class='active chat_item' id='{1}' ><img class='avatar' src='{0}' >{2}<i class='count'>0</i></li>";
 //接收方
-TO_MSG = "<div class='message you'><img class='avatar' src='{0}' ><p class='bubble bubble_primary'>{1}</p></div>";
+TO_MSG = "<div class='message you'><img class='avatar' src='{0}' ><div class='bubble bubble_primary'>{1}</div></div>";
 //发送方
-FROM_MSG = "<div class='message me'><p class='bubble bubble_primary'>{1}</p><img class='avatar' src='{0}' ></div>";
-
-
+FROM_MSG = "<div class='message me'><div class='bubble bubble_primary'>{1}</div><img class='avatar' src='{0}' ></div>";
+PIC="<img class='img-thumbnail' src='{0}'>";
 
 (function($){
     $.fn.autoTextarea = function(options) {
