@@ -3,6 +3,7 @@ var urlGetFriendList    = "/chat/getFriendList";
 var urlAddFriend        = "/chat/addFriend";
 var urlGetOfflineMsg    = "/chat/getOfflineMsg";
 var urlSetOfflineMsg    = "/chat/setOfflineMsg";
+var urlGetHistoryMsg = "/chat/getHistoryMsg";
 // var upLoadImage ="/uploadImg";
 
 //添加好友列表
@@ -13,6 +14,90 @@ TO_MSG = "<div class='message you'><img class='avatar' src='{0}' ><div class='bu
 //发送方
 FROM_MSG = "<div class='message me'><div class='bubble bubble_primary'>{1}</div><img class='avatar' src='{0}' ></div>";
 PIC="<img class='img-thumbnail' src='{0}'>";
+//屏幕截图
+(function ($) {
+    $.fn.screenshotPaste=function(options){
+        var me = this;
+
+        if(typeof options =='string'){
+            var method = $.fn.screenshotPaste.methods[options];
+
+            if (method) {
+                return method();
+            } else {
+                return;
+            }
+        }
+
+        var defaults = {
+            imgContainer: '',   //预览图片的容器,
+            uploadBtn: '',      //上传按钮，
+            cancelBtn: '',      //取消按钮,
+            imgHeight: 200       //预览图片的默认高度
+        };
+
+        options = $.extend(defaults,options);
+
+        var imgReader = function( item ){
+            var file = item.getAsFile();
+            var reader = new FileReader();
+
+            reader.readAsDataURL( file );
+            reader.onload = function( e ){
+                var img = new Image();
+
+                img.src = e.target.result;
+              
+                $(img).css({ height: options.imgHeight });
+                $(document).find(options.imgContainer)
+                    .html('')
+                    .show()
+                    .append(img);
+                $(document).find(options.uploadBtn).removeClass('disabled');
+                $(document).find(options.cancelBtn).removeClass('disabled');
+            };
+        };
+        //事件注册
+        $(me).on('paste',function(e){
+            var clipboardData = e.originalEvent.clipboardData;
+            var items, item, types;
+
+            if( clipboardData ){
+                items = clipboardData.items;
+
+                if( !items ){
+                    return;
+                }
+
+                item = items[0];
+                types = clipboardData.types || [];
+
+                for(var i=0 ; i < types.length; i++ ){
+                    if( types[i] === 'Files' ){
+                        item = items[i];
+                        break;
+                    }
+                }
+
+                if( item && item.kind === 'file' && item.type.match(/^image\//i) ){
+                    imgReader( item );
+                }
+            }
+        });
+
+        $.fn.screenshotPaste.methods = {
+            getImgData: function () {
+                var src = $(document).find(options.imgContainer).find('img').attr('src');
+
+                if(src==undefined){
+                    src='';
+                }
+
+                return src;
+            }
+        };
+    };
+})(jQuery);
 
 (function($){
     $.fn.autoTextarea = function(options) {

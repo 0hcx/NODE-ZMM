@@ -188,6 +188,7 @@ nav{
 }
 .message-content{
 	height: 60vh;
+	overflow: scroll;
 }
 #editArea{
 	padding: 5px;
@@ -344,6 +345,7 @@ nav{
 	height:200px;
 	width: 200px;
 }
+
 * {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;

@@ -11,12 +11,20 @@ function init() {
   initSocket();
   initFriendList();
   initEmoji();//emoji表情初始化
+  //屏幕截图
+  $('#editArea').screenshotPaste({
+    imgContainer: '#imgPreview',
+    // uploadBtn: '#doScreenCut'
+    imgHeight:200
+  });
   $('body').on('click', '.addFriendBtn' , doAddFreind);
   $('body').on('click', '.wrapper-content .list li' , doChatSession);
   $('body').on('keydown', '#editArea' , doSend);
   $('body').on('click', '#emoji' , showEmoji);
   $('body').on('change', '#sendImage' , doShowimg);
-  // $('body').on('click', '#emoji img' , getEmoji);
+  $('body').on('click', '#screenCut' , doScreenCut);
+  $('body').on('click', '#historyMsg' , toggleHistoryView);
+
 }
 //初始化socketio
 function initSocket() {
@@ -26,22 +34,22 @@ function initSocket() {
   // 监听消息
   socket.on('msg', function(uid, fid, msg) {
     var fromID = (_id == fid)?uid:fid;
-    var message;
-    console.log(_id );
-    console.log(uid );
-    console.log(fid );
-    if (_id == fid) {
-      console.log(uid+"消息"+fid );
-      fImg = $('#'+uid).children('img').attr('src');
-      message = $.format(TO_MSG,fImg, msg);
+  var message;
+  console.log(_id );
+  console.log(uid );
+  console.log(fid );
+  if (_id == fid) {
+    console.log(uid+"消息"+fid );
+    fImg = $('#'+uid).children('img').attr('src');
+    message = $.format(TO_MSG,fImg, msg);
 
-    } else {
-      message = $.format(FROM_MSG, _img, msg);
-      console.log("from");
-    }
-    $("#v"+fromID).append(message);
-    $("#v"+fromID).scrollTop($("#v"+fromID)[0].scrollHeight);
-  });
+  } else {
+    message = $.format(FROM_MSG, _img, msg);
+    console.log("from");
+  }
+  $("#v"+fromID).append(message);
+  $("#v"+fromID).scrollTop($("#v"+fromID)[0].scrollHeight);
+});
 }
 
 
@@ -114,13 +122,28 @@ function doChatSession() {
 
 //切换聊天窗口
 function toggleChatView(fid) {
+  // $("#editArea").screenshotPaste({//图片显示的位置
+  //   imgContainer: '#imagePreview',//预览图片的容器
+  //   imgHeight: 200 //预览图片的默认高度
+  // });
+
   if ($("#v"+fid).length == 0) {
     $(".title_wrap .message-content").prepend('<div class="box-content" id="v'+fid+'"></div>');
   }
   $(".box-content").hide();
   $("#v"+fid).show();
 }
-
+//切换聊天记录窗口
+function toggleHistoryView() {
+  // $("#mh"+fid).html('');
+  $("#v"+fid).html('');
+  if ($("#v"+fid).length == 0) {
+    $(".title_wrap .message-content").prepend('<div class="box-content" id="v'+fid+'"></div>');
+  }
+  getHistoryMsg();
+  $(".box-content").hide();
+  $("#v"+fid).show();
+}
 
 //初始化离线消息
 function initOfflineMsg() {
@@ -248,10 +271,51 @@ function  doShowimg() {
   };
 }
 function _displayImage(imgData) {
-    var messageInput = document.getElementById('editArea');
-    messageInput.focus();
-  messageInput.value = messageInput.value + '<img class="img-thumbnail" src="' + imgData + '"/>';
+    // var messageInput = document.getElementById('editArea');
+    // messageInput.focus();
+  var msg='<img class="img-thumbnail" src="' + imgData + '"/>';
+  socket.send(_id,fid,msg);
+  // var container = document.getElementById('chatArea');
+  // container.scrollTop = container.scrollHeight;
+}
+function doScreenCut() {
+  var imgPreview = document.getElementById('imgPreview');
+  imgPreview.style.display = 'block';
+  // var imgData = $('#imgPreview').screenshotPaste('getImgData');
+  var imgData = $('#imgPreview').html();
+  //直接发送
+  socket.send(_id,fid,imgData);//发送消息
+  imgPreview.style.display = 'none';
+}
 
-  var container = document.getElementById('chatArea');
-  container.scrollTop = container.scrollHeight;
+function getHistoryMsg() {
+  var jsonData = JSON.stringify({
+    'from': fid,
+    'to': _id
+  });
+  postData(urlGetHistoryMsg, jsonData, cbShowHistoryMsg);
+}
+function cbShowHistoryMsg(result) {
+  if(result.length != 0) {
+    var friendid = (result[0].from == result[0].uid)?result[0].to:result[0].from;
+
+    for(var i =0; i < result.length; i+=2) {
+      var fromID=result[i].from;
+      var message;
+      if (fromID !== _id) {
+        fImg = $('#'+friendid).children('img').attr('src');
+        fImg=$('.chat_item .avatar').attr('src');
+        message = $.format(TO_MSG,fImg, result[i].msg);
+      } else {
+        message = $.format(FROM_MSG, _img, result[i].msg);
+      }
+      if ($("#v"+fromID).length == 0) {
+        $(".title_wrap .message-content").prepend('<div class="box-content" id="v'+fromID+'"></div>');
+      }
+      // $(" .title_wrap .message-content").append(message);
+      $("#v"+fromID).append(message);
+      $("#v"+fromID).scrollTop($("#v"+fromID)[0].scrollHeight);
+
+    }
+  }
 }
