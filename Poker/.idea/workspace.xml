@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="989daa8c-ec92-4547-b5a8-dd7f560b089c" name="Default" comment="" />
+    <ignored path="Blog.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="Blog" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
+      <file leaf-file-name="index.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/index.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="poker.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/poker/poker.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="141">
+              <caret line="153" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="156" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="www" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/www">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="155">
+              <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="head.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/partials/head.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" column="9" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="poker.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/stylesheets/poker.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="331">
+              <caret line="59" column="8" selection-start-line="59" selection-start-column="1" selection-end-line="59" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/public/js/blog.js" />
+        <option value="$PROJECT_DIR$/views/Setting.hbs" />
+        <option value="$PROJECT_DIR$/public/blog/Setting.js" />
+        <option value="$PROJECT_DIR$/gulpfile.js" />
+        <option value="$PROJECT_DIR$/public/blog/newsAdmin.js" />
+        <option value="$PROJECT_DIR$/routes/admin.js" />
+        <option value="$PROJECT_DIR$/views/admin/news.hbs" />
+        <option value="$PROJECT_DIR$/views/admin/moocCreate.hbs" />
+        <option value="$PROJECT_DIR$/views/admin/moocEdit.hbs" />
+        <option value="$PROJECT_DIR$/views/blogPdf.hbs" />
+        <option value="$PROJECT_DIR$/routes/pdf.js" />
+        <option value="$PROJECT_DIR$/views/moocs.hbs" />
+        <option value="$PROJECT_DIR$/views/blogs.hbs" />
+        <option value="$PROJECT_DIR$/views/detail.hbs" />
+        <option value="$PROJECT_DIR$/views/partials/header.hbs" />
+        <option value="$PROJECT_DIR$/views/blog.hbs" />
+        <option value="$PROJECT_DIR$/public/blog/register.js" />
+        <option value="$PROJECT_DIR$/db/schema/user.js" />
+        <option value="$PROJECT_DIR$/public/blog/login.js" />
+        <option value="$PROJECT_DIR$/db/schema/message.js" />
+        <option value="$PROJECT_DIR$/public/stylesheets/main.css" />
+        <option value="$PROJECT_DIR$/views/layouts/release.hbs" />
+        <option value="$PROJECT_DIR$/public/stylesheets/login.css" />
+        <option value="$PROJECT_DIR$/public/stylesheets/AdminLTE.min.css" />
+        <option value="$PROJECT_DIR$/views/partials/sidebar.hbs" />
+        <option value="$PROJECT_DIR$/public/lib/adminlte/css/AdminLTE.min.css" />
+        <option value="$PROJECT_DIR$/views/login.hbs" />
+        <option value="$PROJECT_DIR$/views/layouts/lg.hbs" />
+        <option value="$PROJECT_DIR$/views/register.hbs" />
+        <option value="$PROJECT_DIR$/views/layouts/main.hbs" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/db/schema/friend.js" />
+        <option value="$PROJECT_DIR$/routes/login.js" />
+        <option value="$PROJECT_DIR$/public/chat/register.js" />
+        <option value="$PROJECT_DIR$/public/lib/bootstrap/css/bootstrap.min.css" />
+        <option value="$PROJECT_DIR$/public/chat/screenshot-paste.js" />
+        <option value="$PROJECT_DIR$/public/chat/screenshot.js" />
+        <option value="$PROJECT_DIR$/public/stylesheets/chat.css" />
+        <option value="$PROJECT_DIR$/db/dbHelper.js" />
+        <option value="$PROJECT_DIR$/views/chat.hbs" />
+        <option value="$PROJECT_DIR$/public/chat/chat.js" />
+        <option value="$PROJECT_DIR$/public/chat/common.js" />
+        <option value="$PROJECT_DIR$/public/chat/login.js" />
+        <option value="$PROJECT_DIR$/routes/index.js" />
+        <option value="$PROJECT_DIR$/views/index.hbs" />
+        <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/public/stylesheets/poker.css" />
+        <option value="$PROJECT_DIR$/views/partials/head.hbs" />
+        <option value="$PROJECT_DIR$/config.js" />
+        <option value="$PROJECT_DIR$/bin/www" />
+        <option value="$PROJECT_DIR$/public/poker/poker.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="86" />
+    <option name="y" value="83" />
+    <option name="width" value="1287" />
+    <option name="height" value="692" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="blog">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="blog">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="public">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="blog">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="public">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="blog">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches">
+        <subPane />
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="partials" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="poker" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="双扣" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="nodejs_interpreter_path" value="D:\dev\nodejs\node.exe" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="4.4.5" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="last_opened_file_path" value="F:/PokerGame" />
+    <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\明明加油啊\Wechat\public\lib" />
+      <recent name="E:\明明加油啊\Wechat\public\img" />
+      <recent name="E:\明明加油啊\Wechat\public" />
+      <recent name="E:\明明加油啊\blog\public\lib" />
+      <recent name="E:\小明明\NODE-ZMM\blog\public\img" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\明明加油啊\双扣\public\img" />
+      <recent name="E:\明明加油啊\Wechat\public\chat" />
+      <recent name="E:\明明加油啊\Wechat\public\stylesheets" />
+      <recent name="E:\明明加油啊\Wechat\public\lib" />
+      <recent name="E:\明明加油啊\Wechat\public" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.bin\www">
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+      <config-file value="" />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="MongoRunConfiguration" factoryName="Mongo">
+      <setting name="path" value="" />
+      <setting name="shellParams" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="false" name="news.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="news.js" working-dir="$PROJECT_DIR$/db/schema">
+      <method />
+    </configuration>
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Node.js.bin\www" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.news.js" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="989daa8c-ec92-4547-b5a8-dd7f560b089c" name="Default" comment="" />
+      <created>1466670074012</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1466670074012</updated>
+      <workItem from="1466670075263" duration="755000" />
+      <workItem from="1466680733947" duration="11547000" />
+      <workItem from="1466817152630" duration="20032000" />
+      <workItem from="1467011587140" duration="1147000" />
+      <workItem from="1467012747760" duration="75000" />
+      <workItem from="1467013065586" duration="353000" />
+      <workItem from="1467013555352" duration="2811000" />
+      <workItem from="1467022239933" duration="6162000" />
+      <workItem from="1467029779667" duration="634000" />
+      <workItem from="1467030602354" duration="202000" />
+      <workItem from="1467031166823" duration="9821000" />
+      <workItem from="1467074687747" duration="3224000" />
+      <workItem from="1467079638223" duration="7008000" />
+      <workItem from="1467098814029" duration="51000" />
+      <workItem from="1467098885272" duration="544000" />
+      <workItem from="1467099454212" duration="1916000" />
+      <workItem from="1467107108553" duration="622000" />
+      <workItem from="1467160854612" duration="13887000" />
+      <workItem from="1467184933861" duration="3047000" />
+      <workItem from="1467189217864" duration="380000" />
+      <workItem from="1467192203276" duration="7947000" />
+      <workItem from="1467211208455" duration="723000" />
+      <workItem from="1467214155688" duration="2225000" />
+      <workItem from="1467219694388" duration="3298000" />
+      <workItem from="1467246866017" duration="19811000" />
+      <workItem from="1467297308645" duration="7910000" />
+      <workItem from="1467594901645" duration="19142000" />
+      <workItem from="1467649843912" duration="1042000" />
+      <workItem from="1467688992347" duration="391000" />
+      <workItem from="1467701107957" duration="3813000" />
+      <workItem from="1467774371921" duration="22330000" />
+      <workItem from="1467819345249" duration="20000" />
+      <workItem from="1467898876262" duration="4600000" />
+      <workItem from="1467946889366" duration="4789000" />
+      <workItem from="1468030341837" duration="10916000" />
+      <workItem from="1468144530371" duration="3316000" />
+      <workItem from="1468204835162" duration="24585000" />
+      <workItem from="1468282020181" duration="23408000" />
+      <workItem from="1468375980703" duration="12903000" />
+      <workItem from="1468415435344" duration="830000" />
+      <workItem from="1468480897136" duration="15134000" />
+      <workItem from="1468594869616" duration="8941000" />
+      <workItem from="1468743318144" duration="1129000" />
+      <workItem from="1468750534605" duration="2328000" />
+      <workItem from="1468844135207" duration="13561000" />
+      <workItem from="1468992885913" duration="1088000" />
+      <workItem from="1469002856892" duration="9470000" />
+      <workItem from="1469081240065" duration="9289000" />
+      <workItem from="1469354101630" duration="51000" />
+      <workItem from="1469354288442" duration="2988000" />
+      <workItem from="1469427114823" duration="3487000" />
+      <workItem from="1469713146318" duration="2964000" />
+      <workItem from="1469791153265" duration="1819000" />
+      <workItem from="1469867795862" duration="6460000" />
+      <workItem from="1469946376211" duration="3377000" />
+      <workItem from="1469952769804" duration="949000" />
+      <workItem from="1469953824823" duration="13698000" />
+      <workItem from="1470036367719" duration="562000" />
+      <workItem from="1470195458739" duration="540000" />
+      <workItem from="1470196171228" duration="18998000" />
+      <workItem from="1470813258471" duration="1330000" />
+      <workItem from="1470878695188" duration="235000" />
+      <workItem from="1470963916786" duration="13842000" />
+      <workItem from="1471005438993" duration="7868000" />
+      <workItem from="1471048057919" duration="26240000" />
+      <workItem from="1471133013466" duration="11404000" />
+      <workItem from="1471156789360" duration="26220000" />
+      <workItem from="1471480388005" duration="19396000" />
+      <workItem from="1471517872414" duration="658000" />
+      <workItem from="1471564145965" duration="6393000" />
+      <workItem from="1471659025822" duration="15948000" />
+      <workItem from="1471833892116" duration="14530000" />
+      <workItem from="1471921191981" duration="15256000" />
+      <workItem from="1472005353826" duration="12788000" />
+      <workItem from="1472096933403" duration="11516000" />
+      <workItem from="1472127074989" duration="4058000" />
+      <workItem from="1473065611306" duration="12497000" />
+      <workItem from="1473125447033" duration="8521000" />
+      <workItem from="1473145156079" duration="7396000" />
+      <workItem from="1473253472964" duration="3471000" />
+      <workItem from="1473313534510" duration="5688000" />
+      <workItem from="1473589186721" duration="167000" />
+      <workItem from="1473590262799" duration="387000" />
+      <workItem from="1473592000453" duration="685000" />
+      <workItem from="1473593703927" duration="275000" />
+      <workItem from="1473653980797" duration="5385000" />
+      <workItem from="1473741843238" duration="6402000" />
+      <workItem from="1473857039170" duration="597000" />
+      <workItem from="1473995900625" duration="9296000" />
+      <workItem from="1474511221533" duration="597000" />
+      <workItem from="1474636591360" duration="2677000" />
+      <workItem from="1474676527728" duration="1226000" />
+      <workItem from="1474713161876" duration="1032000" />
+      <workItem from="1475238027078" duration="223000" />
+      <workItem from="1476100218520" duration="634000" />
+      <workItem from="1476192217148" duration="1462000" />
+      <workItem from="1476274329135" duration="3022000" />
+      <workItem from="1476279175498" duration="83000" />
+      <workItem from="1476433279643" duration="1303000" />
+      <workItem from="1476711709331" duration="1727000" />
+      <workItem from="1476787760252" duration="16462000" />
+      <workItem from="1476860854345" duration="10565000" />
+      <workItem from="1476879603283" duration="9856000" />
+      <workItem from="1476972923606" duration="408000" />
+      <workItem from="1477043722004" duration="17498000" />
+      <workItem from="1477390261714" duration="12620000" />
+      <workItem from="1477529300807" duration="14324000" />
+      <workItem from="1477551144779" duration="11592000" />
+      <workItem from="1477650317912" duration="17651000" />
+      <workItem from="1477670281226" duration="471000" />
+      <workItem from="1478608730534" duration="22320000" />
+      <workItem from="1478776315503" duration="9283000" />
+      <workItem from="1478861177750" duration="15324000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="797084000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="86" y="83" width="1287" height="692" extended-state="1" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1792991" sideWeight="0.8720682" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3398693" sideWeight="0.4907482" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28384992" sideWeight="0.32421562" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23156802" sideWeight="0.12793177" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35084426" sideWeight="0.6757844" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24950299" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1712" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2768" sideWeight="0.48244274" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.274673" sideWeight="0.17555556" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4025974" sideWeight="0.60318667" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2141707" sideWeight="0.4448914" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3398693" sideWeight="0.4907482" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28384992" sideWeight="0.32421562" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23156802" sideWeight="0.12793177" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5611746" sideWeight="0.6757844" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1712" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2768" sideWeight="0.48244274" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1792991" sideWeight="0.8720682" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2141707" sideWeight="0.4448914" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24950299" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.274673" sideWeight="0.17555556" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4025974" sideWeight="0.60318667" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="126" />
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="NodeJSConfigurationType">
+        <watch expression="user" language="JavaScript" />
+        <watch expression="a" language="JavaScript" />
+        <watch expression="docs[0]" language="JavaScript" />
+        <watch expression="entries" language="JavaScript" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/views/error/404.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="59" selection-start-line="9" selection-start-column="59" selection-end-line="9" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/jsonRes.js" />
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/chat.css" />
+    <entry file="file://$PROJECT_DIR$/views/layouts/release.hbs" />
+    <entry file="file://$PROJECT_DIR$/views/partials/sidebar.hbs" />
+    <entry file="file://$PROJECT_DIR$/views/partials/header.hbs" />
+    <entry file="file://$PROJECT_DIR$/public/lib/adminlte/css/AdminLTE.min.css" />
+    <entry file="file://$PROJECT_DIR$/views/layouts/lg.hbs" />
+    <entry file="file://$PROJECT_DIR$/db/authority.js" />
+    <entry file="file://$PROJECT_DIR$/db/schema/friend.js" />
+    <entry file="file://$PROJECT_DIR$/db/schema/user.js" />
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/login.css" />
+    <entry file="file://$PROJECT_DIR$/public/img/user.png" />
+    <entry file="file://$PROJECT_DIR$/public/img/user.jpg" />
+    <entry file="file://$PROJECT_DIR$/public/img/login-bg.png" />
+    <entry file="file://$PROJECT_DIR$/public/img/4.jpg" />
+    <entry file="file://$PROJECT_DIR$/public/img/2.jpg" />
+    <entry file="file://$PROJECT_DIR$/public/img/1.jpg" />
+    <entry file="file://$PROJECT_DIR$/public/lib/bootstrap/css/bootstrap.min.css" />
+    <entry file="file://$PROJECT_DIR$/public/chat/register.js" />
+    <entry file="file://$PROJECT_DIR$/public/emoji/1.gif" />
+    <entry file="file://$PROJECT_DIR$/public/lib/jquery.emoji.css" />
+    <entry file="file://$PROJECT_DIR$/public/lib/jquery.emoji.js" />
+    <entry file="file://$PROJECT_DIR$/public/lib/remarkable/remarkable.js" />
+    <entry file="file://$PROJECT_DIR$/routes/login.js" />
+    <entry file="file://$PROJECT_DIR$/public/chat/screenshot.js" />
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DHTML.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/chat.css" />
+    <entry file="file://$PROJECT_DIR$/views/register.hbs" />
+    <entry file="file://$PROJECT_DIR$/db/schema/message.js" />
+    <entry file="file://$PROJECT_DIR$/db/dbHelper.js" />
+    <entry file="file://$PROJECT_DIR$/views/chat.hbs" />
+    <entry file="file://$PROJECT_DIR$/db/db.js" />
+    <entry file="file://$PROJECT_DIR$/public/chat/chat.js" />
+    <entry file="file://$PROJECT_DIR$/public/chat/common.js" />
+    <entry file="file://$PROJECT_DIR$/public/chat/login.js" />
+    <entry file="file://$PROJECT_DIR$/views/layouts/main.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="39" column="11" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/doudizhu-master/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/socket.io/lib/socket.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="334" column="7" selection-start-line="334" selection-start-column="7" selection-end-line="334" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/img/button.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/img/icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/img/poker.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/poker.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="59" column="8" selection-start-line="59" selection-start-column="1" selection-end-line="59" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/partials/head.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/www">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/poker/poker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="153" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="156" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
