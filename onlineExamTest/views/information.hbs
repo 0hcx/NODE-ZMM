@@ -1,0 +1,14 @@
+<div class="info">
+    <div class="basicInfo">
+        <div class="name">姓名：{{data.username}} </div>
+        <div class="number">学号：{{data.number}} </div>
+        <p class="id" >{{data._id}}</p>
+    </div>
+    {{#each student}}
+    <div class="examInfo" id="{{questionId}}">
+        <!--<div>题号{{questionId}}</div>-->
+        <div>内容{{answerCtn}}</div>
+    </div>
+        {{/each}}
+</div>
+<script src="test/detail.js"></script>

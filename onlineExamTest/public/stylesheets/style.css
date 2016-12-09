@@ -1,0 +1,250 @@
+body {
+  padding: 0;
+  margin: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: rgba(220, 220, 220, 0.26);
+}
+
+a {
+  color: #00B7FF;
+}
+.wrapper{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+.navigation{
+  display: flex;
+  height: 50px;
+  background-color: #F18224;
+  padding: 2px;
+  align-items: center;
+}
+.head{
+  font-size: 23px;
+  padding: 5px;
+  font-weight: 600;
+  color: azure;
+  align-items: flex-start;
+}
+.login{
+  background-color: #51D651;
+  padding: 5px;
+  width: 70px;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  text-align: -webkit-center;
+}
+.button{
+  width: 81%;
+  display: flex;
+  justify-content: flex-end;
+}
+.menu{
+  background-color: black;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.item{
+  color: azure;
+  margin-left: 18px;
+  cursor: pointer;
+  font-size: 5px;
+}
+.login-control{
+  display: none;
+}
+.user-control{
+  display: none;
+}
+.question-control{
+  display: none;
+}
+.login-wrapper{
+  position: absolute;
+  width: 98%;
+  height: 88vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-panel{
+  background-color: rgba(220, 220, 220, 0.5);
+  width: 250px;
+  height: 150px;
+  border: 20px solid rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 5px;
+  padding-bottom:5px ;
+}
+.login-panel label{
+  margin-right: 10px;
+}
+.message-control{
+  display: none;
+}
+.message-control .form-group{
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+}
+.waiting{
+  font-size: large;
+  font-style: oblique;
+  font-weight: 800;
+  padding: 120px 500px;
+  position: absolute;
+}
+.user{
+  padding: 3px;
+  margin: 10px;
+  border: 1px solid gray;
+  height: 20px;
+}
+.log{
+  background-color: black;
+  font-size: 6px;
+  cursor: pointer;
+}
+.admin{
+  display: flex;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+.student{
+  color:black;
+  text-decoration: none;
+  padding: 5px;
+  flex-basis: 12.3%;
+  height: 80px;
+  text-align: center;
+  border: 1px solid #C5BCBC;
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.statusGray{
+  background-color: cornsilk;
+}
+.statusRed{
+  background-color:lightpink;
+}
+.statusBlue{
+  background-color:cornflowerblue;
+}
+.statusGreen{
+  background-color: mediumseagreen;
+}
+.welcome{
+  display: flex;
+  justify-content: flex-end;
+  flex-basis: 70%;
+}
+.welcomeAdmin{
+  display: flex;
+  justify-content: flex-end;
+  flex-basis: 70%;
+  align-items: center;
+}
+#test{
+  display: none;
+}
+#submit{
+  display: none;
+}
+.id{
+  display: none;
+}
+.studentWrapper{
+  display: flex;
+  width: 100%;
+  height: 500px;
+  /*background-color:aliceblue;*/
+}
+.question{
+  margin: 5px;
+  background-color: rgba(177, 173, 173, 0.56);
+  display: flex;
+  flex-direction: column;
+  width: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+}
+.answerItem{
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.82);
+  margin: 10px;
+  border-radius: 70px;
+  border: none;
+  color: white;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.answer-panel{
+  flex: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
+  align-items: center;
+  background-color: rgba(177, 173, 173, 0.56);
+  height: 84vh;
+}
+.que{
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.answer{
+  width: 400px;
+  height: 900px;
+}
+.ans{
+  width: 700px;
+  height: 280px;
+}
+.save{
+  text-align: center;
+  width: 50px;
+  border: 1px solid gray;
+  color: black;
+  background-color: white;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+}
+.main{
+  background: url("/img/cat.png")  no-repeat ;
+  height: 92vh;
+  margin: 0;
+}
+.itm{
+  padding: 3px;
+  margin: 3px;
+}
+.info{
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.basicInfo{
+  display: flex;
+  flex-direction: row;
+}
+.examInfo{
+  display: flex;
+  flex-direction: column;
+}
