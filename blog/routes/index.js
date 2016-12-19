@@ -60,7 +60,6 @@ router.get('/:id', function(req, res, next) {
 				entries: data,
 				comments: comments,
 				user: req.session.user
-
 			});
 		});
 	});

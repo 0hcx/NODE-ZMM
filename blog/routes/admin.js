@@ -11,7 +11,6 @@ router.get('/news', function(req, res, next) {
     title: 'Express',
     layout: 'admin' ,
     user: req.session.user
-
   });
 });
 //创建新闻
