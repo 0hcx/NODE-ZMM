@@ -82,9 +82,11 @@ a:hover{
 }
 .form-thumb{
 	width: 90%;
-	height: 140px;
+	height: 230px;
 }
-
+.img-thumbnail{
+	max-height: 230px;
+}
 .chat{
 	display: flex;
 	/*flex-direction: column;*/
@@ -216,6 +218,12 @@ nav{
 }
 .search_bar .wechat_search {
 	position: absolute;
+}
+#imgPreview img{
+	position: absolute;
+	height: 90px;
+	margin-left: 12px;
+	margin-top: 12px;
 }
 .frm_search {
 	width: 90%;

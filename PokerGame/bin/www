@@ -1,0 +1,212 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('Poker:server');
+var http = require('http');
+var config = require('../config');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '5000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+
+
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+//洗牌
+function shuffle() {
+  var pokers = new Array();
+  for(var i = 0; i < 54; i++) {
+    pokers[i]=i;
+  }
+  for (var i = 0; i < 54; i++) {
+    var rd=parseInt(Math.random()*54);
+    var b=pokers[i] ;
+    pokers[i]= pokers[rd];
+    pokers[rd]=b;
+}
+   var poker1 = [];
+   var poker2 = [];
+   for(var i = 0; i < 54; i++) {
+    if(i<27)
+        poker1[i]=pokers[i];
+     else{
+        poker2[i-27]=pokers[i];
+    }
+   }
+   sort(poker1);
+   sort(poker2);
+  result = {
+    poker1: poker1,
+    poker2: poker2
+  };
+  return result;
+}
+//排序
+function sort(pokers){
+    var i=27;
+    var temp;
+    while (i > 0) {
+    for (var j = 0; j < i - 1; j++) {
+        if (((pokers[j]+11)%13> (pokers[j + 1]+11)%13)&&(pokers[j + 1]!==52||pokers[j + 1]!==53)) {
+            temp = pokers[j];
+            pokers[j] = pokers[j + 1];
+            pokers[j + 1] = temp;}
+        //小王
+        if(pokers[j]===53){
+            temp = pokers[j];
+            pokers[j] = pokers[26];
+            pokers[26] = temp;}
+        //大王
+        if(pokers[j]===52){
+            temp = pokers[j];
+            pokers[j] =pokers[j+1];
+            pokers[j+1] = temp;}
+                   }
+                    i--;
+         }
+}
+
+
+
+DISCARD=2;
+
+var io = require('socket.io').listen(server);
+var count = 0;
+//var onlineList=[];
+var first;
+var second;
+var other;
+
+io.on('connection', function(socket){
+  //用户登录
+  socket.on('add user', function (obj) {
+    console.log("user login");
+    count++;
+    console.log(count);
+     if(count===1){
+        socket.join(obj.from);
+        first=obj;
+        first.authority=true;
+        console.log("first in");
+     }
+     else if(count===2){
+        socket.join(obj.from);
+        second=obj;
+        console.log("second in");
+
+        //发牌开始
+        var res=shuffle();
+        first.data.pokers=res.poker1;
+        second.data.pokers=res.poker2;
+        first.to=second.from;
+        second.to=first.from;
+
+        first.data.status=DISCARD;
+        second.data.status=DISCARD;
+        console.log(first);
+        console.log(second);
+
+        io.to(first.from).emit("start poker", first);
+        io.to(second.from).emit("start poker", second);
+        }
+        else{
+            socket.join(obj.from);
+            other=obj;
+             io.to(other.from).emit("crowded", other);
+        }
+  }
+  );
+  socket.on('discard',function(data,sendMessage){
+    if(data.data.count===0){
+        io.to(data.from).emit("game over", 1);
+        io.to(data.to).emit("game over",2 );
+    }
+    else{
+        io.to(data.to).emit("receive poker", sendMessage,data.data.count);
+    }
+  })
+  socket.on('abandon',function(data){
+      io.to(data.from).emit("game over", 3);
+      io.to(data.to).emit("game over",4);
+    })
+  })
