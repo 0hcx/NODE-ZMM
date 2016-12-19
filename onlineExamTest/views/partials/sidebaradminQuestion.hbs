@@ -1,0 +1,27 @@
+<div class="menu">
+    <div class="subMenu">
+        <div class="item" id="question" data-toggle="modal" data-target="#addQuestion">添加题目</div>
+        <a href="/admin" class="item">管理首页</a>
+    </div>
+    <div class='welcomeAdmin'>
+        <p id="id">{{user._id}}</p>
+        <div class="item"> 欢迎进入{{user.username}}</div>
+        <div class='item'><a class="item" id ="exit" href="/">退出</a></div>
+    </div>
+</div>
+<div class="modal fade" id="addQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+    <div class="message-wrapper modal-dialog">
+        <div class="modal-content message-panel">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">添加问题</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-group itm" placeholder="题号" id="num">
+                <input type="text" class="form-group itm" placeholder="内容" id="content">
+                <input type="text" class="form-group itm" placeholder="答案" id="answer">
+                <input type="text" class="form-group itm" placeholder="分值" id="score">
+            </div>
+            <button class="btn btn-primary" id="questionBtn"  data-dismiss="modal">添加</button>
+        </div>
+    </div>
+</div>

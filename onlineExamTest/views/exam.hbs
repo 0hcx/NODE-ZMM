@@ -1,14 +1,21 @@
 <div class="waiting">
     <p>考试时间还没到，请耐心等待!</p>
 </div>
-<div class="message-control" >
-    <div class="login-wrapper">
-        <div class="login-panel">
-            <div><label>姓名</label><input class="form-group " placeholder="{{user.username}}"></div>
-            <div><label>学号</label><input class="form-group " placeholder="{{user.number}}"></div>
-            <div><label>类型</label><input class="form-group " placeholder="学生"></div>
-            <div><label>密码</label><input class="form-group " placeholder="{{user.password}}"></div>
-            <button class="login" id="confirmBtn">确认</button>
+<div class="modal fade" id="myMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+    <div class="message-wrapper modal-dialog">
+        <div class="modal-content message-panel">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">用户信息</h4>
+            </div>
+            <div class="modal-body">
+                <div><label>姓名</label><input class="form-group" placeholder="{{user.username}}"></div>
+                <div><label>学号</label><input class="form-group" placeholder="{{user.number}}"></div>
+                <div><label>类型</label><input class="form-group" placeholder="学生"></div>
+                <div><label>密码</label><input class="form-group" placeholder="{{user.password}}"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="confirmBtn"  data-dismiss="modal">确认</button>
+            </div>
         </div>
     </div>
 </div>

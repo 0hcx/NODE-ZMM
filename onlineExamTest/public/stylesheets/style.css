@@ -3,6 +3,7 @@ body {
   margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: rgba(220, 220, 220, 0.26);
+  overflow-y:hidden ; /*隐藏垂直滚动条*/
 }
 
 a {
@@ -37,6 +38,7 @@ a {
   font-weight: 600;
   font-size: 15px;
   text-align: -webkit-center;
+  cursor: pointer;
 }
 .button{
   width: 81%;
@@ -57,7 +59,7 @@ a {
   font-size: 5px;
 }
 .login-control{
-  display: none;
+  /*display: none;*/
 }
 .user-control{
   display: none;
@@ -66,17 +68,51 @@ a {
   display: none;
 }
 .login-wrapper{
-  position: absolute;
-  width: 98%;
-  height: 88vh;
   display: flex;
   justify-content: center;
+  height: 88vh;
+  align-items: center;
+}
+.message-wrapper{
+  display: flex;
+  justify-content: center;
+  height: 88vh;
+  width: 100%;
+  align-items: center;
+}
+.message-panel{
+  background-color: rgba(220, 220, 220, 0.5);
+  width: 300px;
+  height: 310px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 5px;
+  padding-bottom:5px ;
+}
+.modal-body label{
+  margin-right: 20px;
+}
+.admin-panel{
+  background-color: rgba(220, 220, 220, 0.5);
+  width: 280px;
+  height: 260px;
+  border: 20px solid rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.modal-body{
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 .login-panel{
   background-color: rgba(220, 220, 220, 0.5);
-  width: 250px;
-  height: 150px;
+  width: 300px;
+  height: 200px;
   border: 20px solid rgba(0,0,0,0.3);
   display: flex;
   flex-direction: column;
@@ -156,6 +192,11 @@ a {
   flex-basis: 70%;
   align-items: center;
 }
+.subMenu{
+  width: 30%;
+  display: flex;
+
+}
 #test{
   display: none;
 }
@@ -225,6 +266,7 @@ a {
   padding: 5px;
   margin: 5px;
   border-radius: 5px;
+  cursor: pointer;
 }
 .main{
   background: url("/img/cat.png")  no-repeat ;
@@ -232,8 +274,10 @@ a {
   margin: 0;
 }
 .itm{
-  padding: 3px;
+  padding: 7px;
   margin: 3px;
+  border-radius: 3px;
+  border: 1px solid lightgray;
 }
 .info{
   margin: 10px;
@@ -243,8 +287,22 @@ a {
 .basicInfo{
   display: flex;
   flex-direction: row;
+  /*font-size: larger;*/
+  font-weight: 700;
+  margin-left: 10px;
 }
 .examInfo{
   display: flex;
   flex-direction: column;
+}
+.asset{
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  width: 15%;
+  justify-content: space-around;
+  margin-left: 10px;
+}
+#excel{
+  margin-left: 10px;
 }

@@ -2,6 +2,7 @@ var entries = require('./jsonRes');
 var User = require('./schema/user');
 var Question = require('./schema/question');
 var Answer = require('./schema/answer');
+
 exports.findUsr = function(data, cb) {
     User.findOne({
         username: data.usr
@@ -44,6 +45,7 @@ exports.addUser = function(data, cb){
         password: data.pwd,
         type:data.type,
         number:data.number,
+        grade:0,
         status:0
     });
 
@@ -68,6 +70,40 @@ exports.addUser = function(data, cb){
             }
         }
     })
+};
+exports.deleteStudent=function (data,cb) {
+    User.findById(data, function (err, doc) {
+        if (doc) {
+            doc.remove(function (err, doc) {
+                if (err) {
+                    entries.msg = err;
+                    cb(false,entries);
+                }else{
+                    entries.msg = '删除成功！';
+                    cb(true,entries);
+                }
+            });
+        } else {
+            next(err);
+        }
+    });
+};
+exports.deleteQuestion=function (data,cb) {
+    Question.findById(data, function (err, doc) {
+        if (doc) {
+            doc.remove(function (err, doc) {
+                if (err) {
+                    entries.msg = err;
+                    cb(false,entries);
+                }else{
+                    entries.msg = '删除成功！';
+                    cb(true,entries);
+                }
+            });
+        } else {
+            next(err);
+        }
+    });
 };
 exports.addQuestion = function(data, cb) {
     var question = new Question({
@@ -101,6 +137,25 @@ exports.getQuestionList=function(data,cb){
             cb(true, questionList);
             // console.log(questionList);
         });
+};
+// updateUser,分數更新
+exports.updateUser = function (data, cb) {
+    User.findOne({"_id": data.userId}, function(err, doc) {
+        var user = (doc !== null) ? doc.toObject() : '';
+        if(user.status !== 3) {
+            User.update({"_id": data.userId}, {$set :{
+                "grade": data.grade
+            }
+            },function(err, result){
+                if(err) {
+                    entries.code = 99;
+                    console.log(err);
+                }
+                cb(true, entries);
+
+            })
+        }
+    });
 };
 exports.updateStatus = function (data, cb) {
     User.findOne({"_id": data.userId}, function(err, doc) {
@@ -163,14 +218,19 @@ exports.getInfor = function (id, cb) {
 };
 //获得学生答题内容
 exports.getAnswer = function (data, cb) {
-    Answer.find({"userId":data})
+    Answer.find({userId:data})
+        .populate('questionId')
         .exec(function(err, docs) {
-            var AnswerList=new Array();
-            for(var i=0;i<docs.length;i++) {
-                AnswerList.push(docs[i].toObject());
+            if(docs!==null) {
+                var AnswerList = new Array();
+                for (var i = 0; i < docs.length; i++) {
+                    AnswerList.push(docs[i].toObject());
+                }
+                cb(true, AnswerList);
             }
-            console.log(AnswerList);
-
-            cb(true, AnswerList);
         });
 };
+//批量添加学生
+// exports.batchAddStudent = function (data, cb) {
+//   
+// };

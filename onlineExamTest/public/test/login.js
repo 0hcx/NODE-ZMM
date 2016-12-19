@@ -5,11 +5,11 @@ $(init);
 var socket = io();
 function init() {
     $("body").on('click', '#loginBtn', doLogin);
-    $("body").on('click', '#login', doDisplay);
+    // $("body").on('click', '#login', doDisplay);
 }
-function doDisplay() {
-    $('.login-control').toggle();
-}
+// function doDisplay() {
+//     $('.login-control').toggle();
+// }
 function doLogin() {
     $.ajax({
         type: "POST",

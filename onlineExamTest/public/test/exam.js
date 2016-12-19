@@ -16,7 +16,7 @@ var userId=$("#id").html();
 function init() {
     $('.login').remove();
     $("body").on('click', '#test', doTest);
-    $("body").on('click', '#myMessage', showMessage);
+    // $("body").on('click', '#myMessage', showMessage);
     $("body").on('click', '#exit', doExit);
     $("body").on('click', '.save', doSave);
     $("body").on('click', '#submit', doSubmit);

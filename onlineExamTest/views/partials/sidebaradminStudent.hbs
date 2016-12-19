@@ -1,0 +1,31 @@
+<div class="menu">
+    <div class="subMenu">
+
+    <div class="item" id="student" data-toggle="modal" data-target="#addStudent">添加学生</div>
+    <!--<div class="item" id="question" data-toggle="modal" data-target="#addQuestion">添加题目</div>-->
+    <!--<div class="item" id="examination" data-toggle="modal" data-target="#setExam">设置考试</div>-->
+    <a href="/admin"  class="item">管理首页</a></div>
+    <div class='welcomeAdmin'>
+        <p id="id">{{user._id}}</p>
+        <div class="item"> 欢迎进入{{user.username}}</div>
+        <div class='item'><a class="item" id ="exit" href="/">退出</a></div>
+    </div>
+</div>
+<div class="modal fade" id="addStudent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+    <div class="message-wrapper modal-dialog">
+        <div class="modal-content admin-panel">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">添加学生</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-group itm" placeholder="用户名" id="usr">
+                <input type="text" class="form-group itm" placeholder="学号" id="number">
+                <input type="text" class="form-group itm" placeholder="密码" id="pwd">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="studentBtn"  data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+

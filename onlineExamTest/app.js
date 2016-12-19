@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-//var logger = require('morgan');
+// var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs      = require('express-handlebars');
@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 var config = require('./config');
 var dbHelper = require('./db/dbHelper');
 var routes = require('./routes/index');
-var admin = require('./routes/admin');
+// var admin = require('./routes/admin');
 var session     = require('express-session');
 var authority = require('./db/authority');
 var app = express();
@@ -56,8 +56,10 @@ app.use(session({
 }));
 
 app.use('/', routes);
-app.use('/', authority.isAuthenticated, require('./routes/index'));
-// app.use('/', authority.isAuthenticated, require('./routes/admin'));
+// app.use('/', authority.isAuthenticated, require('./routes/index'));
+// app.use('/admin', authority.isAuthenticated,require('./routes/admin'));
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,14 +1,24 @@
-<div class="login-control" >
-    <div class="login-wrapper">
-        <div class="login-panel">
-            <input type="text" class="form-group user" placeholder="用户名" id="usr">
-            <input type="password" class="form-group user" placeholder="密码" id="pwd">
-            <button class="login log" id="loginBtn">登录</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\
+        <div class="message-wrapper modal-dialog">
+            <div class="modal-content login-panel">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">用户登录</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" placeholder="用户名" id="usr">
+                    </div>
+                    <div class="form-group">
+                        <input type="password"   placeholder="密码" id="pwd">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="loginBtn">登录</button>
+                </div>
+            </div>
         </div>
-    </div>
 </div>
 <div class="main">
-
 </div>
 <div class="admin"></div>
 <script src="test/login.js"></script>
