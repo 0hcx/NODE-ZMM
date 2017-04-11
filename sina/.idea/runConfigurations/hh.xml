@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="hh" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" path-to-js-file="hh.js" working-dir="$PROJECT_DIR$">
+    <envs>
+      <env name="DEBUG" value="sina:*" />
+    </envs>
+    <browser url="http://localhost:3000/" />
+    <method />
+  </configuration>
+</component>
