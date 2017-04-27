@@ -79,7 +79,8 @@ module.exports=function(grunt){
     grunt.registerTask('default',['concurrent']);//默认任务
 };
 ```
-####3.jshint配置文件+创建相应目录文件+运行事件
+#### 3.jshint配置文件+创建相应目录文件+运行事
+
 ```
 grunt
 grunt jshint
@@ -88,8 +89,8 @@ grunt uglify
 
 ```
 ***
-##2016/8/24
-###gulp插件的使用
+## 2016/8/24
+### gulp插件的使用
 ####1.gulp和gulp-autoprefixe安装
 ####2.根目录创建gulpfile.js
 ```js
@@ -112,7 +113,7 @@ gulp.task('watch',function() {//监听文件
 ###手机端设计
 考虑到屏幕变小后导航条会显得比较拥挤不美观以及自我介绍栏位置的蜜汁尴尬，将屏幕缩小后，新增菜单，隐藏介绍栏
 ，将内容居中,增加内容如下
-```css
+```
 @media all and (max-width:500px) {
     .nav{
         flex-basis: 100%;
@@ -138,8 +139,8 @@ gulp.task('watch',function() {//监听文件
 
 ```
 ***
-##2016/8/19
-###评论回复
+## 2016/8/19
+### 评论回复
 ```js
 /* 评论定义 */
 var commentSchema = new Schema({
@@ -1556,25 +1557,25 @@ reconnecting：正在重连
 [参考](http://www.cnblogs.com/edwardstudy/p/4358202.html)
 
 ***
-##软件下载
+## 软件下载
 ***
-##2016/6/28
-###安装Node
+## 2016/6/28
+### 安装Node
 打开[网址](https://nodejs.org/en/download/)，选择相对应的软件下载即可。一切准备好以后，打开命令提示符，进入 Node.js 源代码所在的目录进行编译。在 Release 子目录下面会有一个node.exe文件。
-###npm的下载和使用
+### npm的下载和使用
 npm就是Node的软件包管理器，可以用它安装所需软件包并发布自己为nodejs写的软件包。[官网地址](http://npmjs.org)安装只需要在终端写入一行代码：`curl http://npmjs.org/install.sh | sh`
-###OmniMarkupPreviewer插件安装
+### OmniMarkupPreviewer插件安装
 你可以在 Sublime Text 内通过 Package Control'shift+control+P'输入 Install Package 来安装 OmniMarkupPreviewer, 也可以从其 Github主页 [下载压缩包](http://theo.im/OmniMarkupPreviewer/)，解压到 Sublime Text 的 Packages 目录即可完成安装。或者自定义快捷键直接在浏览器中预览效果的话，可以自定义快捷键：
 点击 Preferences --> 选择 Key Bindings User，输入：  
 `{ "keys": ["alt+m"], "command": "markdown_preview", "args": {"target": "browser", "parser":"markdown"} }`  
 保存后，直接输入快捷键：Alt + M 就可以直接在浏览器中预览生成的HTML文件了。
-###MongoDB的安装和配置
-####安装插件
+### MongoDB的安装和配置
+#### 安装插件
 1.下载plugins插件，放入对应路径  
 2.在WebStorm的setting中添加路径  
 3.重启WebStorm右上方出现mongo explorer  
 4. 选择数据库，打开mongo explorer,添加数据库  
-####安装
+#### 安装
 1.下载地址<http://www.mongodb.org/downloads>  
 2.解压到文件夹(默认是C:\Program Files\MongoDB)  
 3.创建文件夹dbpath和logpath，分别用来安装db和日志文件，在log文件夹下创建一个日志文件MongoDB.log  
@@ -1582,7 +1583,7 @@ npm就是Node的软件包管理器，可以用它安装所需软件包并发布�
   `cd C:\Program Files\MongoDB\Server\3.2\bin
   mongod -dbpath "E:\Web\db"`
 运行通过，打开<http://localhost:27017/>  
-####配置
+#### 配置
 安装服务命令
 `mongod --dbpath "E:\Web\db" --logpath "E:\Web\logpath\MongoDB.log" --install --serviceName "MongoDB"`  
 出现了一些问题。
@@ -1590,8 +1591,8 @@ npm就是Node的软件包管理器，可以用它安装所需软件包并发布�
 1.建立一个shell的文件夹  
 2.建立一个startmongodb.bat的文件，内容：`mongod  --dbpath E:\Web\db`  
 3.在系统path添加路径E:\Web\shell.  
-##2016/7/10
-###使用Sublime + PlantUML画图   
+## 2016/7/10
+### 使用Sublime + PlantUML画图   
 1. 插件导入  
 1.1 Ctrl+Shift+P->add Repository->[uml](https://github.com/jvantuyl/sublime_diagram_plugin)->install package->sublime_diagram_plugin  
 2. 环境变量配置
@@ -1605,12 +1606,12 @@ npm就是Node的软件包管理器，可以用它安装所需软件包并发布�
 某些情况下程序无法加载Diagram.sublime-settings文件，解决办法：  
 打开package目录下的将sublime_diagram_plugin下的Diagram.sublime-settings，将第三行的null改为“UTF-8"
 ***
-##读书笔记
+## 读书笔记
 ***
-###flex教程总结
-####语法
+### flex教程总结
+#### 语法
 ps:第一个为默认
-#####1.容器的属性
+##### 1.容器的属性
 * 1.1 flex-direction
 ```css
 .box {
