@@ -1,8 +1,7 @@
-## 运行程序
+## 浣跨敤璇存槑
 
 ```
 npm install  
-开启mongodb
 mongod --dbpath
 node app
 npm run dev
