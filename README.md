@@ -1,11 +1,11 @@
-#学习报告
-#项目进程
-##2016/8/25
-###grunt配置
-####1.安装
+# 学习报告
+# 项目进程
+## 2016/8/25
+### grunt配置
+#### 1.安装
 全局安装grunt，并安装`grunt-concurrent`，`grunt-contrib-jshint`，`grunt-contrib-less`，`grunt-contrib-ugli
 fy`，`grunt-contrib-watch，grunt-nodemon`插件，用于慢任务，语法检测，压缩，入口文件及文件修改的监听
-####2.根目录下创建gruntfile.js
+#### 2.根目录下创建gruntfile.js
 ```js
 module.exports=function(grunt){
     //定义的任务
